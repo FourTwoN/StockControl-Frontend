@@ -5,6 +5,7 @@ import type { TenantConfig } from '@core/tenant/types'
 import { resolveTenantId } from '@core/tenant/tenantResolver'
 import env from '@core/config/env'
 import { Industry } from '@core/types/enums'
+import { allModuleKeys } from '@core/config/modules'
 
 interface TenantContextValue {
   readonly tenantId: string | null
@@ -27,19 +28,7 @@ function createLocalTenantConfig(tenantId: string): TenantConfig {
       background: '#f8fafc',
       appName: 'Stock Control (Local)',
     },
-    enabledModules: [
-      'inventario',
-      'productos',
-      'ventas',
-      'costos',
-      'ubicaciones',
-      'empaquetado',
-      'precios',
-      'usuarios',
-      'analytics',
-      'fotos',
-      'chatbot',
-    ],
+    enabledModules: [...allModuleKeys],
     settings: {
       source: 'local-bypass',
     },
