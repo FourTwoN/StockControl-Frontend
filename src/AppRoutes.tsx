@@ -1,44 +1,54 @@
-import { lazy } from 'react'
+import { lazy, useMemo } from 'react'
+import type { ComponentType } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
-import { useFeatureFlag } from '@core/hooks'
+import { useTenant } from '@core/tenant/useTenant'
+import { getFirstEnabledPath } from '@core/config/modules'
 
-const InventarioRoutes = lazy(() => import('@modules/inventario/routes'))
-const ProductosRoutes = lazy(() => import('@modules/productos/routes'))
-const VentasRoutes = lazy(() => import('@modules/ventas/routes'))
-const CostosRoutes = lazy(() => import('@modules/costos/routes'))
-const UsuariosRoutes = lazy(() => import('@modules/usuarios/routes'))
-const UbicacionesRoutes = lazy(() => import('@modules/ubicaciones/routes'))
-const EmpaquetadoRoutes = lazy(() => import('@modules/empaquetado/routes'))
-const PreciosRoutes = lazy(() => import('@modules/precios/routes'))
-const AnalyticsRoutes = lazy(() => import('@modules/analytics/routes'))
-const FotosRoutes = lazy(() => import('@modules/fotos/routes'))
-const ChatbotRoutes = lazy(() => import('@modules/chatbot/routes'))
+const routeComponents: Record<string, React.LazyExoticComponent<ComponentType>> = {
+  inventario: lazy(() => import('@modules/inventario/routes')),
+  productos: lazy(() => import('@modules/productos/routes')),
+  ventas: lazy(() => import('@modules/ventas/routes')),
+  costos: lazy(() => import('@modules/costos/routes')),
+  usuarios: lazy(() => import('@modules/usuarios/routes')),
+  ubicaciones: lazy(() => import('@modules/ubicaciones/routes')),
+  empaquetado: lazy(() => import('@modules/empaquetado/routes')),
+  precios: lazy(() => import('@modules/precios/routes')),
+  analytics: lazy(() => import('@modules/analytics/routes')),
+  fotos: lazy(() => import('@modules/fotos/routes')),
+  chatbot: lazy(() => import('@modules/chatbot/routes')),
+}
+
+const modulePathMap: Record<string, string> = {
+  inventario: '/inventario',
+  productos: '/productos',
+  ventas: '/ventas',
+  costos: '/costos',
+  usuarios: '/usuarios',
+  ubicaciones: '/ubicaciones',
+  empaquetado: '/empaquetado',
+  precios: '/precios',
+  analytics: '/analytics',
+  fotos: '/fotos',
+  chatbot: '/chatbot',
+}
 
 export function AppRoutes() {
-  const fotosEnabled = useFeatureFlag('fotos')
-  const chatbotEnabled = useFeatureFlag('chatbot')
+  const { enabledModules } = useTenant()
+  const defaultPath = useMemo(() => getFirstEnabledPath(enabledModules), [enabledModules])
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/inventario" replace />} />
+      <Route path="/" element={<Navigate to={defaultPath} replace />} />
 
-      {/* Core modules */}
-      <Route path="/inventario/*" element={<InventarioRoutes />} />
-      <Route path="/productos/*" element={<ProductosRoutes />} />
-      <Route path="/ventas/*" element={<VentasRoutes />} />
-      <Route path="/costos/*" element={<CostosRoutes />} />
-      <Route path="/usuarios/*" element={<UsuariosRoutes />} />
-      <Route path="/ubicaciones/*" element={<UbicacionesRoutes />} />
-      <Route path="/empaquetado/*" element={<EmpaquetadoRoutes />} />
-      <Route path="/precios/*" element={<PreciosRoutes />} />
-      <Route path="/analytics/*" element={<AnalyticsRoutes />} />
-
-      {/* DLC modules - conditional */}
-      {fotosEnabled && <Route path="/fotos/*" element={<FotosRoutes />} />}
-      {chatbotEnabled && <Route path="/chatbot/*" element={<ChatbotRoutes />} />}
+      {enabledModules.map((key) => {
+        const Component = routeComponents[key]
+        const path = modulePathMap[key]
+        if (!Component || !path) return null
+        return <Route key={key} path={`${path}/*`} element={<Component />} />
+      })}
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/inventario" replace />} />
+      <Route path="*" element={<Navigate to={defaultPath} replace />} />
     </Routes>
   )
 }
