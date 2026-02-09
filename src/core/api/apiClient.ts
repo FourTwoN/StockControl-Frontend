@@ -5,6 +5,7 @@ import type { ApiError } from './types.ts'
 const AUTH_TOKEN_KEY = 'auth0_token'
 const TENANT_ID_KEY = 'tenant_id'
 const LOGIN_PATH = '/login'
+const AUTH_BYPASS = import.meta.env.VITE_AUTH_BYPASS === 'true'
 
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? '',
@@ -40,7 +41,15 @@ function buildApiError(status: number, message: string): ApiError {
 
 function handleUnauthorized(): void {
   localStorage.removeItem(AUTH_TOKEN_KEY)
-  window.location.href = LOGIN_PATH
+
+  // In local bypass mode there is no real login flow, so avoid redirect loops.
+  if (AUTH_BYPASS) {
+    return
+  }
+
+  if (window.location.pathname !== LOGIN_PATH) {
+    window.location.href = LOGIN_PATH
+  }
 }
 
 function handleErrorResponse(error: AxiosError<ApiError>): Promise<never> {

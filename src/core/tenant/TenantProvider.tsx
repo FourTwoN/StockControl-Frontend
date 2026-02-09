@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import type { TenantConfig } from '@core/tenant/types'
 import { resolveTenantId } from '@core/tenant/tenantResolver'
 import env from '@core/config/env'
+import { Industry } from '@core/types/enums'
 
 interface TenantContextValue {
   readonly tenantId: string | null
@@ -13,6 +14,37 @@ interface TenantContextValue {
 }
 
 const TenantContext = createContext<TenantContextValue | undefined>(undefined)
+
+function createLocalTenantConfig(tenantId: string): TenantConfig {
+  return {
+    id: tenantId,
+    name: `Local Tenant ${tenantId}`,
+    industry: Industry.CULTIVOS,
+    theme: {
+      primary: '#16a34a',
+      secondary: '#0f172a',
+      accent: '#22c55e',
+      background: '#f8fafc',
+      appName: 'Stock Control (Local)',
+    },
+    enabledModules: [
+      'inventario',
+      'productos',
+      'ventas',
+      'costos',
+      'ubicaciones',
+      'empaquetado',
+      'precios',
+      'usuarios',
+      'analytics',
+      'fotos',
+      'chatbot',
+    ],
+    settings: {
+      source: 'local-bypass',
+    },
+  }
+}
 
 async function fetchTenantConfig(
   tenantId: string,
@@ -60,6 +92,16 @@ export function TenantProvider({ children }: TenantProviderProps) {
           tenantConfig: null,
           isLoading: false,
           error: 'Unable to resolve tenant ID',
+        })
+        return
+      }
+
+      if (env.AUTH_BYPASS) {
+        setState({
+          tenantId: resolvedId,
+          tenantConfig: createLocalTenantConfig(resolvedId),
+          isLoading: false,
+          error: null,
         })
         return
       }
