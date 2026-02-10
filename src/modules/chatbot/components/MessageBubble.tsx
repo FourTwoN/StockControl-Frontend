@@ -51,9 +51,7 @@ function AssistantBubble({ message }: MessageBubbleProps) {
           </div>
         )}
 
-        {message.chartData && (
-          <ChartRenderer chartData={message.chartData} />
-        )}
+        {message.chartData && <ChartRenderer chartData={message.chartData} />}
       </div>
     </div>
   )

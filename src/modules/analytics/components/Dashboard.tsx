@@ -43,7 +43,10 @@ function KPISkeletonGrid() {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {Array.from({ length: 4 }).map((_, i) => (
-        <div key={`kpi-skeleton-${i}`} className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4">
+        <div
+          key={`kpi-skeleton-${i}`}
+          className="flex flex-col gap-2 rounded-lg border border-border bg-surface p-4"
+        >
           <Skeleton className="h-3 w-24" />
           <Skeleton className="h-8 w-32" />
           <Skeleton className="h-5 w-20" />
@@ -67,26 +70,17 @@ export function Dashboard() {
   const topProducts = useTopProducts()
   const occupancy = useOccupancy()
 
-  const handleFromChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setDateRange((prev) => ({ ...prev, from: e.target.value }))
-    },
-    [],
-  )
+  const handleFromChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateRange((prev) => ({ ...prev, from: e.target.value }))
+  }, [])
 
-  const handleToChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setDateRange((prev) => ({ ...prev, to: e.target.value }))
-    },
-    [],
-  )
+  const handleToChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateRange((prev) => ({ ...prev, to: e.target.value }))
+  }, [])
 
-  const handlePeriodChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSalesPeriod(e.target.value as SalesPeriod)
-    },
-    [],
-  )
+  const handlePeriodChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSalesPeriod(e.target.value as SalesPeriod)
+  }, [])
 
   const stockExportData = useMemo(
     () => toExportableStock(stockHistory.data ?? []),
@@ -99,10 +93,7 @@ export function Dashboard() {
   )
 
   const hasNoData =
-    !kpis.isLoading &&
-    !kpis.data?.length &&
-    !stockHistory.isLoading &&
-    !stockHistory.data?.length
+    !kpis.isLoading && !kpis.data?.length && !stockHistory.isLoading && !stockHistory.data?.length
 
   if (hasNoData) {
     return (
@@ -138,9 +129,7 @@ export function Dashboard() {
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            <span className="text-xs font-medium text-muted">
-              Sales Period
-            </span>
+            <span className="text-xs font-medium text-muted">Sales Period</span>
             <select
               value={salesPeriod}
               onChange={handlePeriodChange}
@@ -162,36 +151,26 @@ export function Dashboard() {
         <KPISkeletonGrid />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {kpis.data?.map((kpi) => <KPICard key={kpi.id} kpi={kpi} />)}
+          {kpis.data?.map((kpi) => (
+            <KPICard key={kpi.id} kpi={kpi} />
+          ))}
         </div>
       )}
 
       {/* Row 2: Stock Chart (span 2) + Occupancy */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <StockChart
-            data={stockHistory.data ?? []}
-            isLoading={stockHistory.isLoading}
-          />
+          <StockChart data={stockHistory.data ?? []} isLoading={stockHistory.isLoading} />
         </div>
-        <OccupancyWidget
-          data={occupancy.data ?? []}
-          isLoading={occupancy.isLoading}
-        />
+        <OccupancyWidget data={occupancy.data ?? []} isLoading={occupancy.isLoading} />
       </div>
 
       {/* Row 3: Sales Chart (span 2) + Top Products */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <SalesChart
-            data={salesSummary.data ?? []}
-            isLoading={salesSummary.isLoading}
-          />
+          <SalesChart data={salesSummary.data ?? []} isLoading={salesSummary.isLoading} />
         </div>
-        <TopProductsWidget
-          data={topProducts.data ?? []}
-          isLoading={topProducts.isLoading}
-        />
+        <TopProductsWidget data={topProducts.data ?? []} isLoading={topProducts.isLoading} />
       </div>
     </div>
   )

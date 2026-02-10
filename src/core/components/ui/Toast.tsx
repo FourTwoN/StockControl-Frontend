@@ -57,12 +57,10 @@ export function useToast() {
   return {
     success: (message: string, duration?: number) =>
       addToast({ type: 'success', message, duration }),
-    error: (message: string, duration?: number) =>
-      addToast({ type: 'error', message, duration }),
+    error: (message: string, duration?: number) => addToast({ type: 'error', message, duration }),
     warning: (message: string, duration?: number) =>
       addToast({ type: 'warning', message, duration }),
-    info: (message: string, duration?: number) =>
-      addToast({ type: 'info', message, duration }),
+    info: (message: string, duration?: number) => addToast({ type: 'info', message, duration }),
   }
 }
 
@@ -106,7 +104,7 @@ function ToastItem({ toast }: { readonly toast: Toast }) {
   return (
     <div
       className={[
-        'flex items-start gap-3 rounded-lg border p-4 shadow-lg backdrop-blur-sm transition-all animate-in fade-in slide-in-from-right-4',
+        'flex items-start gap-3 rounded-xl border p-4 shadow-[var(--shadow-lg)] backdrop-blur-sm animate-slide-in-right',
         config.className,
       ].join(' ')}
       role="alert"
@@ -116,7 +114,7 @@ function ToastItem({ toast }: { readonly toast: Toast }) {
       <button
         type="button"
         onClick={dismiss}
-        className="flex-shrink-0 rounded p-0.5 opacity-70 transition-opacity hover:opacity-100"
+        className="flex-shrink-0 rounded-full p-0.5 opacity-70 transition-opacity duration-200 hover:opacity-100"
         aria-label="Dismiss"
       >
         <X className="h-4 w-4" />

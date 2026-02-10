@@ -77,10 +77,5 @@ function resolveFromEnv(): string | null {
  * 4. Env variable — VITE_DEFAULT_TENANT_ID (development override)
  */
 export function resolveTenantId(jwtTenantId?: string | null): string | null {
-  return (
-    resolveFromSubdomain() ??
-    resolveFromPath() ??
-    jwtTenantId ??
-    resolveFromEnv()
-  )
+  return resolveFromSubdomain() ?? resolveFromPath() ?? jwtTenantId ?? resolveFromEnv()
 }

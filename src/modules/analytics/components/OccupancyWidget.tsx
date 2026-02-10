@@ -32,9 +32,7 @@ export function OccupancyWidget({ data, isLoading }: OccupancyWidgetProps) {
   if (isLoading) {
     return (
       <Card>
-        <h3 className="mb-4 text-sm font-semibold text-primary">
-          Warehouse Occupancy
-        </h3>
+        <h3 className="mb-4 text-sm font-semibold text-primary">Warehouse Occupancy</h3>
         <div className="flex flex-col gap-4">
           <Skeleton className="h-12 w-full" variant="rectangle" />
           <Skeleton className="h-12 w-full" variant="rectangle" />
@@ -46,16 +44,12 @@ export function OccupancyWidget({ data, isLoading }: OccupancyWidgetProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-primary">
-        Warehouse Occupancy
-      </h3>
+      <h3 className="mb-4 text-sm font-semibold text-primary">Warehouse Occupancy</h3>
       <div className="flex flex-col gap-4">
         {data.map((warehouse) => (
           <div key={warehouse.warehouseId} className="flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-primary">
-                {warehouse.warehouseName}
-              </span>
+              <span className="text-sm font-medium text-primary">{warehouse.warehouseName}</span>
               <span
                 className={[
                   'text-xs font-semibold',

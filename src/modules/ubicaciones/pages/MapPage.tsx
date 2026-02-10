@@ -67,12 +67,8 @@ export default function MapPage() {
                 <h3 className="text-sm font-semibold text-primary">{wh.name}</h3>
                 <p className="text-xs text-muted">{wh.address}</p>
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted">
-                    {wh.areaCount} areas
-                  </span>
-                  <span className="font-medium text-primary">
-                    {percent}% capacity
-                  </span>
+                  <span className="text-muted">{wh.areaCount} areas</span>
+                  <span className="font-medium text-primary">{percent}% capacity</span>
                 </div>
               </div>
             </Card>

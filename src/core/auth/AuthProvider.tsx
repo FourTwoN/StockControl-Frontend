@@ -1,11 +1,5 @@
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react'
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import env from '@core/config/env'
 import type { AuthUser } from '@core/auth/types'
 import { AuthContext } from '@core/auth/authContext'
@@ -109,18 +103,14 @@ function Auth0StateProvider({ children }: AuthStateProviderProps) {
 
   const roles = useMemo(() => {
     if (!auth0User) return []
-    const claimRoles = auth0User[`${CLAIMS_NAMESPACE}/roles`] as
-      | readonly UserRole[]
-      | undefined
+    const claimRoles = auth0User[`${CLAIMS_NAMESPACE}/roles`] as readonly UserRole[] | undefined
     return claimRoles ?? []
   }, [auth0User])
 
   const user = useMemo<AuthUser | null>(() => {
     if (!auth0User || !isAuthenticated) return null
 
-    const tenantId = auth0User[`${CLAIMS_NAMESPACE}/tenant_id`] as
-      | string
-      | undefined
+    const tenantId = auth0User[`${CLAIMS_NAMESPACE}/tenant_id`] as string | undefined
 
     return {
       id: auth0User.sub ?? '',

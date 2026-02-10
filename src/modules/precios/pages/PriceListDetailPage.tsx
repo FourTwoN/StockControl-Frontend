@@ -103,9 +103,7 @@ export default function PriceListDetailPage() {
                 {priceList.isActive ? 'Active' : 'Inactive'}
               </Badge>
             </div>
-            {priceList.description && (
-              <p className="text-sm text-muted">{priceList.description}</p>
-            )}
+            {priceList.description && <p className="text-sm text-muted">{priceList.description}</p>}
           </div>
         </div>
 
@@ -115,11 +113,7 @@ export default function PriceListDetailPage() {
         </Button>
       </div>
 
-      <PriceTable
-        items={items ?? []}
-        isLoading={isLoadingItems}
-        onUpdateItem={handleUpdateItem}
-      />
+      <PriceTable items={items ?? []} isLoading={isLoadingItems} onUpdateItem={handleUpdateItem} />
 
       <PriceUploadModal
         isOpen={isUploadOpen}

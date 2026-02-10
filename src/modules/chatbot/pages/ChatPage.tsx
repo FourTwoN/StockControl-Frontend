@@ -40,9 +40,7 @@ function SessionCard({
       <div className="flex items-start gap-3">
         <MessageSquare className="mt-0.5 h-4 w-4 shrink-0 text-muted" />
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-medium text-primary">
-            {session.title}
-          </p>
+          <p className="truncate text-sm font-medium text-primary">{session.title}</p>
           <div className="mt-1 flex items-center gap-2 text-xs text-muted">
             <span>{session.messageCount} messages</span>
             <span>{formattedDate}</span>
@@ -85,17 +83,8 @@ function SessionSidebar({
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between border-b border-border p-4">
         <h2 className="text-lg font-semibold text-primary">Chats</h2>
-        <Button
-          size="sm"
-          onClick={onNewChat}
-          disabled={isCreating}
-          aria-label="New chat"
-        >
-          {isCreating ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Plus className="h-4 w-4" />
-          )}
+        <Button size="sm" onClick={onNewChat} disabled={isCreating} aria-label="New chat">
+          {isCreating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
           New
         </Button>
       </div>
@@ -133,8 +122,8 @@ function EmptyChatPanel({ onNewChat }: { readonly onNewChat: () => void }) {
       </div>
       <h2 className="text-xl font-semibold text-primary">Demeter AI Chat</h2>
       <p className="max-w-md text-sm text-muted">
-        Ask questions about your inventory, get sales insights, or request data analysis.
-        Select an existing conversation or start a new one.
+        Ask questions about your inventory, get sales insights, or request data analysis. Select an
+        existing conversation or start a new one.
       </p>
       <Button onClick={onNewChat}>
         <Plus className="h-4 w-4" />
@@ -195,10 +184,9 @@ export function ChatPage() {
       </div>
 
       <div
-        className={[
-          'flex h-full flex-1 flex-col',
-          showSidebar ? 'hidden sm:flex' : 'flex',
-        ].join(' ')}
+        className={['flex h-full flex-1 flex-col', showSidebar ? 'hidden sm:flex' : 'flex'].join(
+          ' ',
+        )}
       >
         {/* Mobile back button */}
         <div className="flex items-center border-b border-border p-2 sm:hidden">

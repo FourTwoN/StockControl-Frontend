@@ -89,18 +89,9 @@ export function PackagingForm({
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(handleFormSubmit)}
-      className="flex flex-col gap-4"
-      noValidate
-    >
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-4" noValidate>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <FormField
-          name="sku"
-          control={control}
-          label="SKU"
-          placeholder="e.g. PKG-001"
-        />
+        <FormField name="sku" control={control} label="SKU" placeholder="e.g. PKG-001" />
 
         <FormField
           name="name"

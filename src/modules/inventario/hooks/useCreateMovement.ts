@@ -8,8 +8,7 @@ export function useCreateMovement() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: MovementRequest) =>
-      movementService.createMovement(data),
+    mutationFn: (data: MovementRequest) => movementService.createMovement(data),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [STOCK_BATCHES_QUERY_KEY] })
       void queryClient.invalidateQueries({ queryKey: [MOVEMENTS_QUERY_KEY] })

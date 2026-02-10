@@ -22,9 +22,5 @@ interface RoleBadgeProps {
 }
 
 export function RoleBadge({ role }: RoleBadgeProps) {
-  return (
-    <Badge variant={ROLE_BADGE_MAP[role]}>
-      {ROLE_LABELS[role]}
-    </Badge>
-  )
+  return <Badge variant={ROLE_BADGE_MAP[role]}>{ROLE_LABELS[role]}</Badge>
 }

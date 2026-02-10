@@ -14,11 +14,11 @@ export function MobileNav({ items }: MobileNavProps) {
 
   const isActive = useCallback(
     (path: string) => location.pathname === path || location.pathname.startsWith(`${path}/`),
-    [location.pathname]
+    [location.pathname],
   )
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 border-t border-border bg-surface md:hidden">
+    <nav className="glass fixed bottom-0 left-0 right-0 z-30 border-t border-border/50 shadow-[var(--shadow-md)] md:hidden">
       <ul className="flex items-center justify-around">
         {visibleItems.map((item) => {
           const active = isActive(item.path)
@@ -27,10 +27,14 @@ export function MobileNav({ items }: MobileNavProps) {
               <Link
                 to={item.path}
                 className={[
-                  'flex flex-col items-center gap-0.5 px-2 py-2 text-xs font-medium transition-colors',
+                  'relative flex flex-col items-center gap-0.5 px-2 py-2.5 text-xs font-medium transition-all duration-200',
                   active ? 'text-primary' : 'text-muted',
                 ].join(' ')}
               >
+                {/* Active indicator bar */}
+                {active && (
+                  <span className="absolute top-0 left-1/2 h-0.5 w-6 -translate-x-1/2 rounded-full bg-primary" />
+                )}
                 <span className="flex-shrink-0">{item.icon}</span>
                 <span className="truncate">{item.label}</span>
               </Link>

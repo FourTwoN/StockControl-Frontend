@@ -68,13 +68,9 @@ export function ProcessingProgress({ sessionId }: ProcessingProgressProps) {
               .filter(Boolean)
               .join(' ')}
           />
-          <span className="text-sm font-medium text-primary">
-            {STATUS_LABELS[status.status]}
-          </span>
+          <span className="text-sm font-medium text-primary">{STATUS_LABELS[status.status]}</span>
         </div>
-        <Badge variant={STATUS_BADGE_MAP[status.status]}>
-          {progress}%
-        </Badge>
+        <Badge variant={STATUS_BADGE_MAP[status.status]}>{progress}%</Badge>
       </div>
 
       <div className="flex flex-col gap-1">

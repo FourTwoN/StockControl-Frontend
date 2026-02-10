@@ -10,8 +10,10 @@ export function Card({ children, className, onClick }: CardProps) {
   return (
     <div
       className={[
-        'rounded-lg border border-border bg-surface p-4 shadow-sm',
-        onClick ? 'cursor-pointer transition-shadow hover:shadow-md' : '',
+        'rounded-xl border border-border/50 bg-surface p-4 shadow-[var(--shadow-sm)] transition-all duration-200',
+        onClick
+          ? 'cursor-pointer hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-primary/20'
+          : '',
         className,
       ]
         .filter(Boolean)

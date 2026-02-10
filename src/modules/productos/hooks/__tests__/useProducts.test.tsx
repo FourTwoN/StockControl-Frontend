@@ -23,30 +23,20 @@ function createWrapper(): ({ children }: WrapperProps) => ReactElement {
   const queryClient = createTestQueryClient()
 
   return function Wrapper({ children }: WrapperProps): ReactElement {
-    return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
-    )
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   }
 }
 
 describe('useProducts', () => {
   it('returns loading state initially', () => {
-    const { result } = renderHook(
-      () => useProducts(0, 20),
-      { wrapper: createWrapper() },
-    )
+    const { result } = renderHook(() => useProducts(0, 20), { wrapper: createWrapper() })
 
     expect(result.current.isLoading).toBe(true)
     expect(result.current.data).toBeUndefined()
   })
 
   it('fetches products successfully', async () => {
-    const { result } = renderHook(
-      () => useProducts(0, 20),
-      { wrapper: createWrapper() },
-    )
+    const { result } = renderHook(() => useProducts(0, 20), { wrapper: createWrapper() })
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true)
@@ -58,10 +48,7 @@ describe('useProducts', () => {
   })
 
   it('includes search parameter in query', async () => {
-    const { result } = renderHook(
-      () => useProducts(0, 20, 'rosa'),
-      { wrapper: createWrapper() },
-    )
+    const { result } = renderHook(() => useProducts(0, 20, 'rosa'), { wrapper: createWrapper() })
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true)
@@ -72,10 +59,7 @@ describe('useProducts', () => {
   })
 
   it('returns paged response structure', async () => {
-    const { result } = renderHook(
-      () => useProducts(0, 20),
-      { wrapper: createWrapper() },
-    )
+    const { result } = renderHook(() => useProducts(0, 20), { wrapper: createWrapper() })
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true)

@@ -50,14 +50,9 @@ function ChartTooltip({ active, payload, label }: CustomTooltipProps) {
       </p>
       {payload.map((entry) => (
         <div key={entry.name} className="flex items-center gap-2 text-sm">
-          <span
-            className="h-2.5 w-2.5 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
           <span className="text-muted">{entry.name}:</span>
-          <span className="font-medium text-primary">
-            {formatTooltipValue(entry.value)}
-          </span>
+          <span className="font-medium text-primary">{formatTooltipValue(entry.value)}</span>
         </div>
       ))}
     </div>
@@ -68,9 +63,7 @@ export function StockChart({ data, isLoading }: StockChartProps) {
   if (isLoading) {
     return (
       <Card>
-        <h3 className="mb-4 text-sm font-semibold text-primary">
-          Stock History
-        </h3>
+        <h3 className="mb-4 text-sm font-semibold text-primary">Stock History</h3>
         <Skeleton className="h-64 w-full" variant="rectangle" />
       </Card>
     )
@@ -78,9 +71,7 @@ export function StockChart({ data, isLoading }: StockChartProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-primary">
-        Stock History
-      </h3>
+      <h3 className="mb-4 text-sm font-semibold text-primary">Stock History</h3>
       <ResponsiveContainer width="100%" height={280}>
         <AreaChart data={[...data]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -89,10 +80,7 @@ export function StockChart({ data, isLoading }: StockChartProps) {
             tickFormatter={formatXAxisDate}
             tick={{ fontSize: 12, fill: '#6b7280' }}
           />
-          <YAxis
-            tickFormatter={formatTooltipValue}
-            tick={{ fontSize: 12, fill: '#6b7280' }}
-          />
+          <YAxis tickFormatter={formatTooltipValue} tick={{ fontSize: 12, fill: '#6b7280' }} />
           <Tooltip content={<ChartTooltip />} />
           <Area
             type="monotone"

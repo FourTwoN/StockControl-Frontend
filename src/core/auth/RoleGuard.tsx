@@ -8,11 +8,7 @@ interface RoleGuardProps {
   readonly fallback?: ReactNode
 }
 
-export function RoleGuard({
-  allowedRoles,
-  children,
-  fallback = null,
-}: RoleGuardProps) {
+export function RoleGuard({ allowedRoles, children, fallback = null }: RoleGuardProps) {
   const { roles } = useAuth()
 
   const hasRequiredRole = roles.some((role) => allowedRoles.includes(role))

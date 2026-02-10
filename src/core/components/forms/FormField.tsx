@@ -61,10 +61,7 @@ export function FormField<T extends FieldValues>({
         if (type === 'textarea') {
           return (
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor={name}
-                className="text-sm font-medium text-primary"
-              >
+              <label htmlFor={name} className="text-sm font-medium text-primary">
                 {label}
               </label>
               <textarea
@@ -81,12 +78,8 @@ export function FormField<T extends FieldValues>({
                 ref={field.ref}
                 name={field.name}
               />
-              {errorMessage && (
-                <p className="text-xs text-destructive">{errorMessage}</p>
-              )}
-              {!errorMessage && helperText && (
-                <p className="text-xs text-muted">{helperText}</p>
-              )}
+              {errorMessage && <p className="text-xs text-destructive">{errorMessage}</p>}
+              {!errorMessage && helperText && <p className="text-xs text-muted">{helperText}</p>}
             </div>
           )
         }

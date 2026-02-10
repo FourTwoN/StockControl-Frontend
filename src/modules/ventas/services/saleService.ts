@@ -23,14 +23,11 @@ export const saleService = {
       })
       .then((r) => r.data),
 
-  fetchSale: (id: string) =>
-    apiClient.get<Sale>(`/api/v1/sales/${id}`).then((r) => r.data),
+  fetchSale: (id: string) => apiClient.get<Sale>(`/api/v1/sales/${id}`).then((r) => r.data),
 
   createSale: (data: SaleFormData) =>
     apiClient.post<Sale>('/api/v1/sales', data).then((r) => r.data),
 
   updateSaleStatus: (id: string, status: Sale['status']) =>
-    apiClient
-      .put<Sale>(`/api/v1/sales/${id}/status`, { status })
-      .then((r) => r.data),
+    apiClient.put<Sale>(`/api/v1/sales/${id}/status`, { status }).then((r) => r.data),
 }

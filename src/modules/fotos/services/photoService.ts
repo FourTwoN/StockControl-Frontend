@@ -16,19 +16,13 @@ export const photoService = {
       .then((r) => r.data),
 
   fetchSession: (id: string) =>
-    apiClient
-      .get<PhotoSession>(`/api/v1/photos/sessions/${id}`)
-      .then((r) => r.data),
+    apiClient.get<PhotoSession>(`/api/v1/photos/sessions/${id}`).then((r) => r.data),
 
   createSession: (data: CreateSessionData) =>
-    apiClient
-      .post<PhotoSession>('/api/v1/photos/sessions', data)
-      .then((r) => r.data),
+    apiClient.post<PhotoSession>('/api/v1/photos/sessions', data).then((r) => r.data),
 
   fetchSessionImages: (sessionId: string) =>
-    apiClient
-      .get<S3Image[]>(`/api/v1/photos/sessions/${sessionId}/images`)
-      .then((r) => r.data),
+    apiClient.get<S3Image[]>(`/api/v1/photos/sessions/${sessionId}/images`).then((r) => r.data),
 
   uploadPhoto: (file: File) => {
     const formData = new FormData()

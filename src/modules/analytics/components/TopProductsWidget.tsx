@@ -53,9 +53,7 @@ function ChartTooltip({ active, payload }: CustomTooltipProps) {
   return (
     <div className="rounded-lg border border-border bg-surface p-3 shadow-md">
       <p className="mb-1 text-sm font-medium text-primary">{entry.name}</p>
-      <p className="text-xs text-muted">
-        Qty: {numberFormatter.format(entry.value)}
-      </p>
+      <p className="text-xs text-muted">Qty: {numberFormatter.format(entry.value)}</p>
       <p className="text-xs text-muted">
         Revenue: {currencyFormatter.format(entry.payload.totalRevenue)}
       </p>
@@ -70,9 +68,7 @@ export function TopProductsWidget({ data, isLoading }: TopProductsWidgetProps) {
   if (isLoading) {
     return (
       <Card>
-        <h3 className="mb-4 text-sm font-semibold text-primary">
-          Top Products
-        </h3>
+        <h3 className="mb-4 text-sm font-semibold text-primary">Top Products</h3>
         <Skeleton className="h-64 w-full" variant="rectangle" />
       </Card>
     )
@@ -94,10 +90,7 @@ export function TopProductsWidget({ data, isLoading }: TopProductsWidgetProps) {
             paddingAngle={2}
           >
             {data.map((_, index) => (
-              <Cell
-                key={`cell-${data[index].productId}`}
-                fill={COLORS[index % COLORS.length]}
-              />
+              <Cell key={`cell-${data[index].productId}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip content={<ChartTooltip />} />
@@ -105,10 +98,7 @@ export function TopProductsWidget({ data, isLoading }: TopProductsWidgetProps) {
       </ResponsiveContainer>
       <div className="mt-3 flex flex-wrap gap-2">
         {data.slice(0, 5).map((product, index) => (
-          <div
-            key={product.productId}
-            className="flex items-center gap-1.5 text-xs text-muted"
-          >
+          <div key={product.productId} className="flex items-center gap-1.5 text-xs text-muted">
             <span
               className="h-2.5 w-2.5 rounded-full"
               style={{ backgroundColor: COLORS[index % COLORS.length] }}

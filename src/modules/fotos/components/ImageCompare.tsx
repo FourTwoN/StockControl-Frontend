@@ -100,18 +100,10 @@ export function ImageCompare({ originalUrl, processedUrl }: ImageCompareProps) {
       tabIndex={0}
     >
       {/* Processed image (background) */}
-      <img
-        src={processedUrl}
-        alt="Processed"
-        className="block w-full"
-        draggable={false}
-      />
+      <img src={processedUrl} alt="Processed" className="block w-full" draggable={false} />
 
       {/* Original image (clipped overlay) */}
-      <div
-        className="absolute inset-0 overflow-hidden"
-        style={{ width: `${position}%` }}
-      >
+      <div className="absolute inset-0 overflow-hidden" style={{ width: `${position}%` }}>
         <img
           src={originalUrl}
           alt="Original"

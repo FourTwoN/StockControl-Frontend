@@ -31,7 +31,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
         onClose()
       }
     },
-    [onClose]
+    [onClose],
   )
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 transition-opacity"
+        className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-fade-in"
         onClick={onClose}
         role="button"
         tabIndex={0}
@@ -76,19 +76,19 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
         aria-modal="true"
         aria-labelledby="modal-title"
         className={[
-          'relative w-full animate-in fade-in slide-in-from-bottom-4 rounded-lg border border-border bg-surface shadow-xl',
+          'relative w-full rounded-xl border border-border/50 bg-surface shadow-[var(--shadow-xl)] animate-zoom-in',
           sizeClasses[size],
         ].join(' ')}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border px-6 py-4">
-          <h2 id="modal-title" className="text-lg font-semibold text-primary">
+        <div className="flex items-center justify-between border-b border-border/50 px-6 py-4">
+          <h2 id="modal-title" className="text-lg font-semibold text-text-primary">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg p-1.5 text-muted transition-colors hover:bg-background hover:text-primary"
+            className="rounded-full p-1.5 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary"
             aria-label="Close"
           >
             <X className="h-4 w-4" />
@@ -99,6 +99,6 @@ export function Modal({ isOpen, onClose, title, children, size = 'md' }: ModalPr
         <div className="px-6 py-4">{children}</div>
       </div>
     </div>,
-    document.body
+    document.body,
   )
 }

@@ -10,24 +10,15 @@ interface CategoryNodeProps {
   readonly depth?: number
 }
 
-function CategoryNode({
-  category,
-  selectedId,
-  onSelect,
-  depth = 0,
-}: CategoryNodeProps) {
+function CategoryNode({ category, selectedId, onSelect, depth = 0 }: CategoryNodeProps) {
   const [isExpanded, setIsExpanded] = useState(false)
-  const hasChildren =
-    category.children !== undefined && category.children.length > 0
+  const hasChildren = category.children !== undefined && category.children.length > 0
   const isSelected = selectedId === category.id
 
-  const handleToggle = useCallback(
-    (e: React.MouseEvent) => {
-      e.stopPropagation()
-      setIsExpanded((prev) => !prev)
-    },
-    [],
-  )
+  const handleToggle = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    setIsExpanded((prev) => !prev)
+  }, [])
 
   const handleSelect = useCallback(() => {
     onSelect(category)
@@ -109,21 +100,14 @@ export function CategoryTree({
     return (
       <div className="flex flex-col gap-2 p-3">
         {Array.from({ length: 5 }, (_, i) => (
-          <div
-            key={i}
-            className="h-9 animate-pulse rounded-lg bg-background"
-          />
+          <div key={i} className="h-9 animate-pulse rounded-lg bg-background" />
         ))}
       </div>
     )
   }
 
   if (categories.length === 0) {
-    return (
-      <p className="p-4 text-center text-sm text-muted">
-        No categories found
-      </p>
-    )
+    return <p className="p-4 text-center text-sm text-muted">No categories found</p>
   }
 
   return (

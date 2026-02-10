@@ -46,17 +46,11 @@ export function BinSelector({ bins, selectedBinId, onSelect }: BinSelectorProps)
             type="button"
             onClick={() => handleClick(bin)}
             disabled={bin.binType === 'disabled'}
-            title={
-              bin.currentBatchName
-                ? `${bin.name} - Batch: ${bin.currentBatchName}`
-                : bin.name
-            }
+            title={bin.currentBatchName ? `${bin.name} - Batch: ${bin.currentBatchName}` : bin.name}
             className={[
               'flex h-10 w-full items-center justify-center rounded text-xs font-medium text-white transition-colors',
               getBinColor(bin),
-              selectedBinId === bin.id
-                ? 'ring-2 ring-primary ring-offset-2'
-                : '',
+              selectedBinId === bin.id ? 'ring-2 ring-primary ring-offset-2' : '',
             ]
               .filter(Boolean)
               .join(' ')}

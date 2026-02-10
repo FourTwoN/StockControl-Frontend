@@ -12,9 +12,7 @@ interface FetchBatchesParams {
   readonly status?: string
 }
 
-async function fetchBatches(
-  params: FetchBatchesParams,
-): Promise<PagedResponse<StockBatch>> {
+async function fetchBatches(params: FetchBatchesParams): Promise<PagedResponse<StockBatch>> {
   const { page, size, productId, locationId, status } = params
   const queryParams: Record<string, string | number> = { page, size }
 

@@ -103,17 +103,10 @@ export function ChatWindow({ sessionId }: ChatWindowProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
-  const { data: messages, isLoading: isLoadingMessages } =
-    useChatMessages(sessionId)
+  const { data: messages, isLoading: isLoadingMessages } = useChatMessages(sessionId)
 
-  const {
-    sendMessage,
-    isStreaming,
-    streamedContent,
-    activeToolExecutions,
-    chartData,
-    error,
-  } = useSendMessage(sessionId)
+  const { sendMessage, isStreaming, streamedContent, activeToolExecutions, chartData, error } =
+    useSendMessage(sessionId)
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -145,24 +138,18 @@ export function ChatWindow({ sessionId }: ChatWindowProps) {
     [handleSubmit],
   )
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setInput(e.target.value)
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(e.target.value)
 
-      const textarea = e.target
-      textarea.style.height = 'auto'
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 120).toString()}px`
-    },
-    [],
-  )
+    const textarea = e.target
+    textarea.style.height = 'auto'
+    textarea.style.height = `${Math.min(textarea.scrollHeight, 120).toString()}px`
+  }, [])
 
   return (
     <div className="flex h-full flex-col">
       <div className="flex-1 overflow-y-auto">
-        <MessageList
-          messages={messages ?? []}
-          isLoading={isLoadingMessages}
-        />
+        <MessageList messages={messages ?? []} isLoading={isLoadingMessages} />
 
         {isStreaming && streamedContent.length > 0 && (
           <div className="px-4 pb-4">

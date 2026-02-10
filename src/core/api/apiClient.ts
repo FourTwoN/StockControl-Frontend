@@ -14,9 +14,7 @@ const apiClient = axios.create({
   },
 })
 
-function addAuthHeaders(
-  config: InternalAxiosRequestConfig,
-): InternalAxiosRequestConfig {
+function addAuthHeaders(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
   const token = localStorage.getItem(AUTH_TOKEN_KEY)
   const tenantId = localStorage.getItem(TENANT_ID_KEY)
 
@@ -57,35 +55,23 @@ function handleErrorResponse(error: AxiosError<ApiError>): Promise<never> {
 
   if (status === 401) {
     handleUnauthorized()
-    return Promise.reject(
-      buildApiError(401, 'Session expired. Redirecting to login.'),
-    )
+    return Promise.reject(buildApiError(401, 'Session expired. Redirecting to login.'))
   }
 
   if (status === 403) {
-    console.error(
-      '[API] Forbidden:',
-      error.response?.data?.message ?? 'Access denied',
-    )
-    return Promise.reject(
-      error.response?.data ?? buildApiError(403, 'Access denied.'),
-    )
+    console.error('[API] Forbidden:', error.response?.data?.message ?? 'Access denied')
+    return Promise.reject(error.response?.data ?? buildApiError(403, 'Access denied.'))
   }
 
   if (status >= 500) {
-    console.error(
-      '[API] Server error:',
-      error.response?.data?.message ?? 'Internal server error',
-    )
+    console.error('[API] Server error:', error.response?.data?.message ?? 'Internal server error')
     return Promise.reject(
-      error.response?.data ??
-        buildApiError(status, 'An unexpected server error occurred.'),
+      error.response?.data ?? buildApiError(status, 'An unexpected server error occurred.'),
     )
   }
 
   return Promise.reject(
-    error.response?.data ??
-      buildApiError(status, error.message || 'An unexpected error occurred.'),
+    error.response?.data ?? buildApiError(status, error.message || 'An unexpected error occurred.'),
   )
 }
 

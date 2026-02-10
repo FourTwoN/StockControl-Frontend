@@ -99,16 +99,10 @@ export function ProductsPage() {
     <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Products</h1>
-        <p className="mt-1 text-sm text-muted">
-          Manage your product catalog
-        </p>
+        <p className="mt-1 text-sm text-muted">Manage your product catalog</p>
       </div>
 
-      <ProductList
-        onCreate={handleCreate}
-        onEdit={handleEdit}
-        onDelete={handleDeleteRequest}
-      />
+      <ProductList onCreate={handleCreate} onEdit={handleEdit} onDelete={handleDeleteRequest} />
 
       <Modal
         isOpen={modal.isOpen}

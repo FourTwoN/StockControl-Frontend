@@ -55,9 +55,7 @@ export function UserTable({ onEdit, onDelete }: UserTableProps) {
       {
         key: 'email' as const,
         header: 'Email',
-        render: (value) => (
-          <span className="text-sm text-muted">{value as string}</span>
-        ),
+        render: (value) => <span className="text-sm text-muted">{value as string}</span>,
       },
       {
         key: 'role' as const,
@@ -78,9 +76,7 @@ export function UserTable({ onEdit, onDelete }: UserTableProps) {
         header: 'Last Login',
         render: (value) => (
           <span className="text-sm text-muted">
-            {value
-              ? format(new Date(value as string), 'dd/MM/yyyy HH:mm')
-              : 'Never'}
+            {value ? format(new Date(value as string), 'dd/MM/yyyy HH:mm') : 'Never'}
           </span>
         ),
       },

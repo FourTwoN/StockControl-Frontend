@@ -11,8 +11,7 @@ export function useUpdateProduct() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ id, data }: UpdateProductArgs) =>
-      productService.updateProduct(id, data),
+    mutationFn: ({ id, data }: UpdateProductArgs) => productService.updateProduct(id, data),
     onSuccess: (_result, variables) => {
       void queryClient.invalidateQueries({ queryKey: ['products'] })
       void queryClient.invalidateQueries({

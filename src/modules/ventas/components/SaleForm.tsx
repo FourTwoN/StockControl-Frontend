@@ -23,11 +23,7 @@ function formatCurrency(amount: number): string {
   }).format(amount)
 }
 
-function calculateSubtotal(
-  quantity: number,
-  unitPrice: number,
-  discount: number,
-): number {
+function calculateSubtotal(quantity: number, unitPrice: number, discount: number): number {
   const discountMultiplier = 1 - discount / 100
   return quantity * unitPrice * discountMultiplier
 }
@@ -55,8 +51,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
   const totalAmount = useMemo(
     () =>
       watchedItems.reduce(
-        (sum, item) =>
-          sum + calculateSubtotal(item.quantity, item.unitPrice, item.discount),
+        (sum, item) => sum + calculateSubtotal(item.quantity, item.unitPrice, item.discount),
         0,
       ),
     [watchedItems],
@@ -64,9 +59,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
 
   const handleAddProduct = useCallback(
     (product: { id: string; name: string; sku: string }) => {
-      const existingIndex = watchedItems.findIndex(
-        (item) => item.productId === product.id,
-      )
+      const existingIndex = watchedItems.findIndex((item) => item.productId === product.id)
 
       if (existingIndex >= 0) {
         const existing = watchedItems[existingIndex]
@@ -93,9 +86,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-primary">
-          Add Products
-        </h3>
+        <h3 className="mb-4 text-lg font-semibold text-primary">Add Products</h3>
         <div className="relative">
           <SearchInput
             value={productSearch}
@@ -121,12 +112,8 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
                           })
                         }
                       >
-                        <span className="font-medium text-primary">
-                          {product.name}
-                        </span>
-                        <span className="text-xs text-muted">
-                          {product.sku}
-                        </span>
+                        <span className="font-medium text-primary">{product.name}</span>
+                        <span className="text-xs text-muted">{product.sku}</span>
                       </button>
                     </li>
                   ))}
@@ -138,9 +125,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
       </Card>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-primary">
-          Sale Items
-        </h3>
+        <h3 className="mb-4 text-lg font-semibold text-primary">Sale Items</h3>
         {fields.length === 0 ? (
           <EmptyState
             icon={<ShoppingCart className="h-8 w-8" />}
@@ -161,11 +146,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
             {fields.map((field, index) => {
               const item = watchedItems[index]
               const subtotal = item
-                ? calculateSubtotal(
-                    item.quantity,
-                    item.unitPrice,
-                    item.discount,
-                  )
+                ? calculateSubtotal(item.quantity, item.unitPrice, item.discount)
                 : 0
 
               return (
@@ -174,20 +155,12 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
                   className="grid grid-cols-2 gap-2 rounded-lg border border-border p-3 sm:grid-cols-12 sm:items-center sm:border-0 sm:p-0"
                 >
                   <div className="col-span-2 sm:col-span-3">
-                    <span className="text-xs text-muted sm:hidden">
-                      Product:{' '}
-                    </span>
-                    <span className="text-sm font-medium text-primary">
-                      {field.productName}
-                    </span>
+                    <span className="text-xs text-muted sm:hidden">Product: </span>
+                    <span className="text-sm font-medium text-primary">{field.productName}</span>
                   </div>
                   <div className="col-span-2 sm:col-span-2">
-                    <span className="text-xs text-muted sm:hidden">
-                      SKU:{' '}
-                    </span>
-                    <span className="text-sm text-muted">
-                      {field.productSku}
-                    </span>
+                    <span className="text-xs text-muted sm:hidden">SKU: </span>
+                    <span className="text-sm text-muted">{field.productSku}</span>
                   </div>
                   <div className="sm:col-span-2">
                     <FormField<SaleFormData>
@@ -249,9 +222,7 @@ export function SaleForm({ onSubmit, isSubmitting = false }: SaleFormProps) {
       </Card>
 
       <Card>
-        <h3 className="mb-4 text-lg font-semibold text-primary">
-          Additional Information
-        </h3>
+        <h3 className="mb-4 text-lg font-semibold text-primary">Additional Information</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField<SaleFormData>
             name="customerName"

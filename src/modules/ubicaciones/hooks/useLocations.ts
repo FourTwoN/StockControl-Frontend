@@ -7,10 +7,12 @@ export const locationKeys = {
     ['locations', params] as const,
 } as const
 
-export function useLocations(params: {
-  readonly warehouseId?: string
-  readonly areaId?: string
-} = {}) {
+export function useLocations(
+  params: {
+    readonly warehouseId?: string
+    readonly areaId?: string
+  } = {},
+) {
   return useQuery({
     queryKey: locationKeys.filtered(params),
     queryFn: () => locationService.getLocations(params),

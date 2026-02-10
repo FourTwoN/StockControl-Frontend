@@ -71,9 +71,7 @@ export function ProductList({ onEdit, onDelete, onCreate }: ProductListProps) {
         key: 'state' as const,
         header: 'State',
         render: (_value, row) => (
-          <Badge variant={STATE_BADGE_MAP[row.state]}>
-            {STATE_LABELS[row.state]}
-          </Badge>
+          <Badge variant={STATE_BADGE_MAP[row.state]}>{STATE_LABELS[row.state]}</Badge>
         ),
       },
       {

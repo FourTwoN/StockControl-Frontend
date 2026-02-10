@@ -51,21 +51,14 @@ export function SessionCard({ session }: SessionCardProps) {
     <Card onClick={handleClick} className="flex flex-col gap-3">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-sm font-semibold text-primary">
-            {session.name}
-          </h3>
+          <h3 className="truncate text-sm font-semibold text-primary">{session.name}</h3>
           {session.description && (
-            <p className="mt-0.5 line-clamp-2 text-xs text-muted">
-              {session.description}
-            </p>
+            <p className="mt-0.5 line-clamp-2 text-xs text-muted">{session.description}</p>
           )}
         </div>
         <Badge variant={STATUS_BADGE_MAP[session.status]}>
           <StatusIcon
-            className={[
-              'mr-1 h-3 w-3',
-              session.status === 'PROCESSING' ? 'animate-spin' : '',
-            ]
+            className={['mr-1 h-3 w-3', session.status === 'PROCESSING' ? 'animate-spin' : '']
               .filter(Boolean)
               .join(' ')}
           />

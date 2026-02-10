@@ -12,10 +12,9 @@ describe('useDebounce', () => {
   it('does not update the debounced value before the delay', () => {
     vi.useFakeTimers()
 
-    const { result, rerender } = renderHook(
-      ({ value, delay }) => useDebounce(value, delay),
-      { initialProps: { value: 'hello', delay: 500 } },
-    )
+    const { result, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+      initialProps: { value: 'hello', delay: 500 },
+    })
 
     rerender({ value: 'world', delay: 500 })
 
@@ -32,10 +31,9 @@ describe('useDebounce', () => {
   it('updates the debounced value after the delay', () => {
     vi.useFakeTimers()
 
-    const { result, rerender } = renderHook(
-      ({ value, delay }) => useDebounce(value, delay),
-      { initialProps: { value: 'hello', delay: 500 } },
-    )
+    const { result, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+      initialProps: { value: 'hello', delay: 500 },
+    })
 
     rerender({ value: 'world', delay: 500 })
 
@@ -52,10 +50,9 @@ describe('useDebounce', () => {
     vi.useFakeTimers()
     const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout')
 
-    const { unmount, rerender } = renderHook(
-      ({ value, delay }) => useDebounce(value, delay),
-      { initialProps: { value: 'hello', delay: 500 } },
-    )
+    const { unmount, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+      initialProps: { value: 'hello', delay: 500 },
+    })
 
     rerender({ value: 'world', delay: 500 })
     unmount()
@@ -69,10 +66,9 @@ describe('useDebounce', () => {
   it('resets the timer when value changes rapidly', () => {
     vi.useFakeTimers()
 
-    const { result, rerender } = renderHook(
-      ({ value, delay }) => useDebounce(value, delay),
-      { initialProps: { value: 'a', delay: 300 } },
-    )
+    const { result, rerender } = renderHook(({ value, delay }) => useDebounce(value, delay), {
+      initialProps: { value: 'a', delay: 300 },
+    })
 
     rerender({ value: 'ab', delay: 300 })
     act(() => {

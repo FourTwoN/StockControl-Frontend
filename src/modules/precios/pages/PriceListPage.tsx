@@ -108,11 +108,7 @@ export default function PriceListPage() {
         </Button>
       </div>
 
-      <SearchInput
-        value={search}
-        onChange={setSearch}
-        placeholder="Search price lists..."
-      />
+      <SearchInput value={search} onChange={setSearch} placeholder="Search price lists..." />
 
       {priceLists.length === 0 ? (
         <EmptyState
@@ -143,11 +139,7 @@ export default function PriceListPage() {
       {/* Create Price List Modal */}
       <Modal isOpen={isCreateOpen} onClose={handleCloseModal} title="Create Price List">
         <form onSubmit={handleSubmit(handleCreate)} className="space-y-4">
-          <Input
-            label="Name"
-            {...register('name')}
-            error={errors.name?.message}
-          />
+          <Input label="Name" {...register('name')} error={errors.name?.message} />
           <Input
             label="Description"
             {...register('description')}
@@ -165,11 +157,7 @@ export default function PriceListPage() {
             {...register('effectiveTo')}
             error={errors.effectiveTo?.message}
           />
-          <Input
-            label="Currency"
-            {...register('currency')}
-            error={errors.currency?.message}
-          />
+          <Input label="Currency" {...register('currency')} error={errors.currency?.message} />
           <div className="flex items-center gap-2">
             <input
               type="checkbox"

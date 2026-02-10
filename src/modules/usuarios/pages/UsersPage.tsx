@@ -103,9 +103,7 @@ export function UsersPage() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-primary">Users</h1>
-          <p className="mt-1 text-sm text-muted">
-            Manage user accounts and roles
-          </p>
+          <p className="mt-1 text-sm text-muted">Manage user accounts and roles</p>
         </div>
         <RoleGuard allowedRoles={['ADMIN']}>
           <Button onClick={handleCreate}>

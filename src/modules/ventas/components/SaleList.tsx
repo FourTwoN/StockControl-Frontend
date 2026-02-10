@@ -109,17 +109,13 @@ export function SaleList({ onCreate }: SaleListProps) {
         key: 'customerName' as const,
         header: 'Customer',
         render: (value) => (
-          <span className="text-sm text-primary">
-            {(value as string) || 'Walk-in'}
-          </span>
+          <span className="text-sm text-primary">{(value as string) || 'Walk-in'}</span>
         ),
       },
       {
         key: 'items' as const,
         header: 'Items',
-        render: (_value, row) => (
-          <span className="text-sm text-muted">{row.items.length}</span>
-        ),
+        render: (_value, row) => <span className="text-sm text-muted">{row.items.length}</span>,
       },
       {
         key: 'totalAmount' as const,
@@ -134,9 +130,7 @@ export function SaleList({ onCreate }: SaleListProps) {
         key: 'status' as const,
         header: 'Status',
         render: (_value, row) => (
-          <Badge variant={STATUS_BADGE_MAP[row.status]}>
-            {STATUS_LABELS[row.status]}
-          </Badge>
+          <Badge variant={STATUS_BADGE_MAP[row.status]}>{STATUS_LABELS[row.status]}</Badge>
         ),
       },
       {
@@ -175,9 +169,7 @@ export function SaleList({ onCreate }: SaleListProps) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
           <div className="w-full sm:w-40">
-            <label className="mb-1 block text-xs font-medium text-muted">
-              Status
-            </label>
+            <label className="mb-1 block text-xs font-medium text-muted">Status</label>
             <Select
               value={statusFilter}
               onChange={handleStatusChange}
@@ -185,15 +177,11 @@ export function SaleList({ onCreate }: SaleListProps) {
             />
           </div>
           <div className="w-full sm:w-40">
-            <label className="mb-1 block text-xs font-medium text-muted">
-              From
-            </label>
+            <label className="mb-1 block text-xs font-medium text-muted">From</label>
             <Input type="date" value={dateFrom} onChange={handleDateFromChange} />
           </div>
           <div className="w-full sm:w-40">
-            <label className="mb-1 block text-xs font-medium text-muted">
-              To
-            </label>
+            <label className="mb-1 block text-xs font-medium text-muted">To</label>
             <Input type="date" value={dateTo} onChange={handleDateToChange} />
           </div>
         </div>

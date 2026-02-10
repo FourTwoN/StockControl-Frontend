@@ -36,10 +36,7 @@ function createLocalTenantConfig(tenantId: string): TenantConfig {
   }
 }
 
-async function fetchTenantConfig(
-  tenantId: string,
-  signal: AbortSignal
-): Promise<TenantConfig> {
+async function fetchTenantConfig(tenantId: string, signal: AbortSignal): Promise<TenantConfig> {
   const url = `${env.API_URL}/api/v1/tenants/${encodeURIComponent(tenantId)}/config`
 
   const response = await fetch(url, {
@@ -49,9 +46,7 @@ async function fetchTenantConfig(
   })
 
   if (!response.ok) {
-    throw new Error(
-      `Failed to fetch tenant config: ${response.status} ${response.statusText}`
-    )
+    throw new Error(`Failed to fetch tenant config: ${response.status} ${response.statusText}`)
   }
 
   const data: unknown = await response.json()
@@ -100,10 +95,7 @@ export function TenantProvider({ children }: TenantProviderProps) {
       setState((prev) => ({ ...prev, tenantId: resolvedId, isLoading: true }))
 
       try {
-        const config = await fetchTenantConfig(
-          resolvedId,
-          abortController.signal
-        )
+        const config = await fetchTenantConfig(resolvedId, abortController.signal)
         setState({
           tenantId: resolvedId,
           tenantConfig: config,
@@ -114,8 +106,7 @@ export function TenantProvider({ children }: TenantProviderProps) {
         if (abortController.signal.aborted) {
           return
         }
-        const message =
-          err instanceof Error ? err.message : 'Failed to load tenant config'
+        const message = err instanceof Error ? err.message : 'Failed to load tenant config'
         setState({
           tenantId: resolvedId,
           tenantConfig: null,
@@ -136,9 +127,7 @@ export function TenantProvider({ children }: TenantProviderProps) {
     return <div data-testid="tenant-loading">Loading tenant...</div>
   }
 
-  return (
-    <TenantContext.Provider value={state}>{children}</TenantContext.Provider>
-  )
+  return <TenantContext.Provider value={state}>{children}</TenantContext.Provider>
 }
 
 export function useTenantContext(): TenantContextValue {

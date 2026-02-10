@@ -1,5 +1,12 @@
 import { apiClient } from '@core/api/apiClient'
-import type { DashboardData, StockHistoryPoint, SalesSummaryPoint, TopProduct, WarehouseOccupancy, KPI } from '../types/Analytics.ts'
+import type {
+  DashboardData,
+  StockHistoryPoint,
+  SalesSummaryPoint,
+  TopProduct,
+  WarehouseOccupancy,
+  KPI,
+} from '../types/Analytics.ts'
 
 interface StockHistoryParams {
   readonly from: string
@@ -16,9 +23,7 @@ interface TopProductsParams {
 
 export const analyticsService = {
   fetchDashboard: () =>
-    apiClient
-      .get<DashboardData>('/api/v1/analytics/dashboard')
-      .then((r) => r.data),
+    apiClient.get<DashboardData>('/api/v1/analytics/dashboard').then((r) => r.data),
 
   fetchStockHistory: (params: StockHistoryParams) =>
     apiClient
@@ -42,12 +47,7 @@ export const analyticsService = {
       .then((r) => r.data),
 
   fetchOccupancy: () =>
-    apiClient
-      .get<WarehouseOccupancy[]>('/api/v1/analytics/occupancy')
-      .then((r) => r.data),
+    apiClient.get<WarehouseOccupancy[]>('/api/v1/analytics/occupancy').then((r) => r.data),
 
-  fetchKPIs: () =>
-    apiClient
-      .get<KPI[]>('/api/v1/analytics/kpis')
-      .then((r) => r.data),
+  fetchKPIs: () => apiClient.get<KPI[]>('/api/v1/analytics/kpis').then((r) => r.data),
 }

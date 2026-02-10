@@ -74,12 +74,15 @@ export function DataTable<T>({
   // Loading skeleton
   if (isLoading) {
     return (
-      <div className="overflow-x-auto rounded-lg border border-border">
+      <div className="overflow-x-auto rounded-xl border border-border/50 shadow-[var(--shadow-sm)]">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-border bg-background">
+            <tr className="border-b border-border/50 bg-surface-hover">
               {columns.map((col) => (
-                <th key={col.key} className="px-4 py-3 text-left text-xs font-medium uppercase text-muted">
+                <th
+                  key={col.key}
+                  className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted"
+                >
                   {col.header}
                 </th>
               ))}
@@ -87,7 +90,7 @@ export function DataTable<T>({
           </thead>
           <tbody>
             {Array.from({ length: 5 }, (_, i) => (
-              <tr key={i} className="border-b border-border last:border-b-0">
+              <tr key={i} className="border-b border-border/30 last:border-b-0">
                 {columns.map((col) => (
                   <td key={col.key} className="px-4 py-3">
                     <Skeleton className="h-4 w-3/4" />
@@ -104,7 +107,7 @@ export function DataTable<T>({
   // Empty state
   if (data.length === 0) {
     return (
-      <div className="rounded-lg border border-border">
+      <div className="rounded-xl border border-border/50 shadow-[var(--shadow-sm)]">
         <EmptyState
           icon={<Inbox className="h-8 w-8" />}
           title="No results"
@@ -115,26 +118,31 @@ export function DataTable<T>({
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border">
+    <div className="overflow-x-auto rounded-xl border border-border/50 shadow-[var(--shadow-sm)]">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-border bg-background">
+          <tr className="border-b border-border/50 bg-surface-hover">
             {columns.map((col) => (
               <th
                 key={col.key}
                 className={[
-                  'px-4 py-3 text-left text-xs font-medium uppercase text-muted',
-                  col.sortable ? 'cursor-pointer select-none hover:text-primary' : '',
+                  'px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-muted',
+                  col.sortable
+                    ? 'cursor-pointer select-none transition-colors duration-200 hover:text-text-primary'
+                    : '',
+                  sort?.column === col.key ? 'text-primary' : '',
                 ].join(' ')}
                 onClick={col.sortable ? () => handleSort(col.key) : undefined}
               >
                 <span className="inline-flex items-center gap-1">
                   {col.header}
-                  {col.sortable && sort?.column === col.key && (
-                    sort.direction === 'asc'
-                      ? <ChevronUp className="h-3 w-3" />
-                      : <ChevronDown className="h-3 w-3" />
-                  )}
+                  {col.sortable &&
+                    sort?.column === col.key &&
+                    (sort.direction === 'asc' ? (
+                      <ChevronUp className="h-3 w-3" />
+                    ) : (
+                      <ChevronDown className="h-3 w-3" />
+                    ))}
                 </span>
               </th>
             ))}
@@ -145,16 +153,14 @@ export function DataTable<T>({
             <tr
               key={keyExtractor(row)}
               className={[
-                'border-b border-border last:border-b-0 transition-colors',
-                onRowClick ? 'cursor-pointer hover:bg-background' : '',
+                'border-b border-border/30 last:border-b-0 transition-colors duration-150',
+                onRowClick ? 'cursor-pointer hover:bg-primary/[0.03]' : '',
               ].join(' ')}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((col) => (
-                <td key={col.key} className="px-4 py-3 text-sm text-primary">
-                  {col.render
-                    ? col.render(row[col.key], row)
-                    : String(row[col.key] ?? '')}
+                <td key={col.key} className="px-4 py-3 text-sm text-text-primary">
+                  {col.render ? col.render(row[col.key], row) : String(row[col.key] ?? '')}
                 </td>
               ))}
             </tr>
@@ -164,7 +170,7 @@ export function DataTable<T>({
 
       {/* Pagination */}
       {pagination && pagination.totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-border px-4 py-3">
+        <div className="flex items-center justify-between border-t border-border/50 px-4 py-3">
           <p className="text-xs text-muted">
             Page {pagination.page} of {pagination.totalPages}
           </p>
@@ -173,7 +179,7 @@ export function DataTable<T>({
               type="button"
               disabled={pagination.page <= 1}
               onClick={() => pagination.onPageChange(pagination.page - 1)}
-              className="rounded-lg p-1.5 text-muted transition-colors hover:bg-background hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+              className="rounded-lg p-1.5 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary disabled:pointer-events-none disabled:opacity-50"
               aria-label="Previous page"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -182,7 +188,7 @@ export function DataTable<T>({
               type="button"
               disabled={pagination.page >= pagination.totalPages}
               onClick={() => pagination.onPageChange(pagination.page + 1)}
-              className="rounded-lg p-1.5 text-muted transition-colors hover:bg-background hover:text-primary disabled:pointer-events-none disabled:opacity-50"
+              className="rounded-lg p-1.5 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary disabled:pointer-events-none disabled:opacity-50"
               aria-label="Next page"
             >
               <ChevronRight className="h-4 w-4" />

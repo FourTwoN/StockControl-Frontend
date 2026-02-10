@@ -143,9 +143,7 @@ export function EmpaquetadoPage() {
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-primary">Packaging</h1>
-          <p className="mt-1 text-sm text-muted">
-            Manage your packaging catalog
-          </p>
+          <p className="mt-1 text-sm text-muted">Manage your packaging catalog</p>
         </div>
         <Button onClick={handleCreate}>
           <Plus className="h-4 w-4" />

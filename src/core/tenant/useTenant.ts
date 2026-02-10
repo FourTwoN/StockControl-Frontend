@@ -15,7 +15,7 @@ export function useTenant(): UseTenantReturn {
 
   if (!context.tenantId || !context.tenantConfig) {
     throw new Error(
-      'Tenant not loaded. Ensure TenantProvider has resolved a tenant before using useTenant.'
+      'Tenant not loaded. Ensure TenantProvider has resolved a tenant before using useTenant.',
     )
   }
 

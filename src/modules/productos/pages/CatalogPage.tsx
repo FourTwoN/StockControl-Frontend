@@ -34,11 +34,7 @@ export function CatalogPage() {
 
   const { data: categories, isLoading: categoriesLoading } = useCategories()
   const { data: families, isLoading: familiesLoading } = useFamilies()
-  const { data: productsData, isLoading: productsLoading } = useProducts(
-    page,
-    50,
-    undefined,
-  )
+  const { data: productsData, isLoading: productsLoading } = useProducts(page, 50, undefined)
 
   const handleCategorySelect = useCallback((category: Category) => {
     setFilters((prev) => ({
@@ -54,16 +50,13 @@ export function CatalogPage() {
     }))
   }, [])
 
-  const handleMobileCategoryChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const value = e.target.value
-      setFilters((prev) => ({
-        ...prev,
-        categoryId: value || undefined,
-      }))
-    },
-    [],
-  )
+  const handleMobileCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    setFilters((prev) => ({
+      ...prev,
+      categoryId: value || undefined,
+    }))
+  }, [])
 
   const categoryOptions = useMemo(() => {
     if (!categories) return []
@@ -101,9 +94,7 @@ export function CatalogPage() {
     <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Product Catalog</h1>
-        <p className="mt-1 text-sm text-muted">
-          Browse products by category and family
-        </p>
+        <p className="mt-1 text-sm text-muted">Browse products by category and family</p>
       </div>
 
       {/* Mobile: category dropdown */}
@@ -142,9 +133,7 @@ export function CatalogPage() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={() =>
-                    setFilters((prev) => ({ ...prev, familyId: undefined }))
-                  }
+                  onClick={() => setFilters((prev) => ({ ...prev, familyId: undefined }))}
                 >
                   Clear family filter
                 </Button>
@@ -168,11 +157,7 @@ export function CatalogPage() {
                 </span>
               </h2>
               {(filters.categoryId || filters.familyId) && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setFilters({})}
-                >
+                <Button variant="ghost" size="sm" onClick={() => setFilters({})}>
                   Clear all filters
                 </Button>
               )}
@@ -181,11 +166,7 @@ export function CatalogPage() {
             {productsLoading ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {Array.from({ length: 6 }, (_, i) => (
-                  <Skeleton
-                    key={i}
-                    className="h-32 rounded-lg"
-                    variant="rectangle"
-                  />
+                  <Skeleton key={i} className="h-32 rounded-lg" variant="rectangle" />
                 ))}
               </div>
             ) : filteredProducts.length === 0 ? (
@@ -206,9 +187,7 @@ export function CatalogPage() {
                         <h3 className="truncate text-sm font-semibold text-primary">
                           {product.name}
                         </h3>
-                        <p className="mt-0.5 text-xs text-muted">
-                          SKU: {product.sku}
-                        </p>
+                        <p className="mt-0.5 text-xs text-muted">SKU: {product.sku}</p>
                       </div>
                       <Badge
                         variant={
@@ -222,9 +201,7 @@ export function CatalogPage() {
                         {product.state}
                       </Badge>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-xs text-muted">
-                      {product.description}
-                    </p>
+                    <p className="mt-2 line-clamp-2 text-xs text-muted">{product.description}</p>
                     <div className="mt-3 flex items-center gap-2">
                       <Badge variant="outline">{product.categoryName}</Badge>
                       <Badge variant="outline">{product.familyName}</Badge>

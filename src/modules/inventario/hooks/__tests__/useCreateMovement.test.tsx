@@ -29,11 +29,7 @@ function createWrapper(): {
   const queryClient = createTestQueryClient()
 
   function Wrapper({ children }: WrapperProps): ReactElement {
-    return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
-    )
+    return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   }
 
   return { wrapper: Wrapper, queryClient }
@@ -43,10 +39,7 @@ describe('useCreateMovement', () => {
   it('creates a movement successfully', async () => {
     const { wrapper } = createWrapper()
 
-    const { result } = renderHook(
-      () => useCreateMovement(),
-      { wrapper },
-    )
+    const { result } = renderHook(() => useCreateMovement(), { wrapper })
 
     await act(async () => {
       result.current.mutate({
@@ -74,10 +67,7 @@ describe('useCreateMovement', () => {
 
     const invalidateSpy = vi.spyOn(queryClient, 'invalidateQueries')
 
-    const { result } = renderHook(
-      () => useCreateMovement(),
-      { wrapper },
-    )
+    const { result } = renderHook(() => useCreateMovement(), { wrapper })
 
     await act(async () => {
       result.current.mutate({
@@ -105,10 +95,7 @@ describe('useCreateMovement', () => {
     // This test verifies the hook's error handling structure
     const { wrapper } = createWrapper()
 
-    const { result } = renderHook(
-      () => useCreateMovement(),
-      { wrapper },
-    )
+    const { result } = renderHook(() => useCreateMovement(), { wrapper })
 
     expect(result.current.isIdle).toBe(true)
     expect(result.current.isError).toBe(false)

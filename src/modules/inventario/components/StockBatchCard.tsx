@@ -10,9 +10,7 @@ interface StockBatchCardProps {
 
 export function StockBatchCard({ batch, onClick }: StockBatchCardProps) {
   const quantityPercentage =
-    batch.initialQuantity > 0
-      ? Math.round((batch.quantity / batch.initialQuantity) * 100)
-      : 0
+    batch.initialQuantity > 0 ? Math.round((batch.quantity / batch.initialQuantity) * 100) : 0
 
   return (
     <Card onClick={onClick} className={onClick ? 'cursor-pointer' : ''}>
@@ -27,9 +25,7 @@ export function StockBatchCard({ batch, onClick }: StockBatchCardProps) {
 
         {/* Product info */}
         <div className="min-w-0">
-          <h3 className="truncate text-sm font-semibold text-primary">
-            {batch.productName}
-          </h3>
+          <h3 className="truncate text-sm font-semibold text-primary">{batch.productName}</h3>
           <p className="mt-0.5 text-xs text-muted">SKU: {batch.productSku}</p>
         </div>
 

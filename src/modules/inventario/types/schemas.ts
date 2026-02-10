@@ -10,11 +10,7 @@ export const movementSchema = z.object({
     .int('Quantity must be a whole number')
     .positive('Quantity must be greater than 0'),
   destinationBinId: z.string().uuid('Invalid destination bin').optional(),
-  notes: z
-    .string()
-    .max(500, 'Notes must be 500 characters or less')
-    .optional()
-    .or(z.literal('')),
+  notes: z.string().max(500, 'Notes must be 500 characters or less').optional().or(z.literal('')),
 })
 
 export type MovementRequest = z.infer<typeof movementSchema>

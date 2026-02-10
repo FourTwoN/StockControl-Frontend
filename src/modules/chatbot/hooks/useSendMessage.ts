@@ -85,9 +85,7 @@ export function useSendMessage(sessionId: string) {
         case 'chart':
           setState((prev) => ({
             ...prev,
-            chartData: chunk.data
-              ? (chunk.data as unknown as ChartData)
-              : prev.chartData,
+            chartData: chunk.data ? (chunk.data as unknown as ChartData) : prev.chartData,
           }))
           break
 

@@ -1,10 +1,4 @@
-import {
-  ArrowDownCircle,
-  ArrowRightLeft,
-  ShoppingCart,
-  Settings,
-  Skull,
-} from 'lucide-react'
+import { ArrowDownCircle, ArrowRightLeft, ShoppingCart, Settings, Skull } from 'lucide-react'
 import { Skeleton } from '@core/components/ui/Skeleton'
 import { EmptyState } from '@core/components/ui/EmptyState'
 import type { MovementType } from '@core/types/enums'
@@ -68,9 +62,7 @@ function MovementEntry({
   return (
     <div className="relative flex gap-4">
       {/* Timeline line */}
-      {!isLast && (
-        <div className="absolute left-5 top-10 h-full w-px bg-border" />
-      )}
+      {!isLast && <div className="absolute left-5 top-10 h-full w-px bg-border" />}
 
       {/* Icon */}
       <div
@@ -86,12 +78,8 @@ function MovementEntry({
       <div className="flex-1 pb-6">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
-            <span className={`text-sm font-semibold ${config.color}`}>
-              {config.label}
-            </span>
-            <span className="text-sm font-medium text-primary">
-              x{movement.quantity}
-            </span>
+            <span className={`text-sm font-semibold ${config.color}`}>{config.label}</span>
+            <span className="text-sm font-medium text-primary">x{movement.quantity}</span>
           </div>
           <time className="text-xs text-muted">
             {new Date(movement.createdAt).toLocaleString()}
@@ -101,22 +89,16 @@ function MovementEntry({
         {/* Source / Destination */}
         {(movement.sourceBinName || movement.destinationBinName) && (
           <p className="mt-1 text-xs text-muted">
-            {movement.sourceBinName && (
-              <span>From: {movement.sourceBinName}</span>
-            )}
+            {movement.sourceBinName && <span>From: {movement.sourceBinName}</span>}
             {movement.sourceBinName && movement.destinationBinName && (
               <span className="mx-1">&rarr;</span>
             )}
-            {movement.destinationBinName && (
-              <span>To: {movement.destinationBinName}</span>
-            )}
+            {movement.destinationBinName && <span>To: {movement.destinationBinName}</span>}
           </p>
         )}
 
         {/* User */}
-        <p className="mt-1 text-xs text-muted">
-          By: {movement.performedBy}
-        </p>
+        <p className="mt-1 text-xs text-muted">By: {movement.performedBy}</p>
 
         {/* Notes */}
         {movement.notes && (
@@ -129,10 +111,7 @@ function MovementEntry({
   )
 }
 
-export function MovementHistory({
-  movements,
-  isLoading,
-}: MovementHistoryProps) {
+export function MovementHistory({ movements, isLoading }: MovementHistoryProps) {
   if (isLoading) {
     return (
       <div className="flex flex-col gap-4">

@@ -11,8 +11,7 @@ export function useBulkUpload() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ listId, file }: BulkUploadParams) =>
-      bulkUploadItems(listId, file),
+    mutationFn: ({ listId, file }: BulkUploadParams) => bulkUploadItems(listId, file),
     onSuccess: (_result, variables) => {
       void queryClient.invalidateQueries({
         queryKey: priceListKeys.items(variables.listId),

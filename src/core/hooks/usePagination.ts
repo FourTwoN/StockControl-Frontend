@@ -37,7 +37,17 @@ export function usePagination(initialSize = 20): PaginationState & PaginationAct
   }, [])
 
   return useMemo(
-    () => ({ page, size, totalPages, totalElements, setPage, nextPage, prevPage, setSize, setTotal }),
+    () => ({
+      page,
+      size,
+      totalPages,
+      totalElements,
+      setPage,
+      nextPage,
+      prevPage,
+      setSize,
+      setTotal,
+    }),
     [page, size, totalPages, totalElements, setPage, nextPage, prevPage, setSize, setTotal],
   )
 }

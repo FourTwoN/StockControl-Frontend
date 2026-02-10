@@ -60,12 +60,8 @@ export function KPICard({ kpi }: KPICardProps) {
 
   return (
     <Card className="flex flex-col gap-2">
-      <span className="text-xs font-medium uppercase tracking-wider text-muted">
-        {kpi.label}
-      </span>
-      <span className="text-2xl font-bold text-primary">
-        {formatValue(kpi.value, kpi.unit)}
-      </span>
+      <span className="text-xs font-medium uppercase tracking-wider text-muted">{kpi.label}</span>
+      <span className="text-2xl font-bold text-primary">{formatValue(kpi.value, kpi.unit)}</span>
       <div className="flex items-center gap-1.5">
         <span
           className={[

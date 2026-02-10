@@ -31,7 +31,7 @@ export function SearchInput({
         onChange(newValue)
       }, debounceMs)
     },
-    [onChange, debounceMs]
+    [onChange, debounceMs],
   )
 
   // Cleanup timer on unmount
@@ -49,7 +49,7 @@ export function SearchInput({
       setInternalValue(newValue)
       debouncedOnChange(newValue)
     },
-    [debouncedOnChange]
+    [debouncedOnChange],
   )
 
   const handleClear = useCallback(() => {

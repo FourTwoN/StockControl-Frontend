@@ -51,11 +51,7 @@ export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryP
     <>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {images.map((image) => (
-          <ImageCard
-            key={image.id}
-            image={image}
-            onClick={handleImageClick}
-          />
+          <ImageCard key={image.id} image={image} onClick={handleImageClick} />
         ))}
       </div>
 

@@ -21,11 +21,7 @@ const STATE_OPTIONS = [
   { value: 'dormant', label: 'Dormant' },
 ] as const
 
-export function ProductForm({
-  initialData,
-  onSubmit,
-  isSubmitting = false,
-}: ProductFormProps) {
+export function ProductForm({ initialData, onSubmit, isSubmitting = false }: ProductFormProps) {
   const { data: categories } = useCategories()
   const { data: families } = useFamilies()
 

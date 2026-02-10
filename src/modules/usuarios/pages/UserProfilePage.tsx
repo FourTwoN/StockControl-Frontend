@@ -5,21 +5,9 @@ import { Skeleton } from '@core/components/ui/Skeleton'
 import { useCurrentUser } from '../hooks/useCurrentUser.ts'
 import { RoleBadge } from '../components/RoleBadge.tsx'
 
-function ProfileAvatar({
-  name,
-  picture,
-}: {
-  readonly name: string
-  readonly picture?: string
-}) {
+function ProfileAvatar({ name, picture }: { readonly name: string; readonly picture?: string }) {
   if (picture) {
-    return (
-      <img
-        src={picture}
-        alt={name}
-        className="h-20 w-20 rounded-full object-cover"
-      />
-    )
+    return <img src={picture} alt={name} className="h-20 w-20 rounded-full object-cover" />
   }
 
   const initials = name
@@ -63,9 +51,7 @@ export function UserProfilePage() {
     <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">My Profile</h1>
-        <p className="mt-1 text-sm text-muted">
-          View your account information
-        </p>
+        <p className="mt-1 text-sm text-muted">View your account information</p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
@@ -82,18 +68,14 @@ export function UserProfilePage() {
         </Card>
 
         <Card>
-          <h2 className="mb-4 text-lg font-semibold text-primary">
-            Account Details
-          </h2>
+          <h2 className="mb-4 text-lg font-semibold text-primary">Account Details</h2>
           <dl className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
               <div className="rounded-lg bg-muted/10 p-2">
                 <Mail className="h-4 w-4 text-muted" />
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Email
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Email</dt>
                 <dd className="text-sm text-primary">{user.email}</dd>
               </div>
             </div>
@@ -103,9 +85,7 @@ export function UserProfilePage() {
                 <Shield className="h-4 w-4 text-muted" />
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Role
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Role</dt>
                 <dd className="mt-0.5">
                   <RoleBadge role={user.role} />
                 </dd>
@@ -117,9 +97,7 @@ export function UserProfilePage() {
                 <Clock className="h-4 w-4 text-muted" />
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Last Login
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Last Login</dt>
                 <dd className="text-sm text-primary">
                   {user.lastLoginAt
                     ? format(new Date(user.lastLoginAt), 'dd/MM/yyyy HH:mm')
@@ -133,9 +111,7 @@ export function UserProfilePage() {
                 <UserIcon className="h-4 w-4 text-muted" />
               </div>
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Account Created
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Account Created</dt>
                 <dd className="text-sm text-primary">
                   {format(new Date(user.createdAt), 'dd/MM/yyyy')}
                 </dd>

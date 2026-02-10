@@ -41,9 +41,7 @@ export function ToolResultCard({ execution }: ToolResultCardProps) {
           ) : (
             <ChevronRight className="h-4 w-4 text-muted" />
           )}
-          <span className="text-sm font-medium text-primary">
-            {execution.toolName}
-          </span>
+          <span className="text-sm font-medium text-primary">{execution.toolName}</span>
           <Badge variant={statusVariant}>{statusLabel}</Badge>
         </div>
         <div className="flex items-center gap-1 text-xs text-muted">

@@ -29,10 +29,7 @@ export function ConfirmDialog({
         <Button variant="ghost" onClick={onClose}>
           {cancelText}
         </Button>
-        <Button
-          variant={variant === 'danger' ? 'destructive' : 'primary'}
-          onClick={onConfirm}
-        >
+        <Button variant={variant === 'danger' ? 'destructive' : 'primary'} onClick={onConfirm}>
           {confirmText}
         </Button>
       </div>

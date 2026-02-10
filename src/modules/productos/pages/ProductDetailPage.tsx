@@ -103,72 +103,44 @@ export function ProductDetailPage() {
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
-          <h2 className="mb-4 text-lg font-semibold text-primary">
-            General Information
-          </h2>
+          <h2 className="mb-4 text-lg font-semibold text-primary">General Information</h2>
           <dl className="flex flex-col gap-3">
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Description
-              </dt>
-              <dd className="mt-1 text-sm text-primary">
-                {product.description}
-              </dd>
+              <dt className="text-xs font-medium uppercase text-muted">Description</dt>
+              <dd className="mt-1 text-sm text-primary">{product.description}</dd>
             </div>
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                State
-              </dt>
+              <dt className="text-xs font-medium uppercase text-muted">State</dt>
               <dd className="mt-1">
-                <Badge variant={STATE_BADGE_MAP[product.state]}>
-                  {product.state}
-                </Badge>
+                <Badge variant={STATE_BADGE_MAP[product.state]}>{product.state}</Badge>
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Size Classification
-              </dt>
-              <dd className="mt-1 text-sm text-primary">
-                {product.sizeClassification || 'N/A'}
-              </dd>
+              <dt className="text-xs font-medium uppercase text-muted">Size Classification</dt>
+              <dd className="mt-1 text-sm text-primary">{product.sizeClassification || 'N/A'}</dd>
             </div>
           </dl>
         </Card>
 
         <Card>
-          <h2 className="mb-4 text-lg font-semibold text-primary">
-            Classification
-          </h2>
+          <h2 className="mb-4 text-lg font-semibold text-primary">Classification</h2>
           <dl className="flex flex-col gap-3">
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Category
-              </dt>
-              <dd className="mt-1 text-sm text-primary">
-                {product.categoryName}
-              </dd>
+              <dt className="text-xs font-medium uppercase text-muted">Category</dt>
+              <dd className="mt-1 text-sm text-primary">{product.categoryName}</dd>
             </div>
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Family
-              </dt>
-              <dd className="mt-1 text-sm text-primary">
-                {product.familyName}
-              </dd>
+              <dt className="text-xs font-medium uppercase text-muted">Family</dt>
+              <dd className="mt-1 text-sm text-primary">{product.familyName}</dd>
             </div>
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Created
-              </dt>
+              <dt className="text-xs font-medium uppercase text-muted">Created</dt>
               <dd className="mt-1 text-sm text-primary">
                 {new Date(product.createdAt).toLocaleDateString()}
               </dd>
             </div>
             <div>
-              <dt className="text-xs font-medium uppercase text-muted">
-                Last Updated
-              </dt>
+              <dt className="text-xs font-medium uppercase text-muted">Last Updated</dt>
               <dd className="mt-1 text-sm text-primary">
                 {new Date(product.updatedAt).toLocaleDateString()}
               </dd>
@@ -190,12 +162,7 @@ export function ProductDetailPage() {
         )}
       </div>
 
-      <Modal
-        isOpen={isEditOpen}
-        onClose={handleCloseEdit}
-        title="Edit Product"
-        size="lg"
-      >
+      <Modal isOpen={isEditOpen} onClose={handleCloseEdit} title="Edit Product" size="lg">
         <ProductForm
           initialData={product}
           onSubmit={handleSubmit}

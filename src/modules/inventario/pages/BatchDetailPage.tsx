@@ -85,9 +85,7 @@ export function BatchDetailPage() {
   }
 
   const quantityPercentage =
-    batch.initialQuantity > 0
-      ? Math.round((batch.quantity / batch.initialQuantity) * 100)
-      : 0
+    batch.initialQuantity > 0 ? Math.round((batch.quantity / batch.initialQuantity) * 100) : 0
 
   return (
     <div className="p-4 sm:p-6">
@@ -99,9 +97,7 @@ export function BatchDetailPage() {
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-primary">
-                {batch.productName}
-              </h1>
+              <h1 className="text-2xl font-bold text-primary">{batch.productName}</h1>
               <BatchStatusBadge status={batch.status} />
             </div>
             <p className="text-sm text-muted">SKU: {batch.productSku}</p>
@@ -142,22 +138,14 @@ export function BatchDetailPage() {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           {/* Batch details */}
           <Card>
-            <h2 className="mb-4 text-lg font-semibold text-primary">
-              Batch Details
-            </h2>
+            <h2 className="mb-4 text-lg font-semibold text-primary">Batch Details</h2>
             <dl className="flex flex-col gap-3">
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Quantity
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Quantity</dt>
                 <dd className="mt-1">
                   <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-primary">
-                      {batch.quantity}
-                    </span>
-                    <span className="text-sm text-muted">
-                      / {batch.initialQuantity} initial
-                    </span>
+                    <span className="text-lg font-bold text-primary">{batch.quantity}</span>
+                    <span className="text-sm text-muted">/ {batch.initialQuantity} initial</span>
                   </div>
                   <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-background">
                     <div
@@ -179,9 +167,7 @@ export function BatchDetailPage() {
 
               {batch.notes && (
                 <div>
-                  <dt className="text-xs font-medium uppercase text-muted">
-                    Notes
-                  </dt>
+                  <dt className="text-xs font-medium uppercase text-muted">Notes</dt>
                   <dd className="mt-1 text-sm text-primary">{batch.notes}</dd>
                 </div>
               )}
@@ -190,14 +176,10 @@ export function BatchDetailPage() {
 
           {/* Location and dates */}
           <Card>
-            <h2 className="mb-4 text-lg font-semibold text-primary">
-              Location & Dates
-            </h2>
+            <h2 className="mb-4 text-lg font-semibold text-primary">Location & Dates</h2>
             <dl className="flex flex-col gap-3">
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Location
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Location</dt>
                 <dd className="mt-1 flex items-center gap-1.5 text-sm text-primary">
                   <MapPin className="h-4 w-4 text-muted" />
                   {batch.locationName}
@@ -206,9 +188,7 @@ export function BatchDetailPage() {
               </div>
 
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Entry Date
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Entry Date</dt>
                 <dd className="mt-1 flex items-center gap-1.5 text-sm text-primary">
                   <Calendar className="h-4 w-4 text-muted" />
                   {new Date(batch.entryDate).toLocaleDateString()}
@@ -217,9 +197,7 @@ export function BatchDetailPage() {
 
               {batch.expiryDate && (
                 <div>
-                  <dt className="text-xs font-medium uppercase text-muted">
-                    Expiry Date
-                  </dt>
+                  <dt className="text-xs font-medium uppercase text-muted">Expiry Date</dt>
                   <dd className="mt-1 flex items-center gap-1.5 text-sm text-primary">
                     <Calendar className="h-4 w-4 text-muted" />
                     {new Date(batch.expiryDate).toLocaleDateString()}
@@ -228,18 +206,14 @@ export function BatchDetailPage() {
               )}
 
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Created
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Created</dt>
                 <dd className="mt-1 text-sm text-primary">
                   {new Date(batch.createdAt).toLocaleDateString()}
                 </dd>
               </div>
 
               <div>
-                <dt className="text-xs font-medium uppercase text-muted">
-                  Last Updated
-                </dt>
+                <dt className="text-xs font-medium uppercase text-muted">Last Updated</dt>
                 <dd className="mt-1 text-sm text-primary">
                   {new Date(batch.updatedAt).toLocaleDateString()}
                 </dd>
@@ -250,10 +224,7 @@ export function BatchDetailPage() {
       )}
 
       {activeTab === 'movements' && (
-        <MovementHistory
-          movements={movementsData?.content ?? []}
-          isLoading={movementsLoading}
-        />
+        <MovementHistory movements={movementsData?.content ?? []} isLoading={movementsLoading} />
       )}
 
       {/* Movement modal */}

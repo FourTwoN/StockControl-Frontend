@@ -19,8 +19,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
   }, [searchParams])
 
   // Auth0 callback in progress — SDK is exchanging code for tokens
-  const isProcessingCallback =
-    searchParams.has('code') && searchParams.has('state')
+  const isProcessingCallback = searchParams.has('code') && searchParams.has('state')
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated && !authError && !isProcessingCallback) {
@@ -31,9 +30,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
   if (authError) {
     return (
       <div className="flex h-screen w-screen flex-col items-center justify-center gap-4 p-8">
-        <h1 className="text-xl font-semibold text-red-600">
-          Authentication Error
-        </h1>
+        <h1 className="text-xl font-semibold text-red-600">Authentication Error</h1>
         <p className="max-w-md text-center text-gray-600">
           {authError.description ?? authError.error}
         </p>

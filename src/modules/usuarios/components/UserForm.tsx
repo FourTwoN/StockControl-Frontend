@@ -26,11 +26,7 @@ const ACTIVE_OPTIONS = [
   { value: 'false', label: 'Inactive' },
 ] as const
 
-export function UserForm({
-  initialData,
-  onSubmit,
-  isSubmitting = false,
-}: UserFormProps) {
+export function UserForm({ initialData, onSubmit, isSubmitting = false }: UserFormProps) {
   const defaultValues: UserFormData = useMemo(
     () => ({
       name: initialData?.name ?? '',
@@ -58,11 +54,7 @@ export function UserForm({
   return (
     <RoleGuard
       allowedRoles={['ADMIN']}
-      fallback={
-        <p className="text-sm text-muted">
-          You do not have permission to manage users.
-        </p>
-      }
+      fallback={<p className="text-sm text-muted">You do not have permission to manage users.</p>}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -90,9 +82,7 @@ export function UserForm({
             placeholder="Select a role"
           />
           <div>
-            <label className="mb-1 block text-sm font-medium text-primary">
-              Status
-            </label>
+            <label className="mb-1 block text-sm font-medium text-primary">Status</label>
             <div className="flex gap-2">
               {ACTIVE_OPTIONS.map((option) => (
                 <button

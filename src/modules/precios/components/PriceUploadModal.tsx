@@ -104,7 +104,8 @@ export function PriceUploadModal({
       {step === 'upload' && (
         <div className="space-y-4">
           <p className="text-sm text-muted">
-            Upload a CSV file with columns: SKU, Unit Price, Min Quantity, Max Quantity (optional), Discount % (optional)
+            Upload a CSV file with columns: SKU, Unit Price, Min Quantity, Max Quantity (optional),
+            Discount % (optional)
           </p>
           <FileUpload accept=".csv" onUpload={handleFileSelected} />
         </div>
@@ -116,9 +117,7 @@ export function PriceUploadModal({
             <p className="text-sm text-primary">
               {previewRows.length} rows found
               {invalidCount > 0 && (
-                <span className="ml-2 text-destructive">
-                  ({invalidCount} with errors)
-                </span>
+                <span className="ml-2 text-destructive">({invalidCount} with errors)</span>
               )}
             </p>
             <Button variant="ghost" size="sm" onClick={() => setStep('upload')}>

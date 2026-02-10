@@ -13,11 +13,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-white hover:bg-primary/90',
-  secondary: 'bg-secondary text-white hover:bg-secondary/90',
-  outline: 'border border-border bg-transparent text-primary hover:bg-background',
-  ghost: 'bg-transparent text-primary hover:bg-background',
-  destructive: 'bg-destructive text-white hover:bg-destructive/90',
+  primary:
+    'gradient-primary text-white shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-glow-primary)] hover:-translate-y-[1px]',
+  secondary:
+    'bg-secondary text-white shadow-[var(--shadow-sm)] hover:bg-secondary/90 hover:-translate-y-[1px]',
+  outline:
+    'border border-border bg-transparent text-text-primary hover:bg-surface-hover hover:border-primary/30',
+  ghost: 'bg-transparent text-text-primary hover:bg-surface-hover',
+  destructive:
+    'bg-destructive text-white shadow-[var(--shadow-sm)] hover:bg-destructive/90 hover:-translate-y-[1px]',
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
@@ -26,29 +30,27 @@ const sizeClasses: Record<ButtonSize, string> = {
   lg: 'h-12 px-6 text-base gap-2.5',
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    { variant = 'primary', size = 'md', isLoading = false, disabled, children, className, ...rest },
-    ref
-  ) {
-    return (
-      <button
-        ref={ref}
-        type="button"
-        disabled={disabled || isLoading}
-        className={[
-          'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:pointer-events-none disabled:opacity-50',
-          variantClasses[variant],
-          sizeClasses[size],
-          className,
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        {...rest}
-      >
-        {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
-        {children}
-      </button>
-    )
-  }
-)
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  { variant = 'primary', size = 'md', isLoading = false, disabled, children, className, ...rest },
+  ref,
+) {
+  return (
+    <button
+      ref={ref}
+      type="button"
+      disabled={disabled || isLoading}
+      className={[
+        'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50',
+        variantClasses[variant],
+        sizeClasses[size],
+        className,
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      {...rest}
+    >
+      {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
+      {children}
+    </button>
+  )
+})

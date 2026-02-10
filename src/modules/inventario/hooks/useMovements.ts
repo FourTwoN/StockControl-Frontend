@@ -14,7 +14,15 @@ export const MOVEMENTS_QUERY_KEY = 'stock-movements'
 
 export function useMovements(params: UseMovementsParams) {
   return useQuery({
-    queryKey: [MOVEMENTS_QUERY_KEY, params.batchId, params.page, params.size, params.type, params.startDate, params.endDate],
+    queryKey: [
+      MOVEMENTS_QUERY_KEY,
+      params.batchId,
+      params.page,
+      params.size,
+      params.type,
+      params.startDate,
+      params.endDate,
+    ],
     queryFn: () => movementService.fetchMovements(params),
   })
 }

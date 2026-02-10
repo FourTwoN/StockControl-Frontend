@@ -13,7 +13,14 @@ export const STOCK_BATCHES_QUERY_KEY = 'stock-batches'
 
 export function useStockBatches(params: UseStockBatchesParams) {
   return useQuery({
-    queryKey: [STOCK_BATCHES_QUERY_KEY, params.page, params.size, params.productId, params.locationId, params.status],
+    queryKey: [
+      STOCK_BATCHES_QUERY_KEY,
+      params.page,
+      params.size,
+      params.productId,
+      params.locationId,
+      params.status,
+    ],
     queryFn: () => stockService.fetchBatches(params),
   })
 }

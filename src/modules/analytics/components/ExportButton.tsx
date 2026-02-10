@@ -7,9 +7,7 @@ interface ExportButtonProps {
   readonly filename: string
 }
 
-function toCsvString(
-  rows: readonly Record<string, string | number | boolean>[],
-): string {
+function toCsvString(rows: readonly Record<string, string | number | boolean>[]): string {
   if (rows.length === 0) {
     return ''
   }
@@ -22,11 +20,7 @@ function toCsvString(
       .map((header) => {
         const value = row[header]
         const stringValue = String(value ?? '')
-        if (
-          stringValue.includes(',') ||
-          stringValue.includes('"') ||
-          stringValue.includes('\n')
-        ) {
+        if (stringValue.includes(',') || stringValue.includes('"') || stringValue.includes('\n')) {
           return `"${stringValue.replace(/"/g, '""')}"`
         }
         return stringValue
@@ -57,12 +51,7 @@ export function ExportButton({ data, filename }: ExportButtonProps) {
   }, [data, filename])
 
   return (
-    <Button
-      variant="outline"
-      size="sm"
-      onClick={handleExport}
-      disabled={data.length === 0}
-    >
+    <Button variant="outline" size="sm" onClick={handleExport} disabled={data.length === 0}>
       <Download className="h-4 w-4" />
       Export CSV
     </Button>

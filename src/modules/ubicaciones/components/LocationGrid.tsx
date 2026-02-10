@@ -10,11 +10,7 @@ export function LocationGrid({ locations, onLocationClick }: LocationGridProps) 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {locations.map((location) => (
-        <LocationCard
-          key={location.id}
-          location={location}
-          onClick={onLocationClick}
-        />
+        <LocationCard key={location.id} location={location} onClick={onLocationClick} />
       ))}
     </div>
   )

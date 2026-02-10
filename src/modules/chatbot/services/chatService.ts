@@ -75,21 +75,15 @@ function streamMessage(sessionId: string): StreamConnection {
 }
 
 export const chatService = {
-  fetchSessions: () =>
-    apiClient.get<ChatSession[]>(BASE_PATH).then((r) => r.data),
+  fetchSessions: () => apiClient.get<ChatSession[]>(BASE_PATH).then((r) => r.data),
 
-  createSession: () =>
-    apiClient.post<ChatSession>(BASE_PATH).then((r) => r.data),
+  createSession: () => apiClient.post<ChatSession>(BASE_PATH).then((r) => r.data),
 
   fetchMessages: (sessionId: string) =>
-    apiClient
-      .get<ChatMessage[]>(`${BASE_PATH}/${sessionId}/messages`)
-      .then((r) => r.data),
+    apiClient.get<ChatMessage[]>(`${BASE_PATH}/${sessionId}/messages`).then((r) => r.data),
 
   sendMessage: (sessionId: string, content: string) =>
-    apiClient
-      .post<void>(`${BASE_PATH}/${sessionId}/messages`, { content })
-      .then((r) => r.data),
+    apiClient.post<void>(`${BASE_PATH}/${sessionId}/messages`, { content }).then((r) => r.data),
 
   streamMessage,
 }

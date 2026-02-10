@@ -99,10 +99,7 @@ export default function CultivationPage() {
               description="No storage locations have been registered yet."
             />
           ) : (
-            <LocationGrid
-              locations={locationList}
-              onLocationClick={handleLocationClick}
-            />
+            <LocationGrid locations={locationList} onLocationClick={handleLocationClick} />
           )}
         </div>
 
@@ -113,9 +110,7 @@ export default function CultivationPage() {
               <SelectedLocationDetail location={selectedLocation} />
             ) : (
               <div className="flex h-48 items-center justify-center">
-                <p className="text-sm text-muted">
-                  Select a location to view details
-                </p>
+                <p className="text-sm text-muted">Select a location to view details</p>
               </div>
             )}
           </Card>

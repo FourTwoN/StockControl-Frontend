@@ -12,13 +12,7 @@ const variantClasses: Record<NonNullable<SkeletonProps['variant']>, string> = {
 export function Skeleton({ className, variant = 'line' }: SkeletonProps) {
   return (
     <div
-      className={[
-        'animate-pulse bg-border/60',
-        variantClasses[variant],
-        className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      className={['shimmer rounded', variantClasses[variant], className].filter(Boolean).join(' ')}
       aria-hidden="true"
     />
   )

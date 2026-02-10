@@ -84,43 +84,33 @@ export function MovementsPage() {
         key: 'type' as const,
         header: 'Type',
         render: (_value, row) => (
-          <Badge variant={TYPE_BADGE_MAP[row.type]}>
-            {TYPE_LABEL_MAP[row.type]}
-          </Badge>
+          <Badge variant={TYPE_BADGE_MAP[row.type]}>{TYPE_LABEL_MAP[row.type]}</Badge>
         ),
       },
       {
         key: 'batchId' as const,
         header: 'Batch ID',
         render: (value) => (
-          <span className="font-mono text-xs text-muted">
-            {(value as string).slice(0, 8)}...
-          </span>
+          <span className="font-mono text-xs text-muted">{(value as string).slice(0, 8)}...</span>
         ),
       },
       {
         key: 'quantity' as const,
         header: 'Quantity',
-        render: (value) => (
-          <span className="font-medium text-primary">{value as number}</span>
-        ),
+        render: (value) => <span className="font-medium text-primary">{value as number}</span>,
       },
       {
         key: 'sourceBinName' as const,
         header: 'Source',
         render: (value) => (
-          <span className="text-sm text-muted">
-            {(value as string | undefined) ?? '-'}
-          </span>
+          <span className="text-sm text-muted">{(value as string | undefined) ?? '-'}</span>
         ),
       },
       {
         key: 'destinationBinName' as const,
         header: 'Destination',
         render: (value) => (
-          <span className="text-sm text-muted">
-            {(value as string | undefined) ?? '-'}
-          </span>
+          <span className="text-sm text-muted">{(value as string | undefined) ?? '-'}</span>
         ),
       },
       {
@@ -131,9 +121,7 @@ export function MovementsPage() {
         key: 'createdAt' as const,
         header: 'Date',
         render: (value) => (
-          <span className="text-sm text-muted">
-            {new Date(value as string).toLocaleString()}
-          </span>
+          <span className="text-sm text-muted">{new Date(value as string).toLocaleString()}</span>
         ),
       },
     ],
@@ -144,17 +132,13 @@ export function MovementsPage() {
     <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Movements</h1>
-        <p className="mt-1 text-sm text-muted">
-          View all stock movement records
-        </p>
+        <p className="mt-1 text-sm text-muted">View all stock movement records</p>
       </div>
 
       {/* Filters */}
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
         <div className="w-full sm:w-40">
-          <label className="mb-1 block text-xs font-medium text-muted">
-            Type
-          </label>
+          <label className="mb-1 block text-xs font-medium text-muted">Type</label>
           <Select
             options={[...TYPE_OPTIONS]}
             value={typeFilter}
@@ -164,25 +148,13 @@ export function MovementsPage() {
         </div>
 
         <div className="w-full sm:w-44">
-          <label className="mb-1 block text-xs font-medium text-muted">
-            Start Date
-          </label>
-          <Input
-            type="date"
-            value={startDate}
-            onChange={handleStartDateChange}
-          />
+          <label className="mb-1 block text-xs font-medium text-muted">Start Date</label>
+          <Input type="date" value={startDate} onChange={handleStartDateChange} />
         </div>
 
         <div className="w-full sm:w-44">
-          <label className="mb-1 block text-xs font-medium text-muted">
-            End Date
-          </label>
-          <Input
-            type="date"
-            value={endDate}
-            onChange={handleEndDateChange}
-          />
+          <label className="mb-1 block text-xs font-medium text-muted">End Date</label>
+          <Input type="date" value={endDate} onChange={handleEndDateChange} />
         </div>
       </div>
 

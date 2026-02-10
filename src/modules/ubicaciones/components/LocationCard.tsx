@@ -24,10 +24,7 @@ export function LocationCard({ location, onClick }: LocationCardProps) {
   const barColor = getOccupancyColor(location.occupancy, location.maxCapacity)
 
   return (
-    <Card
-      onClick={onClick ? () => onClick(location) : undefined}
-      className="flex flex-col gap-3"
-    >
+    <Card onClick={onClick ? () => onClick(location) : undefined} className="flex flex-col gap-3">
       <div className="flex items-start justify-between">
         <div>
           <h3 className="text-sm font-semibold text-primary">{location.name}</h3>

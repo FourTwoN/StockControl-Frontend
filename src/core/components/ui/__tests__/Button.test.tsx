@@ -13,7 +13,7 @@ describe('Button', () => {
     render(<Button>Primary</Button>)
 
     const button = screen.getByRole('button')
-    expect(button.className).toContain('bg-primary')
+    expect(button.className).toContain('gradient-primary')
     expect(button.className).toContain('text-white')
   })
 
@@ -96,7 +96,11 @@ describe('Button', () => {
 
   it('does not call onClick when disabled', () => {
     const handleClick = vi.fn()
-    render(<Button onClick={handleClick} disabled>Disabled</Button>)
+    render(
+      <Button onClick={handleClick} disabled>
+        Disabled
+      </Button>,
+    )
 
     fireEvent.click(screen.getByRole('button'))
 

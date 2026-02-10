@@ -15,14 +15,8 @@ export function CostTrendChart({ productId }: CostTrendChartProps) {
       <div className="flex h-64 items-center justify-center rounded-lg border border-dashed border-border bg-muted/5">
         <div className="text-center">
           <TrendingUp className="mx-auto h-10 w-10 text-muted/40" />
-          <p className="mt-2 text-sm text-muted">
-            Cost trend chart - Recharts integration pending
-          </p>
-          {productId && (
-            <p className="mt-1 text-xs text-muted/60">
-              Product ID: {productId}
-            </p>
-          )}
+          <p className="mt-2 text-sm text-muted">Cost trend chart - Recharts integration pending</p>
+          {productId && <p className="mt-1 text-xs text-muted/60">Product ID: {productId}</p>}
         </div>
       </div>
     </Card>

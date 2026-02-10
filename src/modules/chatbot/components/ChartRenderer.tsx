@@ -75,10 +75,7 @@ function renderPieChart(chartData: ChartData) {
         label
       >
         {chartData.data.map((_, index) => (
-          <Cell
-            key={`cell-${index.toString()}`}
-            fill={CHART_COLORS[index % CHART_COLORS.length]}
-          />
+          <Cell key={`cell-${index.toString()}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
         ))}
       </Pie>
       <Tooltip />

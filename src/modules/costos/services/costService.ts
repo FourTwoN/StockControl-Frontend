@@ -1,11 +1,6 @@
 import { apiClient } from '@core/api/apiClient'
 import type { PagedResponse } from '@core/api/types'
-import type {
-  ProductCost,
-  BatchCost,
-  InventoryValuation,
-  CostTrend,
-} from '../types/Cost.ts'
+import type { ProductCost, BatchCost, InventoryValuation, CostTrend } from '../types/Cost.ts'
 
 interface CostTrendParams {
   readonly productId: string
@@ -22,14 +17,10 @@ export const costService = {
       .then((r) => r.data),
 
   fetchBatchCost: (batchId: string) =>
-    apiClient
-      .get<BatchCost>(`/api/v1/costs/batches/${batchId}`)
-      .then((r) => r.data),
+    apiClient.get<BatchCost>(`/api/v1/costs/batches/${batchId}`).then((r) => r.data),
 
   fetchInventoryValuation: () =>
-    apiClient
-      .get<InventoryValuation>('/api/v1/costs/valuation')
-      .then((r) => r.data),
+    apiClient.get<InventoryValuation>('/api/v1/costs/valuation').then((r) => r.data),
 
   fetchCostTrends: (params: CostTrendParams) =>
     apiClient

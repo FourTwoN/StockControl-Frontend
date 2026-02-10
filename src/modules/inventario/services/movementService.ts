@@ -14,9 +14,7 @@ interface FetchMovementsParams {
   readonly endDate?: string
 }
 
-async function fetchMovements(
-  params: FetchMovementsParams,
-): Promise<PagedResponse<StockMovement>> {
+async function fetchMovements(params: FetchMovementsParams): Promise<PagedResponse<StockMovement>> {
   const { batchId, page, size, type, startDate, endDate } = params
   const queryParams: Record<string, string | number> = { page, size }
 
@@ -33,16 +31,13 @@ async function fetchMovements(
     queryParams.endDate = endDate
   }
 
-  const response = await apiClient.get<PagedResponse<StockMovement>>(
-    BASE_PATH,
-    { params: queryParams },
-  )
+  const response = await apiClient.get<PagedResponse<StockMovement>>(BASE_PATH, {
+    params: queryParams,
+  })
   return response.data
 }
 
-async function createMovement(
-  data: MovementRequest,
-): Promise<StockMovement> {
+async function createMovement(data: MovementRequest): Promise<StockMovement> {
   const response = await apiClient.post<StockMovement>(BASE_PATH, data)
   return response.data
 }

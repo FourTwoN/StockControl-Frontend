@@ -100,36 +100,22 @@ export function SaleDetailPage() {
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-primary">
-                Sale #{sale.saleNumber}
-              </h1>
-              <Badge variant={STATUS_BADGE_MAP[sale.status]}>
-                {STATUS_LABELS[sale.status]}
-              </Badge>
+              <h1 className="text-2xl font-bold text-primary">Sale #{sale.saleNumber}</h1>
+              <Badge variant={STATUS_BADGE_MAP[sale.status]}>{STATUS_LABELS[sale.status]}</Badge>
             </div>
             {sale.customerName && (
-              <p className="text-sm text-muted">
-                Customer: {sale.customerName}
-              </p>
+              <p className="text-sm text-muted">Customer: {sale.customerName}</p>
             )}
           </div>
         </div>
         <div className="flex items-center gap-2">
           {sale.status === 'PENDING' && (
             <>
-              <Button
-                variant="outline"
-                onClick={handleConfirm}
-                isLoading={updateStatus.isPending}
-              >
+              <Button variant="outline" onClick={handleConfirm} isLoading={updateStatus.isPending}>
                 <CheckCircle className="h-4 w-4" />
                 Confirm
               </Button>
-              <Button
-                variant="outline"
-                onClick={handleCancel}
-                isLoading={updateStatus.isPending}
-              >
+              <Button variant="outline" onClick={handleCancel} isLoading={updateStatus.isPending}>
                 <XCircle className="h-4 w-4" />
                 Cancel
               </Button>

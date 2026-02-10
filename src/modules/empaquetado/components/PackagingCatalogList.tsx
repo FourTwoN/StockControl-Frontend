@@ -72,9 +72,7 @@ function CatalogCard({
 
         {/* Name + SKU */}
         <div>
-          <h3 className="text-sm font-semibold text-primary line-clamp-1">
-            {item.name}
-          </h3>
+          <h3 className="text-sm font-semibold text-primary line-clamp-1">{item.name}</h3>
           <p className="mt-0.5 text-xs text-muted">SKU: {item.sku}</p>
         </div>
 
@@ -139,24 +137,14 @@ function Pagination({
         {totalElements} item{totalElements === 1 ? '' : 's'} total
       </p>
       <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handlePrev}
-          disabled={page === 0}
-        >
+        <Button variant="outline" size="sm" onClick={handlePrev} disabled={page === 0}>
           <ChevronLeft className="h-4 w-4" />
           Previous
         </Button>
         <span className="text-sm text-muted">
           {page + 1} / {totalPages}
         </span>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleNext}
-          disabled={page >= totalPages - 1}
-        >
+        <Button variant="outline" size="sm" onClick={handleNext} disabled={page >= totalPages - 1}>
           Next
           <ChevronRight className="h-4 w-4" />
         </Button>

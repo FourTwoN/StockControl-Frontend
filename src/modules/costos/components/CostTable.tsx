@@ -45,9 +45,7 @@ export function CostTable() {
         key: 'lastCost' as const,
         header: 'Last Cost',
         render: (_value, row) => (
-          <span className="text-sm text-muted">
-            {formatCurrency(row.lastCost, row.currency)}
-          </span>
+          <span className="text-sm text-muted">{formatCurrency(row.lastCost, row.currency)}</span>
         ),
       },
       {

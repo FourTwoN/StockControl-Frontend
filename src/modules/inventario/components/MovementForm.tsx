@@ -21,12 +21,7 @@ const MOVEMENT_TYPE_OPTIONS = [
   { value: 'AJUSTE', label: 'Ajuste' },
 ] as const
 
-export function MovementForm({
-  batchId,
-  onSubmit,
-  onCancel,
-  isSubmitting,
-}: MovementFormProps) {
+export function MovementForm({ batchId, onSubmit, onCancel, isSubmitting }: MovementFormProps) {
   const { control, handleSubmit, watch } = useForm<MovementRequest>({
     resolver: zodResolver(movementSchema),
     defaultValues: {
@@ -55,11 +50,7 @@ export function MovementForm({
   )
 
   return (
-    <form
-      onSubmit={handleSubmit(handleFormSubmit)}
-      className="flex flex-col gap-4"
-      noValidate
-    >
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="flex flex-col gap-4" noValidate>
       <FormField<MovementRequest>
         name="type"
         control={control}

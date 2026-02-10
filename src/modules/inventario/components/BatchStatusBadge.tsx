@@ -22,9 +22,5 @@ interface BatchStatusBadgeProps {
 }
 
 export function BatchStatusBadge({ status }: BatchStatusBadgeProps) {
-  return (
-    <Badge variant={STATUS_VARIANT_MAP[status]}>
-      {STATUS_LABEL_MAP[status]}
-    </Badge>
-  )
+  return <Badge variant={STATUS_VARIANT_MAP[status]}>{STATUS_LABEL_MAP[status]}</Badge>
 }

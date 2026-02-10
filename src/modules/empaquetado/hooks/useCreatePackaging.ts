@@ -7,8 +7,7 @@ export function useCreatePackaging() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (data: PackagingCatalogFormData) =>
-      packagingService.createCatalogItem(data),
+    mutationFn: (data: PackagingCatalogFormData) => packagingService.createCatalogItem(data),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [CATALOG_QUERY_KEY] })
     },

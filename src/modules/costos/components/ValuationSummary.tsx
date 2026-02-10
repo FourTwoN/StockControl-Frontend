@@ -39,9 +39,7 @@ function CategoryBar({ category, colorClass, currency }: CategoryBarProps) {
       <div className="flex items-center justify-between text-sm">
         <div className="flex items-center gap-2">
           <div className={`h-3 w-3 rounded-full ${colorClass}`} />
-          <span className="font-medium text-primary">
-            {category.categoryName}
-          </span>
+          <span className="font-medium text-primary">{category.categoryName}</span>
         </div>
         <span className="text-muted">
           {formatCurrency(category.totalValue, currency)} ({category.percentage.toFixed(1)}%)
@@ -61,10 +59,7 @@ export function ValuationSummary() {
   const { data: valuation, isLoading } = useInventoryValuation()
 
   const sortedCategories = useMemo(
-    () =>
-      valuation
-        ? [...valuation.byCategory].sort((a, b) => b.totalValue - a.totalValue)
-        : [],
+    () => (valuation ? [...valuation.byCategory].sort((a, b) => b.totalValue - a.totalValue) : []),
     [valuation],
   )
 
@@ -90,9 +85,7 @@ export function ValuationSummary() {
             <DollarSign className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
           </div>
           <div>
-            <p className="text-xs font-medium uppercase text-muted">
-              Total Inventory Value
-            </p>
+            <p className="text-xs font-medium uppercase text-muted">Total Inventory Value</p>
             <p className="mt-1 text-2xl font-bold text-primary">
               {formatCurrency(valuation.totalValue, valuation.currency)}
             </p>
@@ -106,9 +99,7 @@ export function ValuationSummary() {
             <Package className="h-5 w-5 text-blue-600 dark:text-blue-400" />
           </div>
           <div>
-            <p className="text-xs font-medium uppercase text-muted">
-              Total Units
-            </p>
+            <p className="text-xs font-medium uppercase text-muted">Total Units</p>
             <p className="mt-1 text-2xl font-bold text-primary">
               {new Intl.NumberFormat('es-AR').format(valuation.totalUnits)}
             </p>
@@ -117,9 +108,7 @@ export function ValuationSummary() {
       </Card>
 
       <Card className="lg:col-span-1">
-        <p className="mb-3 text-xs font-medium uppercase text-muted">
-          Value by Category
-        </p>
+        <p className="mb-3 text-xs font-medium uppercase text-muted">Value by Category</p>
         <div className="flex flex-col gap-3">
           {sortedCategories.map((category, index) => (
             <CategoryBar

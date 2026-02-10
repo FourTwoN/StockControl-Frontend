@@ -40,21 +40,13 @@ export async function fetchPriceList(id: string): Promise<PriceList> {
   return data
 }
 
-export async function createPriceList(
-  payload: PriceListFormData,
-): Promise<PriceList> {
+export async function createPriceList(payload: PriceListFormData): Promise<PriceList> {
   const { data } = await apiClient.post<PriceList>(BASE_URL, payload)
   return data
 }
 
-export async function updatePriceList(
-  id: string,
-  payload: PriceListFormData,
-): Promise<PriceList> {
-  const { data } = await apiClient.put<PriceList>(
-    buildPriceListUrl(id),
-    payload,
-  )
+export async function updatePriceList(id: string, payload: PriceListFormData): Promise<PriceList> {
+  const { data } = await apiClient.put<PriceList>(buildPriceListUrl(id), payload)
   return data
 }
 
@@ -67,20 +59,13 @@ export async function fetchPriceItems(listId: string): Promise<PriceItem[]> {
   return data
 }
 
-export async function bulkUploadItems(
-  listId: string,
-  file: File,
-): Promise<PriceItem[]> {
+export async function bulkUploadItems(listId: string, file: File): Promise<PriceItem[]> {
   const formData = new FormData()
   formData.append('file', file)
 
-  const { data } = await apiClient.post<PriceItem[]>(
-    buildBulkUrl(listId),
-    formData,
-    {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    },
-  )
+  const { data } = await apiClient.post<PriceItem[]>(buildBulkUrl(listId), formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  })
   return data
 }
 
@@ -89,9 +74,6 @@ export async function updatePriceItem(
   itemId: string,
   payload: PriceItemFormData,
 ): Promise<PriceItem> {
-  const { data } = await apiClient.put<PriceItem>(
-    buildItemUrl(listId, itemId),
-    payload,
-  )
+  const { data } = await apiClient.put<PriceItem>(buildItemUrl(listId, itemId), payload)
   return data
 }

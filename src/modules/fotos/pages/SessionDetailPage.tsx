@@ -80,9 +80,7 @@ export function SessionDetailPage() {
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold text-primary">
-                {session.name}
-              </h1>
+              <h1 className="text-2xl font-bold text-primary">{session.name}</h1>
               <Badge variant={STATUS_BADGE_MAP[session.status]}>
                 {STATUS_LABELS[session.status]}
               </Badge>
@@ -114,19 +112,10 @@ export function SessionDetailPage() {
       <Card className="mb-6">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <InfoItem label="Created By" value={session.createdBy} />
-          <InfoItem
-            label="Created At"
-            value={new Date(session.createdAt).toLocaleString()}
-          />
-          <InfoItem
-            label="Processed"
-            value={`${session.processedCount} / ${session.imageCount}`}
-          />
+          <InfoItem label="Created At" value={new Date(session.createdAt).toLocaleString()} />
+          <InfoItem label="Processed" value={`${session.processedCount} / ${session.imageCount}`} />
           {session.completedAt && (
-            <InfoItem
-              label="Completed At"
-              value={new Date(session.completedAt).toLocaleString()}
-            />
+            <InfoItem label="Completed At" value={new Date(session.completedAt).toLocaleString()} />
           )}
         </div>
       </Card>

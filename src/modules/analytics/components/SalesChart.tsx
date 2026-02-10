@@ -1,12 +1,4 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { Card, Skeleton } from '@core/components/ui'
 import type { SalesSummaryPoint } from '../types/Analytics.ts'
 
@@ -46,10 +38,7 @@ function ChartTooltip({ active, payload, label }: CustomTooltipProps) {
       <p className="mb-2 text-xs font-medium text-muted">{label}</p>
       {payload.map((entry) => (
         <div key={entry.name} className="flex items-center gap-2 text-sm">
-          <span
-            className="h-2.5 w-2.5 rounded-full"
-            style={{ backgroundColor: entry.color }}
-          />
+          <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: entry.color }} />
           <span className="text-muted">{entry.name}:</span>
           <span className="font-medium text-primary">
             {entry.name === 'Revenue'
@@ -66,9 +55,7 @@ export function SalesChart({ data, isLoading }: SalesChartProps) {
   if (isLoading) {
     return (
       <Card>
-        <h3 className="mb-4 text-sm font-semibold text-primary">
-          Sales Summary
-        </h3>
+        <h3 className="mb-4 text-sm font-semibold text-primary">Sales Summary</h3>
         <Skeleton className="h-64 w-full" variant="rectangle" />
       </Card>
     )
@@ -76,16 +63,11 @@ export function SalesChart({ data, isLoading }: SalesChartProps) {
 
   return (
     <Card>
-      <h3 className="mb-4 text-sm font-semibold text-primary">
-        Sales Summary
-      </h3>
+      <h3 className="mb-4 text-sm font-semibold text-primary">Sales Summary</h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={[...data]} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-          <XAxis
-            dataKey="period"
-            tick={{ fontSize: 12, fill: '#6b7280' }}
-          />
+          <XAxis dataKey="period" tick={{ fontSize: 12, fill: '#6b7280' }} />
           <YAxis
             yAxisId="sales"
             orientation="left"

@@ -1,6 +1,11 @@
 import { apiClient } from '@core/api/apiClient.ts'
 import type { Warehouse, StorageArea, StorageLocation, StorageBin } from '../types/Location.ts'
-import type { WarehouseFormData, StorageAreaFormData, StorageLocationFormData, StorageBinFormData } from '../types/schemas.ts'
+import type {
+  WarehouseFormData,
+  StorageAreaFormData,
+  StorageLocationFormData,
+  StorageBinFormData,
+} from '../types/schemas.ts'
 
 // --- Warehouses ---
 
@@ -27,9 +32,7 @@ async function updateWarehouse(id: string, data: WarehouseFormData): Promise<War
 // --- Storage Areas ---
 
 async function getAreas(warehouseId: string): Promise<readonly StorageArea[]> {
-  const response = await apiClient.get<StorageArea[]>(
-    `/api/v1/warehouses/${warehouseId}/areas`,
-  )
+  const response = await apiClient.get<StorageArea[]>(`/api/v1/warehouses/${warehouseId}/areas`)
   return response.data
 }
 

@@ -18,9 +18,7 @@ export function InventarioPage() {
     <div className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Inventory</h1>
-        <p className="mt-1 text-sm text-muted">
-          Manage stock batches and track inventory levels
-        </p>
+        <p className="mt-1 text-sm text-muted">Manage stock batches and track inventory levels</p>
       </div>
 
       <StockBatchList onView={handleViewBatch} />

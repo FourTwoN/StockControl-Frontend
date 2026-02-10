@@ -21,9 +21,7 @@ interface CatalogListParams {
 
 // --- Catalog ---
 
-async function getCatalogList(
-  params: CatalogListParams,
-): Promise<PagedResponse<PackagingCatalog>> {
+async function getCatalogList(params: CatalogListParams): Promise<PagedResponse<PackagingCatalog>> {
   const { page, size, search, typeId, materialId, colorId } = params
   const queryParams: Record<string, string | number> = { page, size }
 
@@ -40,27 +38,19 @@ async function getCatalogList(
     queryParams.colorId = colorId
   }
 
-  const response = await apiClient.get<PagedResponse<PackagingCatalog>>(
-    `${BASE_PATH}/catalog`,
-    { params: queryParams },
-  )
+  const response = await apiClient.get<PagedResponse<PackagingCatalog>>(`${BASE_PATH}/catalog`, {
+    params: queryParams,
+  })
   return response.data
 }
 
 async function getCatalogById(id: string): Promise<PackagingCatalog> {
-  const response = await apiClient.get<PackagingCatalog>(
-    `${BASE_PATH}/catalog/${id}`,
-  )
+  const response = await apiClient.get<PackagingCatalog>(`${BASE_PATH}/catalog/${id}`)
   return response.data
 }
 
-async function createCatalogItem(
-  data: PackagingCatalogFormData,
-): Promise<PackagingCatalog> {
-  const response = await apiClient.post<PackagingCatalog>(
-    `${BASE_PATH}/catalog`,
-    data,
-  )
+async function createCatalogItem(data: PackagingCatalogFormData): Promise<PackagingCatalog> {
+  const response = await apiClient.post<PackagingCatalog>(`${BASE_PATH}/catalog`, data)
   return response.data
 }
 
@@ -68,10 +58,7 @@ async function updateCatalogItem(
   id: string,
   data: PackagingCatalogFormData,
 ): Promise<PackagingCatalog> {
-  const response = await apiClient.put<PackagingCatalog>(
-    `${BASE_PATH}/catalog/${id}`,
-    data,
-  )
+  const response = await apiClient.put<PackagingCatalog>(`${BASE_PATH}/catalog/${id}`, data)
   return response.data
 }
 
@@ -86,51 +73,41 @@ async function getTypes(): Promise<readonly PackagingType[]> {
   return response.data
 }
 
-async function createType(
-  data: { readonly name: string; readonly description?: string },
-): Promise<PackagingType> {
-  const response = await apiClient.post<PackagingType>(
-    `${BASE_PATH}/types`,
-    data,
-  )
+async function createType(data: {
+  readonly name: string
+  readonly description?: string
+}): Promise<PackagingType> {
+  const response = await apiClient.post<PackagingType>(`${BASE_PATH}/types`, data)
   return response.data
 }
 
 // --- Materials ---
 
 async function getMaterials(): Promise<readonly PackagingMaterial[]> {
-  const response = await apiClient.get<PackagingMaterial[]>(
-    `${BASE_PATH}/materials`,
-  )
+  const response = await apiClient.get<PackagingMaterial[]>(`${BASE_PATH}/materials`)
   return response.data
 }
 
-async function createMaterial(
-  data: { readonly name: string; readonly description?: string },
-): Promise<PackagingMaterial> {
-  const response = await apiClient.post<PackagingMaterial>(
-    `${BASE_PATH}/materials`,
-    data,
-  )
+async function createMaterial(data: {
+  readonly name: string
+  readonly description?: string
+}): Promise<PackagingMaterial> {
+  const response = await apiClient.post<PackagingMaterial>(`${BASE_PATH}/materials`, data)
   return response.data
 }
 
 // --- Colors ---
 
 async function getColors(): Promise<readonly PackagingColor[]> {
-  const response = await apiClient.get<PackagingColor[]>(
-    `${BASE_PATH}/colors`,
-  )
+  const response = await apiClient.get<PackagingColor[]>(`${BASE_PATH}/colors`)
   return response.data
 }
 
-async function createColor(
-  data: { readonly name: string; readonly hex: string },
-): Promise<PackagingColor> {
-  const response = await apiClient.post<PackagingColor>(
-    `${BASE_PATH}/colors`,
-    data,
-  )
+async function createColor(data: {
+  readonly name: string
+  readonly hex: string
+}): Promise<PackagingColor> {
+  const response = await apiClient.post<PackagingColor>(`${BASE_PATH}/colors`, data)
   return response.data
 }
 

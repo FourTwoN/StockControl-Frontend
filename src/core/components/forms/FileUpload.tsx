@@ -14,12 +14,7 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
 }
 
-export function FileUpload({
-  accept,
-  maxSize,
-  onUpload,
-  multiple = false,
-}: FileUploadProps) {
+export function FileUpload({ accept, maxSize, onUpload, multiple = false }: FileUploadProps) {
   const [isDragOver, setIsDragOver] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState<readonly File[]>([])
   const [error, setError] = useState<string | null>(null)
@@ -57,7 +52,7 @@ export function FileUpload({
       }
       return { valid: validFiles, error: null }
     },
-    [accept, maxSize]
+    [accept, maxSize],
   )
 
   const handleFiles = useCallback(
@@ -74,7 +69,7 @@ export function FileUpload({
       setSelectedFiles(valid)
       onUpload(valid)
     },
-    [validateFiles, onUpload]
+    [validateFiles, onUpload],
   )
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -95,7 +90,7 @@ export function FileUpload({
         handleFiles(e.dataTransfer.files)
       }
     },
-    [handleFiles]
+    [handleFiles],
   )
 
   const handleInputChange = useCallback(
@@ -104,7 +99,7 @@ export function FileUpload({
         handleFiles(e.target.files)
       }
     },
-    [handleFiles]
+    [handleFiles],
   )
 
   const openFilePicker = useCallback(() => {
@@ -117,7 +112,7 @@ export function FileUpload({
       setSelectedFiles(updated)
       onUpload([...updated])
     },
-    [selectedFiles, onUpload]
+    [selectedFiles, onUpload],
   )
 
   return (
@@ -141,9 +136,7 @@ export function FileUpload({
         tabIndex={0}
       >
         <Upload className="mb-2 h-8 w-8 text-muted" />
-        <p className="text-sm font-medium text-primary">
-          Drop files here or click to browse
-        </p>
+        <p className="text-sm font-medium text-primary">Drop files here or click to browse</p>
         <p className="mt-1 text-xs text-muted">
           {accept ? `Accepted: ${accept}` : 'Any file type'}
           {maxSize ? ` | Max: ${formatFileSize(maxSize)}` : ''}
