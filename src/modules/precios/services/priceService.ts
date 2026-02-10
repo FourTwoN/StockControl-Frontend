@@ -9,16 +9,16 @@ function buildPriceListUrl(id: string): string {
   return `${BASE_URL}/${id}`
 }
 
-function buildItemsUrl(listId: string): string {
-  return `${BASE_URL}/${listId}/items`
+function buildEntriesUrl(priceListId: string): string {
+  return `${BASE_URL}/${priceListId}/entries`
 }
 
-function buildBulkUrl(listId: string): string {
-  return `${BASE_URL}/${listId}/items/bulk`
+function buildBulkUrl(priceListId: string): string {
+  return `${BASE_URL}/${priceListId}/entries/bulk`
 }
 
-function buildItemUrl(listId: string, itemId: string): string {
-  return `${BASE_URL}/${listId}/items/${itemId}`
+function buildEntryUrl(priceListId: string, entryId: string): string {
+  return `${BASE_URL}/${priceListId}/entries/${entryId}`
 }
 
 export async function fetchPriceLists(
@@ -54,26 +54,31 @@ export async function deletePriceList(id: string): Promise<void> {
   await apiClient.delete(buildPriceListUrl(id))
 }
 
-export async function fetchPriceItems(listId: string): Promise<PriceItem[]> {
-  const { data } = await apiClient.get<PriceItem[]>(buildItemsUrl(listId))
+export async function fetchPriceEntries(priceListId: string): Promise<PriceItem[]> {
+  const { data } = await apiClient.get<PriceItem[]>(buildEntriesUrl(priceListId))
   return data
 }
 
-export async function bulkUploadItems(listId: string, file: File): Promise<PriceItem[]> {
+export async function bulkUploadEntries(priceListId: string, file: File): Promise<PriceItem[]> {
   const formData = new FormData()
   formData.append('file', file)
 
-  const { data } = await apiClient.post<PriceItem[]>(buildBulkUrl(listId), formData, {
+  const { data } = await apiClient.post<PriceItem[]>(buildBulkUrl(priceListId), formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   })
   return data
 }
 
-export async function updatePriceItem(
-  listId: string,
-  itemId: string,
+export async function updatePriceEntry(
+  priceListId: string,
+  entryId: string,
   payload: PriceItemFormData,
 ): Promise<PriceItem> {
-  const { data } = await apiClient.put<PriceItem>(buildItemUrl(listId, itemId), payload)
+  const { data } = await apiClient.put<PriceItem>(buildEntryUrl(priceListId, entryId), payload)
   return data
 }
+
+// Legacy aliases for backward compatibility
+export const fetchPriceItems = fetchPriceEntries
+export const bulkUploadItems = bulkUploadEntries
+export const updatePriceItem = updatePriceEntry

@@ -3,7 +3,7 @@ import type { PagedResponse } from '@core/api/types'
 import type { StockMovement } from '../types/StockMovement.ts'
 import type { MovementRequest } from '../types/schemas.ts'
 
-const BASE_PATH = '/api/v1/stock/movements'
+const BASE_PATH = '/api/v1/stock-movements'
 
 interface FetchMovementsParams {
   readonly batchId?: string

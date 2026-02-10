@@ -2,7 +2,7 @@ import { apiClient } from '@core/api/apiClient'
 import type { PagedResponse } from '@core/api/types'
 import type { StockBatch } from '../types/StockBatch.ts'
 
-const BASE_PATH = '/api/v1/stock/batches'
+const BASE_PATH = '/api/v1/stock-batches'
 
 interface FetchBatchesParams {
   readonly page: number

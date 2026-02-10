@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef } from 'react'
-import { Camera, Plus, Upload } from 'lucide-react'
+import { useState, useCallback } from 'react'
+import { Camera, Plus } from 'lucide-react'
 import { Button } from '@core/components/ui/Button'
 import { Modal } from '@core/components/ui/Modal'
 import { Input } from '@core/components/ui/Input'
@@ -9,13 +9,11 @@ import { useToast } from '@core/components/ui/Toast'
 import { SessionCard } from '../components/SessionCard.tsx'
 import { usePhotoSessions } from '../hooks/usePhotoSessions.ts'
 import { useCreateSession } from '../hooks/useCreateSession.ts'
-import { useUploadPhoto } from '../hooks/useUploadPhoto.ts'
 
 const PAGE_SIZE = 20
 
 export function PhotosPage() {
   const toast = useToast()
-  const fileInputRef = useRef<HTMLInputElement>(null)
 
   const [page, setPage] = useState(0)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
@@ -24,7 +22,6 @@ export function PhotosPage() {
 
   const { data, isLoading } = usePhotoSessions(page, PAGE_SIZE)
   const createSession = useCreateSession()
-  const uploadPhoto = useUploadPhoto()
 
   const handleOpenCreate = useCallback(() => {
     setIsCreateOpen(true)
@@ -58,30 +55,6 @@ export function PhotosPage() {
     )
   }, [sessionName, sessionDescription, createSession, toast])
 
-  const handleUploadClick = useCallback(() => {
-    fileInputRef.current?.click()
-  }, [])
-
-  const handleFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0]
-      if (!file) return
-
-      uploadPhoto.mutate(file, {
-        onSuccess: () => {
-          toast.success('Photo uploaded successfully')
-        },
-        onError: () => {
-          toast.error('Failed to upload photo')
-        },
-      })
-
-      // Reset file input so the same file can be uploaded again
-      e.target.value = ''
-    },
-    [uploadPhoto, toast],
-  )
-
   const handlePreviousPage = useCallback(() => {
     setPage((prev) => Math.max(0, prev - 1))
   }, [])
@@ -103,21 +76,10 @@ export function PhotosPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={handleUploadClick} isLoading={uploadPhoto.isPending}>
-            <Upload className="h-4 w-4" />
-            Upload
-          </Button>
           <Button onClick={handleOpenCreate}>
             <Plus className="h-4 w-4" />
             New Session
           </Button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleFileChange}
-          />
         </div>
       </div>
 

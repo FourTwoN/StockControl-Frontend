@@ -38,7 +38,7 @@ async function getCatalogList(params: CatalogListParams): Promise<PagedResponse<
     queryParams.colorId = colorId
   }
 
-  const response = await apiClient.get<PagedResponse<PackagingCatalog>>(`${BASE_PATH}/catalog`, {
+  const response = await apiClient.get<PagedResponse<PackagingCatalog>>(`${BASE_PATH}/catalogs`, {
     params: queryParams,
   })
   return response.data
@@ -50,7 +50,7 @@ async function getCatalogById(id: string): Promise<PackagingCatalog> {
 }
 
 async function createCatalogItem(data: PackagingCatalogFormData): Promise<PackagingCatalog> {
-  const response = await apiClient.post<PackagingCatalog>(`${BASE_PATH}/catalog`, data)
+  const response = await apiClient.post<PackagingCatalog>(`${BASE_PATH}/catalogs`, data)
   return response.data
 }
 

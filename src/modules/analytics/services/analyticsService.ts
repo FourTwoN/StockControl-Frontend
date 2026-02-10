@@ -47,7 +47,7 @@ export const analyticsService = {
       .then((r) => r.data),
 
   fetchOccupancy: () =>
-    apiClient.get<WarehouseOccupancy[]>('/api/v1/analytics/occupancy').then((r) => r.data),
+    apiClient.get<WarehouseOccupancy[]>('/api/v1/analytics/location-occupancy').then((r) => r.data),
 
   fetchKPIs: () => apiClient.get<KPI[]>('/api/v1/analytics/kpis').then((r) => r.data),
 }
