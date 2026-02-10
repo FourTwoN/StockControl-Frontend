@@ -66,11 +66,24 @@ async function deleteCatalogItem(id: string): Promise<void> {
   await apiClient.delete(`${BASE_PATH}/catalog/${id}`)
 }
 
+// Helper to extract array from paginated or array response
+function extractArray<T>(data: T[] | PagedResponse<T>): readonly T[] {
+  if (Array.isArray(data)) {
+    return data
+  }
+  if (data && typeof data === 'object' && 'content' in data) {
+    return (data as PagedResponse<T>).content
+  }
+  return []
+}
+
 // --- Types ---
 
 async function getTypes(): Promise<readonly PackagingType[]> {
-  const response = await apiClient.get<PackagingType[]>(`${BASE_PATH}/types`)
-  return response.data
+  const response = await apiClient.get<PackagingType[] | PagedResponse<PackagingType>>(
+    `${BASE_PATH}/types`,
+  )
+  return extractArray(response.data)
 }
 
 async function createType(data: {
@@ -84,8 +97,10 @@ async function createType(data: {
 // --- Materials ---
 
 async function getMaterials(): Promise<readonly PackagingMaterial[]> {
-  const response = await apiClient.get<PackagingMaterial[]>(`${BASE_PATH}/materials`)
-  return response.data
+  const response = await apiClient.get<PackagingMaterial[] | PagedResponse<PackagingMaterial>>(
+    `${BASE_PATH}/materials`,
+  )
+  return extractArray(response.data)
 }
 
 async function createMaterial(data: {
@@ -99,8 +114,10 @@ async function createMaterial(data: {
 // --- Colors ---
 
 async function getColors(): Promise<readonly PackagingColor[]> {
-  const response = await apiClient.get<PackagingColor[]>(`${BASE_PATH}/colors`)
-  return response.data
+  const response = await apiClient.get<PackagingColor[] | PagedResponse<PackagingColor>>(
+    `${BASE_PATH}/colors`,
+  )
+  return extractArray(response.data)
 }
 
 async function createColor(data: {

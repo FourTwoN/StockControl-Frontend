@@ -49,24 +49,28 @@ export function PackagingForm({
 
   const selectedColorId = watch('colorId')
 
+  const colorsArray = Array.isArray(colors) ? colors : []
+  const typesArray = Array.isArray(types) ? types : []
+  const materialsArray = Array.isArray(materials) ? materials : []
+
   const selectedColor = useMemo(
-    () => colors?.find((c) => c.id === selectedColorId),
-    [colors, selectedColorId],
+    () => colorsArray.find((c) => c.id === selectedColorId),
+    [colorsArray, selectedColorId],
   )
 
   const typeOptions = useMemo(
-    () => (types ?? []).map((t) => ({ value: t.id, label: t.name })),
-    [types],
+    () => typesArray.map((t) => ({ value: t.id, label: t.name })),
+    [typesArray],
   )
 
   const materialOptions = useMemo(
-    () => (materials ?? []).map((m) => ({ value: m.id, label: m.name })),
-    [materials],
+    () => materialsArray.map((m) => ({ value: m.id, label: m.name })),
+    [materialsArray],
   )
 
   const colorOptions = useMemo(
-    () => (colors ?? []).map((c) => ({ value: c.id, label: c.name })),
-    [colors],
+    () => colorsArray.map((c) => ({ value: c.id, label: c.name })),
+    [colorsArray],
   )
 
   const handleFormSubmit = useCallback(

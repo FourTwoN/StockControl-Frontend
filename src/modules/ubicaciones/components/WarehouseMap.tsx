@@ -27,16 +27,22 @@ function computeCapacityPercent(warehouse: Warehouse): number {
   return Math.round((warehouse.usedCapacity / warehouse.totalCapacity) * 100)
 }
 
+function hasValidCoordinates(wh: Warehouse): boolean {
+  return wh.latitude !== null && wh.longitude !== null
+}
+
 export function WarehouseMap({ warehouses }: WarehouseMapProps) {
   const markers = useMemo(
     () =>
-      warehouses.map((wh) => ({
-        id: wh.id,
-        position: [wh.latitude, wh.longitude] as L.LatLngExpression,
-        name: wh.name,
-        address: wh.address,
-        capacityPercent: computeCapacityPercent(wh),
-      })),
+      warehouses
+        .filter(hasValidCoordinates)
+        .map((wh) => ({
+          id: wh.id,
+          position: [wh.latitude, wh.longitude] as L.LatLngExpression,
+          name: wh.name,
+          address: wh.address,
+          capacityPercent: computeCapacityPercent(wh),
+        })),
     [warehouses],
   )
 

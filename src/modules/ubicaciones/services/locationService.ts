@@ -1,4 +1,5 @@
 import { apiClient } from '@core/api/apiClient.ts'
+import type { PagedResponse } from '@core/api/types.ts'
 import type { Warehouse, StorageArea, StorageLocation, StorageBin } from '../types/Location.ts'
 import type {
   WarehouseFormData,
@@ -12,8 +13,8 @@ const WAREHOUSES_PATH = '/api/v1/warehouses'
 // --- Warehouses ---
 
 async function getWarehouses(): Promise<readonly Warehouse[]> {
-  const response = await apiClient.get<Warehouse[]>(WAREHOUSES_PATH)
-  return response.data
+  const response = await apiClient.get<PagedResponse<Warehouse>>(WAREHOUSES_PATH)
+  return response.data.content
 }
 
 async function getWarehouse(id: string): Promise<Warehouse> {

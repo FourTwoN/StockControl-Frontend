@@ -38,7 +38,7 @@ export default function MapPage() {
     )
   }
 
-  const warehouseList = warehouses ?? []
+  const warehouseList = Array.isArray(warehouses) ? warehouses : []
 
   if (warehouseList.length === 0) {
     return (

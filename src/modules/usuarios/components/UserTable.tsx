@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { Pencil, Trash2 } from 'lucide-react'
 import { format } from 'date-fns'
 import { DataTable } from '@core/components/ui/DataTable'
@@ -36,9 +36,11 @@ export function UserTable({ onEdit, onDelete }: UserTableProps) {
 
   const { data, isLoading } = useUsers(pagination.page, pagination.size)
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
   const columns: readonly Column<User>[] = useMemo(
     () => [

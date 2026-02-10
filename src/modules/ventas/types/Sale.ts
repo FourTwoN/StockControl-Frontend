@@ -3,7 +3,7 @@ export interface Sale {
   readonly saleNumber: string
   readonly items: readonly SaleItem[]
   readonly totalAmount: number
-  readonly currency: string
+  readonly currency: string | null
   readonly status: 'PENDING' | 'CONFIRMED' | 'CANCELLED'
   readonly customerName?: string
   readonly notes?: string

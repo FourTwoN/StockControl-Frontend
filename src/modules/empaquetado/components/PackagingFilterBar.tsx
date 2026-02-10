@@ -36,14 +36,24 @@ export function PackagingFilterBar({
   materials,
   colors,
 }: PackagingFilterBarProps) {
-  const typeOptions = useMemo(() => types.map((t) => ({ value: t.id, label: t.name })), [types])
+  const typesArray = Array.isArray(types) ? types : []
+  const materialsArray = Array.isArray(materials) ? materials : []
+  const colorsArray = Array.isArray(colors) ? colors : []
 
-  const materialOptions = useMemo(
-    () => materials.map((m) => ({ value: m.id, label: m.name })),
-    [materials],
+  const typeOptions = useMemo(
+    () => typesArray.map((t) => ({ value: t.id, label: t.name })),
+    [typesArray],
   )
 
-  const colorOptions = useMemo(() => colors.map((c) => ({ value: c.id, label: c.name })), [colors])
+  const materialOptions = useMemo(
+    () => materialsArray.map((m) => ({ value: m.id, label: m.name })),
+    [materialsArray],
+  )
+
+  const colorOptions = useMemo(
+    () => colorsArray.map((c) => ({ value: c.id, label: c.name })),
+    [colorsArray],
+  )
 
   const handleSearchChange = useCallback(
     (search: string) => {

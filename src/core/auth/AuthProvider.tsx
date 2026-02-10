@@ -6,9 +6,15 @@ import { AuthContext } from '@core/auth/authContext'
 import type { AuthContextValue } from '@core/auth/authContext'
 import { UserRole } from '@core/types/enums'
 
+// Auth0 custom claims
+// Backend expects 'permissions' and 'tenant_id' without namespace
+// But we also support legacy namespaced claims for backward compatibility
 const CLAIMS_NAMESPACE = 'https://demeter.app'
 const AUTH_TOKEN_KEY = 'auth0_token'
 const TENANT_ID_KEY = 'tenant_id'
+
+// Stable empty array to prevent re-render loops
+const EMPTY_ROLES: readonly UserRole[] = []
 
 interface AuthProviderProps {
   readonly children: ReactNode
@@ -102,15 +108,21 @@ function Auth0StateProvider({ children }: AuthStateProviderProps) {
   }, [isAuthenticated, getAccessTokenSilently])
 
   const roles = useMemo(() => {
-    if (!auth0User) return []
-    const claimRoles = auth0User[`${CLAIMS_NAMESPACE}/roles`] as readonly UserRole[] | undefined
-    return claimRoles ?? []
+    if (!auth0User) return EMPTY_ROLES
+    // Try non-namespaced first (backend format), then namespaced (legacy)
+    const permissions =
+      (auth0User['permissions'] as readonly UserRole[] | undefined) ??
+      (auth0User[`${CLAIMS_NAMESPACE}/roles`] as readonly UserRole[] | undefined)
+    return permissions ?? EMPTY_ROLES
   }, [auth0User])
 
   const user = useMemo<AuthUser | null>(() => {
     if (!auth0User || !isAuthenticated) return null
 
-    const tenantId = auth0User[`${CLAIMS_NAMESPACE}/tenant_id`] as string | undefined
+    // Try non-namespaced first (backend format), then namespaced (legacy)
+    const tenantId =
+      (auth0User['tenant_id'] as string | undefined) ??
+      (auth0User[`${CLAIMS_NAMESPACE}/tenant_id`] as string | undefined)
 
     return {
       id: auth0User.sub ?? '',

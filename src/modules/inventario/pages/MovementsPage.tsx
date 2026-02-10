@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
@@ -50,9 +50,11 @@ export function MovementsPage() {
     endDate: endDate || undefined,
   })
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
   const handleTypeChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {

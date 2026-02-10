@@ -45,7 +45,7 @@ export function ProductForm({ initialData, onSubmit, isSubmitting = false }: Pro
 
   const categoryOptions = useMemo(
     () =>
-      (categories ?? []).map((cat) => ({
+      (Array.isArray(categories) ? categories : []).map((cat) => ({
         value: cat.id,
         label: cat.name,
       })),
@@ -54,7 +54,7 @@ export function ProductForm({ initialData, onSubmit, isSubmitting = false }: Pro
 
   const familyOptions = useMemo(
     () =>
-      (families ?? []).map((fam) => ({
+      (Array.isArray(families) ? families : []).map((fam) => ({
         value: fam.id,
         label: fam.name,
       })),

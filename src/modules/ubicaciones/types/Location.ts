@@ -2,8 +2,8 @@ export interface Warehouse {
   readonly id: string
   readonly name: string
   readonly address: string
-  readonly latitude: number
-  readonly longitude: number
+  readonly latitude: number | null
+  readonly longitude: number | null
   readonly totalCapacity: number
   readonly usedCapacity: number
   readonly areaCount: number

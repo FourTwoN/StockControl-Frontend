@@ -26,18 +26,18 @@ export interface CostEntry {
 }
 
 export interface InventoryValuation {
-  readonly totalValue: number
-  readonly totalUnits: number
-  readonly currency: string
+  readonly totalValue: number | null
+  readonly totalUnits: number | null
+  readonly currency: string | null
   readonly byCategory: readonly CategoryValuation[]
 }
 
 export interface CategoryValuation {
   readonly categoryId: string
   readonly categoryName: string
-  readonly totalValue: number
-  readonly totalUnits: number
-  readonly percentage: number
+  readonly totalValue: number | null
+  readonly totalUnits: number | null
+  readonly percentage: number | null
 }
 
 export interface CostTrend {

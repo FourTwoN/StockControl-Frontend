@@ -18,6 +18,12 @@ function addAuthHeaders(config: InternalAxiosRequestConfig): InternalAxiosReques
   const token = localStorage.getItem(AUTH_TOKEN_KEY)
   const tenantId = localStorage.getItem(TENANT_ID_KEY)
 
+  if (import.meta.env.DEV) {
+    console.debug('[API] Request:', config.method?.toUpperCase(), config.url)
+    console.debug('[API] Token present:', Boolean(token), token ? `(${token.slice(0, 20)}...)` : '')
+    console.debug('[API] Tenant ID:', tenantId)
+  }
+
   if (token) {
     config.headers.set('Authorization', `Bearer ${token}`)
   }

@@ -6,10 +6,12 @@ interface SaleReceiptProps {
   readonly sale: Sale
 }
 
-function formatCurrency(amount: number, currency: string): string {
+const DEFAULT_CURRENCY = 'ARS'
+
+function formatCurrency(amount: number, currency: string | null | undefined): string {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
-    currency,
+    currency: currency || DEFAULT_CURRENCY,
   }).format(amount)
 }
 

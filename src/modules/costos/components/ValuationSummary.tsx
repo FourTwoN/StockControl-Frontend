@@ -5,11 +5,13 @@ import { Skeleton } from '@core/components/ui/Skeleton'
 import { useInventoryValuation } from '../hooks/useInventoryValuation.ts'
 import type { CategoryValuation } from '../types/Cost.ts'
 
-function formatCurrency(amount: number, currency: string): string {
+const DEFAULT_CURRENCY = 'ARS'
+
+function formatCurrency(amount: number | null | undefined, currency: string | null | undefined): string {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
-    currency,
-  }).format(amount)
+    currency: currency || DEFAULT_CURRENCY,
+  }).format(amount ?? 0)
 }
 
 const CATEGORY_COLORS = [
@@ -30,10 +32,12 @@ function getCategoryColor(index: number): string {
 interface CategoryBarProps {
   readonly category: CategoryValuation
   readonly colorClass: string
-  readonly currency: string
+  readonly currency: string | null
 }
 
 function CategoryBar({ category, colorClass, currency }: CategoryBarProps) {
+  const percentage = category.percentage ?? 0
+
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-center justify-between text-sm">
@@ -42,13 +46,13 @@ function CategoryBar({ category, colorClass, currency }: CategoryBarProps) {
           <span className="font-medium text-primary">{category.categoryName}</span>
         </div>
         <span className="text-muted">
-          {formatCurrency(category.totalValue, currency)} ({category.percentage.toFixed(1)}%)
+          {formatCurrency(category.totalValue, currency)} ({percentage.toFixed(1)}%)
         </span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-muted/20">
         <div
           className={`h-full rounded-full ${colorClass} transition-all duration-500`}
-          style={{ width: `${Math.max(category.percentage, 1)}%` }}
+          style={{ width: `${Math.max(percentage, 1)}%` }}
         />
       </div>
     </div>
@@ -59,7 +63,10 @@ export function ValuationSummary() {
   const { data: valuation, isLoading } = useInventoryValuation()
 
   const sortedCategories = useMemo(
-    () => (valuation ? [...valuation.byCategory].sort((a, b) => b.totalValue - a.totalValue) : []),
+    () =>
+      valuation
+        ? [...valuation.byCategory].sort((a, b) => (b.totalValue ?? 0) - (a.totalValue ?? 0))
+        : [],
     [valuation],
   )
 
@@ -101,7 +108,7 @@ export function ValuationSummary() {
           <div>
             <p className="text-xs font-medium uppercase text-muted">Total Units</p>
             <p className="mt-1 text-2xl font-bold text-primary">
-              {new Intl.NumberFormat('es-AR').format(valuation.totalUnits)}
+              {new Intl.NumberFormat('es-AR').format(valuation.totalUnits ?? 0)}
             </p>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { Pencil, Trash2, Plus } from 'lucide-react'
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
@@ -35,9 +35,11 @@ export function ProductList({ onEdit, onDelete, onCreate }: ProductListProps) {
 
   const { data, isLoading } = useProducts(pagination.page, pagination.size, search)
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
   const handleSearchChange = useCallback(
     (value: string) => {

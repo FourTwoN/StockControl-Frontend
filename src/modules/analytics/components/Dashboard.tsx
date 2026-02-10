@@ -82,18 +82,24 @@ export function Dashboard() {
     setSalesPeriod(e.target.value as SalesPeriod)
   }, [])
 
+  const kpisData = Array.isArray(kpis.data) ? kpis.data : []
+  const stockHistoryData = Array.isArray(stockHistory.data) ? stockHistory.data : []
+  const salesSummaryData = Array.isArray(salesSummary.data) ? salesSummary.data : []
+  const topProductsData = Array.isArray(topProducts.data) ? topProducts.data : []
+  const occupancyData = Array.isArray(occupancy.data) ? occupancy.data : []
+
   const stockExportData = useMemo(
-    () => toExportableStock(stockHistory.data ?? []),
-    [stockHistory.data],
+    () => toExportableStock(stockHistoryData),
+    [stockHistoryData],
   )
 
   const salesExportData = useMemo(
-    () => toExportableSales(salesSummary.data ?? []),
-    [salesSummary.data],
+    () => toExportableSales(salesSummaryData),
+    [salesSummaryData],
   )
 
   const hasNoData =
-    !kpis.isLoading && !kpis.data?.length && !stockHistory.isLoading && !stockHistory.data?.length
+    !kpis.isLoading && !kpisData.length && !stockHistory.isLoading && !stockHistoryData.length
 
   if (hasNoData) {
     return (
@@ -151,7 +157,7 @@ export function Dashboard() {
         <KPISkeletonGrid />
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {kpis.data?.map((kpi) => (
+          {kpisData.map((kpi) => (
             <KPICard key={kpi.id} kpi={kpi} />
           ))}
         </div>
@@ -160,17 +166,17 @@ export function Dashboard() {
       {/* Row 2: Stock Chart (span 2) + Occupancy */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <StockChart data={stockHistory.data ?? []} isLoading={stockHistory.isLoading} />
+          <StockChart data={stockHistoryData} isLoading={stockHistory.isLoading} />
         </div>
-        <OccupancyWidget data={occupancy.data ?? []} isLoading={occupancy.isLoading} />
+        <OccupancyWidget data={occupancyData} isLoading={occupancy.isLoading} />
       </div>
 
       {/* Row 3: Sales Chart (span 2) + Top Products */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <SalesChart data={salesSummary.data ?? []} isLoading={salesSummary.isLoading} />
+          <SalesChart data={salesSummaryData} isLoading={salesSummary.isLoading} />
         </div>
-        <TopProductsWidget data={topProducts.data ?? []} isLoading={topProducts.isLoading} />
+        <TopProductsWidget data={topProductsData} isLoading={topProducts.isLoading} />
       </div>
     </div>
   )

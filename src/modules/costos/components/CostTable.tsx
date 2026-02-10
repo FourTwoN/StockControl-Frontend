@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { usePagination } from '@core/hooks/usePagination'
@@ -17,9 +17,11 @@ export function CostTable() {
 
   const { data, isLoading } = useProductCosts(pagination.page, pagination.size)
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
   const columns: readonly Column<ProductCost>[] = useMemo(
     () => [

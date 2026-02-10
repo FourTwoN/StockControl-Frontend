@@ -42,7 +42,7 @@ export interface KPI {
   readonly id: string
   readonly label: string
   readonly value: number
-  readonly previousValue: number
+  readonly previousValue: number | null
   readonly unit: string
-  readonly trend: 'up' | 'down' | 'stable'
+  readonly trend: 'up' | 'down' | 'stable' | null
 }

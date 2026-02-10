@@ -1,12 +1,12 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { Eye } from 'lucide-react'
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { Button } from '@core/components/ui/Button'
 import { Select } from '@core/components/ui/Select'
-import { SearchInput } from '@core/components/forms/SearchInput'
 import { usePagination } from '@core/hooks/usePagination'
 import { BatchStatus } from '@core/types/enums'
+import { useProducts } from '@modules/productos/hooks/useProducts.ts'
 import { useStockBatches } from '../hooks/useStockBatches.ts'
 import { BatchStatusBadge } from './BatchStatusBadge.tsx'
 import type { StockBatch } from '../types/StockBatch.ts'
@@ -23,24 +23,35 @@ const STATUS_OPTIONS = [
 ] as const
 
 export function StockBatchList({ onView }: StockBatchListProps) {
-  const [search, setSearch] = useState('')
+  const [productFilter, setProductFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const pagination = usePagination(20)
+
+  // Fetch products for the dropdown (first 100)
+  const { data: productsData } = useProducts(0, 100)
+  const productsArray = Array.isArray(productsData?.content) ? productsData.content : []
+
+  const productOptions = useMemo(
+    () => productsArray.map((p) => ({ value: p.id, label: `${p.name} (${p.sku})` })),
+    [productsArray],
+  )
 
   const { data, isLoading } = useStockBatches({
     page: pagination.page,
     size: pagination.size,
-    productId: search || undefined,
+    productId: productFilter || undefined,
     status: statusFilter || undefined,
   })
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
-  const handleSearchChange = useCallback(
-    (value: string) => {
-      setSearch(value)
+  const handleProductChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setProductFilter(e.target.value)
       pagination.setPage(0)
     },
     [pagination],
@@ -126,11 +137,12 @@ export function StockBatchList({ onView }: StockBatchListProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-          <div className="w-full sm:max-w-xs">
-            <SearchInput
-              value={search}
-              onChange={handleSearchChange}
-              placeholder="Search by product..."
+          <div className="w-full sm:w-64">
+            <Select
+              options={productOptions}
+              value={productFilter}
+              onChange={handleProductChange}
+              placeholder="All products"
             />
           </div>
           <div className="w-full sm:w-40">

@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { Eye, Plus } from 'lucide-react'
 import { format } from 'date-fns'
@@ -33,10 +33,12 @@ const STATUS_OPTIONS = [
   { value: 'CANCELLED', label: 'Cancelled' },
 ] as const
 
-function formatCurrency(amount: number, currency: string): string {
+const DEFAULT_CURRENCY = 'ARS'
+
+function formatCurrency(amount: number, currency: string | null | undefined): string {
   return new Intl.NumberFormat('es-AR', {
     style: 'currency',
-    currency,
+    currency: currency || DEFAULT_CURRENCY,
   }).format(amount)
 }
 
@@ -63,9 +65,11 @@ export function SaleList({ onCreate }: SaleListProps) {
 
   const { data, isLoading } = useSales(pagination.page, pagination.size, filters)
 
-  if (data) {
-    pagination.setTotal(data.totalPages, data.totalElements)
-  }
+  useEffect(() => {
+    if (data) {
+      pagination.setTotal(data.totalPages, data.totalElements)
+    }
+  }, [data, pagination])
 
   const handleStatusChange = useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
