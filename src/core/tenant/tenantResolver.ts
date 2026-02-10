@@ -35,12 +35,18 @@ function resolveFromSubdomain(): string | null {
   }
 
   const parts = hostname.split('.')
+
+  // Handle *.localhost (e.g., go-bar.localhost for local dev)
+  if (parts.length === 2 && parts[1] === 'localhost') {
+    return parts[0] ?? null
+  }
+
+  // Standard subdomain: tenant.domain.tld (3+ parts)
   if (parts.length < 3) {
     return null
   }
 
-  const subdomain = parts[0]
-  return subdomain ?? null
+  return parts[0] ?? null
 }
 
 function resolveFromPath(): string | null {
@@ -63,6 +69,18 @@ function resolveFromEnv(): string | null {
   return import.meta.env.VITE_DEFAULT_TENANT_ID ?? null
 }
 
-export function resolveTenantId(): string | null {
-  return resolveFromSubdomain() ?? resolveFromPath() ?? resolveFromEnv()
+/**
+ * Resolution chain (highest to lowest priority):
+ * 1. Subdomain — go-bar.demeter.app or go-bar.localhost (production/dev)
+ * 2. Path prefix — /go-bar/dashboard (staging)
+ * 3. JWT claim — tenant_id from authenticated user (runtime fallback)
+ * 4. Env variable — VITE_DEFAULT_TENANT_ID (development override)
+ */
+export function resolveTenantId(jwtTenantId?: string | null): string | null {
+  return (
+    resolveFromSubdomain() ??
+    resolveFromPath() ??
+    jwtTenantId ??
+    resolveFromEnv()
+  )
 }

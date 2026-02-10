@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 
 import type { TenantConfig } from '@core/tenant/types'
 import { resolveTenantId } from '@core/tenant/tenantResolver'
+import { useAuth } from '@core/auth/useAuth'
 import env from '@core/config/env'
 import { Industry } from '@core/types/enums'
 import { allModuleKeys } from '@core/config/modules'
@@ -62,6 +63,7 @@ interface TenantProviderProps {
 }
 
 export function TenantProvider({ children }: TenantProviderProps) {
+  const { user } = useAuth()
   const [state, setState] = useState<TenantContextValue>({
     tenantId: null,
     tenantConfig: null,
@@ -73,7 +75,7 @@ export function TenantProvider({ children }: TenantProviderProps) {
     const abortController = new AbortController()
 
     const loadTenant = async () => {
-      const resolvedId = resolveTenantId()
+      const resolvedId = resolveTenantId(user?.tenantId)
 
       if (!resolvedId) {
         setState({
@@ -128,7 +130,7 @@ export function TenantProvider({ children }: TenantProviderProps) {
     return () => {
       abortController.abort()
     }
-  }, [])
+  }, [user?.tenantId])
 
   if (state.isLoading) {
     return <div data-testid="tenant-loading">Loading tenant...</div>
