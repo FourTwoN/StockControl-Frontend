@@ -187,33 +187,77 @@ const defaultPath = getFirstEnabledPath(enabledModules)
 
 ## Getting Started
 
+### Quick Start (explore the UI without a backend)
+
+This mode uses a local auth bypass and a fake tenant config with all 11 modules enabled. No Auth0 credentials or backend API needed.
+
 ```bash
 # 1. Clone
 git clone <repo-url> demeter-frontend-<industry>
 cd demeter-frontend-<industry>
 
 # 2. Install dependencies
-npm install
+npm ci          # use npm install if no package-lock.json exists yet
 
-# 3. Configure environment
+# 3. Configure environment for local bypass
 cp .env.example .env
-# Edit .env with your Auth0 credentials and API URL
+```
 
+Edit `.env` with these values:
+
+```env
+VITE_API_URL=http://localhost:8080
+VITE_AUTH0_DOMAIN=demeter.auth0.com
+VITE_AUTH0_CLIENT_ID=placeholder
+VITE_AUTH0_AUDIENCE=https://api.demeter.app
+VITE_AUTH0_CALLBACK_URL=http://localhost:3000/callback
+VITE_AUTH_BYPASS=true
+VITE_DEFAULT_TENANT_ID=local
+```
+
+```bash
 # 4. Start dev server (port 3000)
 npm run dev
 ```
 
+With `VITE_AUTH_BYPASS=true`, the app skips Auth0 entirely and creates a local dev user with all roles (`ADMIN`, `SUPERVISOR`, `WORKER`, `VIEWER`). The tenant resolver reads `VITE_DEFAULT_TENANT_ID` and loads a built-in `TenantConfig` with all modules enabled and default green theme.
+
+API calls will fail (no backend), but the full UI — layout, sidebar, all 11 modules, navigation — is explorable.
+
+### Full Setup (with Auth0 + backend)
+
+For connecting to a real backend with Auth0 authentication:
+
+```bash
+cp .env.example .env
+```
+
+```env
+VITE_API_URL=http://localhost:8080
+VITE_AUTH0_DOMAIN=your-tenant.auth0.com
+VITE_AUTH0_CLIENT_ID=your-client-id
+VITE_AUTH0_AUDIENCE=https://api.demeter.app
+VITE_AUTH0_CALLBACK_URL=http://localhost:3000/callback
+VITE_AUTH_BYPASS=false
+```
+
+In this mode:
+- Auth0 handles login/logout and JWT issuance
+- The tenant is resolved from the JWT `tenant_id` claim (or subdomain/path in production)
+- `TenantProvider` fetches the real config from `GET /api/v1/tenants/{id}/config`
+- API requests include `Authorization: Bearer <jwt>` and `X-Tenant-ID` headers
+
 ### Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `VITE_API_URL` | Backend API base URL | Yes |
-| `VITE_AUTH0_DOMAIN` | Auth0 tenant domain | Yes |
-| `VITE_AUTH0_CLIENT_ID` | Auth0 application client ID | Yes |
-| `VITE_AUTH0_AUDIENCE` | Auth0 API audience identifier | Yes |
-| `VITE_AUTH0_CALLBACK_URL` | OAuth callback URL | Yes |
-| `VITE_AUTH_BYPASS` | Skip Auth0 in local dev (`true`/`false`) | No |
-| `VITE_DEFAULT_TENANT_ID` | Override tenant resolution for dev | No |
+| Variable | Description | Quick Start | Full Setup |
+|----------|-------------|-------------|------------|
+| `VITE_API_URL` | Backend API base URL | Any value | Real backend URL |
+| `VITE_AUTH0_DOMAIN` | Auth0 tenant domain | Any value | Real Auth0 domain |
+| `VITE_AUTH0_CLIENT_ID` | Auth0 application client ID | Any value | Real client ID |
+| `VITE_AUTH0_AUDIENCE` | Auth0 API audience identifier | Any value | Real audience |
+| `VITE_AUTH0_CALLBACK_URL` | OAuth callback URL | `http://localhost:3000/callback` | Same |
+| `VITE_AUTH_BYPASS` | Skip Auth0 and use local dev user | `true` | `false` |
+| `VITE_DEFAULT_TENANT_ID` | Override tenant resolution | `local` | Not set (resolved from JWT/subdomain) |
 
 ## Scripts
 
