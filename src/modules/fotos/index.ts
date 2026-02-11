@@ -1,4 +1,4 @@
-export type { PhotoSession, S3Image, Detection, ProcessingStatus } from './types/Photo.ts'
+export type { PhotoSession, SessionImage, Detection, ProcessingStatus } from './types/Photo.ts'
 export { photoService } from './services/photoService.ts'
 export { usePhotoSessions } from './hooks/usePhotoSessions.ts'
 export { usePhotoSession } from './hooks/usePhotoSession.ts'

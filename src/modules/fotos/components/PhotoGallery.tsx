@@ -4,19 +4,19 @@ import { Badge } from '@core/components/ui/Badge'
 import { Modal } from '@core/components/ui/Modal'
 import { Skeleton } from '@core/components/ui/Skeleton'
 import { EmptyState } from '@core/components/ui/EmptyState'
-import type { S3Image } from '../types/Photo.ts'
+import type { SessionImage } from '../types/Photo.ts'
 
 interface PhotoGalleryProps {
-  readonly images: readonly S3Image[]
+  readonly images: readonly SessionImage[]
   readonly isLoading: boolean
-  readonly onImageSelect?: (image: S3Image) => void
+  readonly onImageSelect?: (image: SessionImage) => void
 }
 
 export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryProps) {
-  const [previewImage, setPreviewImage] = useState<S3Image | null>(null)
+  const [previewImage, setPreviewImage] = useState<SessionImage | null>(null)
 
   const handleImageClick = useCallback(
-    (image: S3Image) => {
+    (image: SessionImage) => {
       setPreviewImage(image)
       onImageSelect?.(image)
     },
@@ -68,13 +68,15 @@ export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryP
               alt={previewImage.fileName}
               className="w-full rounded-lg object-contain"
             />
-            <div className="flex flex-wrap gap-2">
-              {previewImage.detections.map((detection) => (
-                <Badge key={detection.id} variant="default">
-                  {detection.className} ({Math.round(detection.confidence * 100)}%)
-                </Badge>
-              ))}
-            </div>
+            {previewImage.detections && previewImage.detections.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {previewImage.detections.map((detection) => (
+                  <Badge key={detection.id} variant="default">
+                    {detection.className} ({Math.round(detection.confidence * 100)}%)
+                  </Badge>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </Modal>
@@ -83,8 +85,8 @@ export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryP
 }
 
 interface ImageCardProps {
-  readonly image: S3Image
-  readonly onClick: (image: S3Image) => void
+  readonly image: SessionImage
+  readonly onClick: (image: SessionImage) => void
 }
 
 function ImageCard({ image, onClick }: ImageCardProps) {
@@ -119,10 +121,10 @@ function ImageCard({ image, onClick }: ImageCardProps) {
         />
       </div>
 
-      {image.detections.length > 0 && (
+      {(image.detections?.length ?? 0) > 0 && (
         <div className="absolute right-2 top-2">
           <Badge variant="warning">
-            {image.detections.length} detection{image.detections.length !== 1 ? 's' : ''}
+            {image.detections!.length} detection{image.detections!.length !== 1 ? 's' : ''}
           </Badge>
         </div>
       )}

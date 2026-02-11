@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
-import { Camera, Plus } from 'lucide-react'
+import { useNavigate } from 'react-router'
+import { Camera, Plus, Cpu } from 'lucide-react'
 import { Button } from '@core/components/ui/Button'
 import { Modal } from '@core/components/ui/Modal'
 import { Input } from '@core/components/ui/Input'
@@ -14,6 +15,7 @@ const PAGE_SIZE = 20
 
 export function PhotosPage() {
   const toast = useToast()
+  const navigate = useNavigate()
 
   const [page, setPage] = useState(0)
   const [isCreateOpen, setIsCreateOpen] = useState(false)
@@ -76,6 +78,10 @@ export function PhotosPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={() => navigate('/fotos/ml-analysis')}>
+            <Cpu className="h-4 w-4" />
+            Quick ML Analysis
+          </Button>
           <Button onClick={handleOpenCreate}>
             <Plus className="h-4 w-4" />
             New Session

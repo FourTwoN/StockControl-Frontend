@@ -11,7 +11,7 @@ export interface PhotoSession {
   readonly completedAt?: string
 }
 
-export interface S3Image {
+export interface SessionImage {
   readonly id: string
   readonly sessionId: string
   readonly originalUrl: string
@@ -22,7 +22,7 @@ export interface S3Image {
   readonly latitude?: number
   readonly longitude?: number
   readonly capturedAt?: string
-  readonly detections: readonly Detection[]
+  readonly detections?: readonly Detection[]
 }
 
 export interface Detection {

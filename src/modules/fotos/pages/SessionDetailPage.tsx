@@ -11,7 +11,7 @@ import { ProcessingProgress } from '../components/ProcessingProgress.tsx'
 import { PhotoGallery } from '../components/PhotoGallery.tsx'
 import { ImageCompare } from '../components/ImageCompare.tsx'
 import type { PhotoSession } from '../types/Photo.ts'
-import type { S3Image } from '../types/Photo.ts'
+import type { SessionImage } from '../types/Photo.ts'
 
 type BadgeVariant = 'default' | 'warning' | 'success' | 'destructive'
 
@@ -36,13 +36,13 @@ export function SessionDetailPage() {
   const { data: session, isLoading: isLoadingSession } = usePhotoSession(sessionId)
   const { data: images, isLoading: isLoadingImages } = useSessionImages(sessionId)
 
-  const [selectedImage, setSelectedImage] = useState<S3Image | null>(null)
+  const [selectedImage, setSelectedImage] = useState<SessionImage | null>(null)
 
   const handleBack = useCallback(() => {
     void navigate('/fotos')
   }, [navigate])
 
-  const handleImageSelect = useCallback((image: S3Image) => {
+  const handleImageSelect = useCallback((image: SessionImage) => {
     setSelectedImage(image)
   }, [])
 
