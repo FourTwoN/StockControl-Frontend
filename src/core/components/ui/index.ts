@@ -1,4 +1,4 @@
-export { Button } from '@core/components/ui/Button'
+export { Button, buttonVariants } from '@core/components/ui/Button'
 export { Input } from '@core/components/ui/Input'
 export { Select } from '@core/components/ui/Select'
 export { Modal } from '@core/components/ui/Modal'
