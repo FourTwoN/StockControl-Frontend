@@ -1076,6 +1076,101 @@ Production builds split into optimized chunks:
 - **E2E**: Playwright (placeholder specs for auth, inventario, multi-tenant flows)
 - **94 tests** across 10 suites covering auth, tenant, API client, feature flags, module registry, navigation filtering, products, and inventory
 
+## Artifact Registry
+
+Docker images are organized by **industry** in Google Artifact Registry:
+
+```
+us-central1-docker.pkg.dev/PROJECT/
+└── cultivadores/               # Industry-specific repo
+    ├── frontend:v1.0.0
+    ├── frontend:latest
+    └── ...
+```
+
+### Why per-industry repos?
+
+- **Isolated permissions**: Grant access per industry
+- **Independent versioning**: Each industry can be at different versions
+- **Industry-specific builds**: Different Auth0 configs, API URLs per industry
+- **Future-proof**: Add new industries without affecting existing ones
+
+---
+
+## Image Handling (Signed URLs)
+
+The frontend receives **signed URLs** for images from the backend, not direct storage URLs:
+
+```typescript
+// API response includes signed URLs
+interface ImageWithUrlsDTO {
+  id: string
+  sessionId: string
+  originalFilename: string
+  imageUrl: string | null      // Signed URL (expires in 60 min)
+  thumbnailUrl: string | null  // Signed URL for thumbnail
+  detections: Detection[]
+}
+
+// Fetch images with signed URLs
+const images = await photoService.fetchSessionImages(sessionId)
+// images[0].imageUrl = "https://storage.googleapis.com/...?X-Goog-Signature=..."
+```
+
+### Benefits
+
+- **No public bucket access**: Storage bucket remains private
+- **Time-limited access**: URLs expire after configurable time
+- **Provider-agnostic**: Works with GCS, S3, or any provider
+- **Secure**: Signed with service account credentials
+
+---
+
+## ML Processing Integration
+
+The frontend integrates with the ML processing pipeline via Cloud Tasks:
+
+### Production Flow (Async)
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────────────┐     ┌─────────────┐
+│   Frontend  │────▶│   Backend   │────▶│   Cloud Tasks       │────▶│  ML Worker  │
+│  (upload)   │     │  (enqueue)  │     │  ml-processing-queue│     │  (process)  │
+└─────────────┘     └─────────────┘     └─────────────────────┘     └─────────────┘
+       │                                                                    │
+       │                         Poll for status                            │
+       └──────────────────────────────────────────────────────────────────▶│
+                                GET /photo-sessions/{id}/status
+```
+
+### Development Flow (Sync)
+
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   Frontend  │────▶│   Backend   │────▶│  ML Worker  │
+│  (upload)   │     │  (direct)   │     │  (process)  │
+└─────────────┘     └─────────────┘     └─────────────┘
+                           │
+                           ▼
+                    Immediate response
+```
+
+### Frontend Code
+
+```typescript
+// Upload and process (async in prod, sync in dev)
+const result = await mlService.processImages({
+  images: [{ filename, contentType, imageBase64 }],
+  pipeline: 'SEGMENT_DETECT'
+})
+
+// Poll for completion (production only)
+const status = await photoService.fetchSessionStatus(result.sessionId)
+// status.processedImages / status.totalImages
+```
+
+---
+
 ## Using as a Template
 
 To create an industry-specific frontend:
