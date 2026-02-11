@@ -1,10 +1,14 @@
 import { Bot, User } from 'lucide-react'
+import { format } from 'date-fns'
+import { MarkdownRenderer } from './MarkdownRenderer.tsx'
 import { ToolResultCard } from './ToolResultCard.tsx'
 import { ChartRenderer } from './ChartRenderer.tsx'
+import { cn } from '@/lib/utils'
 import type { ChatMessage } from '../types/Chat.ts'
 
 interface MessageBubbleProps {
   readonly message: ChatMessage
+  readonly className?: string
 }
 
 function UserAvatar() {
@@ -23,24 +27,48 @@ function AssistantAvatar() {
   )
 }
 
-function UserBubble({ message }: MessageBubbleProps) {
+function MessageTimestamp({
+  createdAt,
+  align,
+}: {
+  readonly createdAt: string
+  readonly align: 'left' | 'right'
+}) {
+  const formatted = format(new Date(createdAt), 'HH:mm')
+
   return (
-    <div className="flex items-start justify-end gap-2">
-      <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5 text-sm text-white">
-        <p className="whitespace-pre-wrap">{message.content}</p>
+    <span
+      className={cn(
+        'mt-1 block text-xs text-muted',
+        align === 'right' ? 'text-right' : 'text-left',
+      )}
+    >
+      {formatted}
+    </span>
+  )
+}
+
+function UserBubble({ message, className }: MessageBubbleProps) {
+  return (
+    <div className={cn('flex items-start justify-end gap-2 chat-message-enter', className)}>
+      <div className="max-w-[80%]">
+        <div className="rounded-2xl rounded-tr-sm bg-primary px-4 py-2.5 text-sm text-white">
+          <p className="whitespace-pre-wrap">{message.content}</p>
+        </div>
+        <MessageTimestamp createdAt={message.createdAt} align="right" />
       </div>
       <UserAvatar />
     </div>
   )
 }
 
-function AssistantBubble({ message }: MessageBubbleProps) {
+function AssistantBubble({ message, className }: MessageBubbleProps) {
   return (
-    <div className="flex items-start gap-2">
+    <div className={cn('flex items-start gap-2 chat-message-enter', className)}>
       <AssistantAvatar />
       <div className="max-w-[80%]">
-        <div className="rounded-2xl rounded-tl-sm bg-surface px-4 py-2.5 text-sm text-primary">
-          <p className="whitespace-pre-wrap">{message.content}</p>
+        <div className="rounded-2xl rounded-tl-sm bg-surface px-4 py-2.5 text-sm">
+          <MarkdownRenderer content={message.content} />
         </div>
 
         {message.toolExecutions && message.toolExecutions.length > 0 && (
@@ -52,15 +80,17 @@ function AssistantBubble({ message }: MessageBubbleProps) {
         )}
 
         {message.chartData && <ChartRenderer chartData={message.chartData} />}
+
+        <MessageTimestamp createdAt={message.createdAt} align="left" />
       </div>
     </div>
   )
 }
 
-export function MessageBubble({ message }: MessageBubbleProps) {
+export function MessageBubble({ message, className }: MessageBubbleProps) {
   if (message.role === 'user') {
-    return <UserBubble message={message} />
+    return <UserBubble message={message} className={className} />
   }
 
-  return <AssistantBubble message={message} />
+  return <AssistantBubble message={message} className={className} />
 }

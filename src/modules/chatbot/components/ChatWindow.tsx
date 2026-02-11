@@ -1,19 +1,24 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { Send, Loader2, AlertCircle, Bot } from 'lucide-react'
-import { Button } from '@core/components/ui/Button'
+import { useState, useCallback } from 'react'
+import { AlertCircle, Bot } from 'lucide-react'
 import { Skeleton } from '@core/components/ui/Skeleton'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { MessageBubble } from './MessageBubble.tsx'
 import { ToolResultCard } from './ToolResultCard.tsx'
 import { ChartRenderer } from './ChartRenderer.tsx'
+import { MarkdownRenderer } from './MarkdownRenderer.tsx'
+import { TypingIndicator } from './TypingIndicator.tsx'
+import { MessageInput } from './MessageInput.tsx'
 import { useChatMessages } from '../hooks/useChatMessages.ts'
 import { useSendMessage } from '../hooks/useSendMessage.ts'
+import { useAutoScroll } from '../hooks/useAutoScroll.ts'
 import type { ChatMessage } from '../types/Chat.ts'
+import '../styles/chatbot.css'
 
 interface ChatWindowProps {
   readonly sessionId: string
 }
 
-function StreamingIndicator({
+function StreamingBubble({
   content,
   toolExecutions,
   chartData,
@@ -23,16 +28,14 @@ function StreamingIndicator({
   readonly chartData: import('../types/Chat.ts').ChartData | null
 }) {
   return (
-    <div className="flex items-start gap-2">
+    <div className="flex items-start gap-2 chat-message-enter">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-secondary text-white">
         <Bot className="h-4 w-4" />
       </div>
       <div className="max-w-[80%]">
-        <div className="rounded-2xl rounded-tl-sm bg-surface px-4 py-2.5 text-sm text-primary">
-          <p className="whitespace-pre-wrap">
-            {content}
-            <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary" />
-          </p>
+        <div className="rounded-2xl rounded-tl-sm bg-surface px-4 py-2.5 text-sm">
+          <MarkdownRenderer content={content} />
+          <span className="ml-1 inline-block h-4 w-1 animate-pulse bg-primary" />
         </div>
 
         {toolExecutions.length > 0 && (
@@ -81,11 +84,13 @@ function MessageList({
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4">
+    <AnimatedList className="flex flex-col gap-4 p-4">
       {messages.map((message) => (
-        <MessageBubble key={message.id} message={message} />
+        <AnimatedListItem key={message.id}>
+          <MessageBubble message={message} />
+        </AnimatedListItem>
       ))}
-    </div>
+    </AnimatedList>
   )
 }
 
@@ -100,21 +105,15 @@ function ErrorBanner({ error }: { readonly error: string }) {
 
 export function ChatWindow({ sessionId }: ChatWindowProps) {
   const [input, setInput] = useState('')
-  const messagesEndRef = useRef<HTMLDivElement>(null)
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const { data: messages, isLoading: isLoadingMessages } = useChatMessages(sessionId)
 
   const { sendMessage, isStreaming, streamedContent, activeToolExecutions, chartData, error } =
     useSendMessage(sessionId)
 
-  const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [])
-
-  useEffect(() => {
-    scrollToBottom()
-  }, [messages, streamedContent, scrollToBottom])
+  const { containerRef, endRef } = useAutoScroll({
+    dependency: [messages, streamedContent],
+  })
 
   const handleSubmit = useCallback(() => {
     const trimmed = input.trim()
@@ -122,38 +121,20 @@ export function ChatWindow({ sessionId }: ChatWindowProps) {
 
     void sendMessage(trimmed)
     setInput('')
-
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto'
-    }
   }, [input, isStreaming, sendMessage])
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault()
-        handleSubmit()
-      }
-    },
-    [handleSubmit],
-  )
-
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInput(e.target.value)
-
-    const textarea = e.target
-    textarea.style.height = 'auto'
-    textarea.style.height = `${Math.min(textarea.scrollHeight, 120).toString()}px`
+  const handleInputChange = useCallback((value: string) => {
+    setInput(value)
   }, [])
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-y-auto">
+      <div ref={containerRef} className="flex-1 overflow-y-auto">
         <MessageList messages={messages ?? []} isLoading={isLoadingMessages} />
 
         {isStreaming && streamedContent.length > 0 && (
           <div className="px-4 pb-4">
-            <StreamingIndicator
+            <StreamingBubble
               content={streamedContent}
               toolExecutions={activeToolExecutions}
               chartData={chartData}
@@ -161,38 +142,23 @@ export function ChatWindow({ sessionId }: ChatWindowProps) {
           </div>
         )}
 
+        {isStreaming && streamedContent.length === 0 && (
+          <div className="px-4 pb-4">
+            <TypingIndicator />
+          </div>
+        )}
+
         {error && <ErrorBanner error={error} />}
 
-        <div ref={messagesEndRef} />
+        <div ref={endRef} />
       </div>
 
-      <div className="border-t border-border bg-background p-4">
-        <div className="flex items-end gap-2">
-          <textarea
-            ref={textareaRef}
-            value={input}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message..."
-            rows={1}
-            disabled={isStreaming}
-            className="flex-1 resize-none rounded-lg border border-border bg-surface px-3 py-2.5 text-sm text-primary placeholder:text-muted focus:outline-2 focus:outline-offset-0 focus:outline-primary disabled:cursor-not-allowed disabled:opacity-50"
-            aria-label="Message input"
-          />
-          <Button
-            onClick={handleSubmit}
-            disabled={input.trim().length === 0 || isStreaming}
-            size="md"
-            aria-label="Send message"
-          >
-            {isStreaming ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="h-4 w-4" />
-            )}
-          </Button>
-        </div>
-      </div>
+      <MessageInput
+        value={input}
+        onChange={handleInputChange}
+        onSubmit={handleSubmit}
+        isStreaming={isStreaming}
+      />
     </div>
   )
 }
