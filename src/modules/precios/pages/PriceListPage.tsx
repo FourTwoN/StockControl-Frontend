@@ -137,7 +137,7 @@ export default function PriceListPage() {
       )}
 
       {/* Create Price List Modal */}
-      <Modal isOpen={isCreateOpen} onClose={handleCloseModal} title="Create Price List">
+      <Modal open={isCreateOpen} onClose={handleCloseModal} title="Create Price List">
         <form onSubmit={handleSubmit(handleCreate)} className="space-y-4">
           <Input label="Name" {...register('name')} error={errors.name?.message} />
           <Input

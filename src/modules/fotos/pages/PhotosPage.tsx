@@ -145,7 +145,7 @@ export function PhotosPage() {
         </>
       )}
 
-      <Modal isOpen={isCreateOpen} onClose={handleCloseCreate} title="New Photo Session">
+      <Modal open={isCreateOpen} onClose={handleCloseCreate} title="New Photo Session">
         <div className="flex flex-col gap-4">
           <Input
             label="Session Name"

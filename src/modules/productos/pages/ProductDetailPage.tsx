@@ -162,7 +162,7 @@ export function ProductDetailPage() {
         )}
       </div>
 
-      <Modal isOpen={isEditOpen} onClose={handleCloseEdit} title="Edit Product" size="lg">
+      <Modal open={isEditOpen} onClose={handleCloseEdit} title="Edit Product" size="lg">
         <ProductForm
           initialData={product}
           onSubmit={handleSubmit}

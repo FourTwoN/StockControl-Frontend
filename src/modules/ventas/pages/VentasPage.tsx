@@ -44,7 +44,7 @@ export function VentasPage() {
 
       <SaleList onCreate={handleOpenCreate} />
 
-      <Modal isOpen={isCreateOpen} onClose={handleCloseCreate} title="New Sale" size="lg">
+      <Modal open={isCreateOpen} onClose={handleCloseCreate} title="New Sale" size="lg">
         <SaleForm onSubmit={handleSubmit} isSubmitting={createSale.isPending} />
       </Modal>
     </div>

@@ -229,7 +229,7 @@ export function BatchDetailPage() {
 
       {/* Movement modal */}
       <Modal
-        isOpen={isMovementModalOpen}
+        open={isMovementModalOpen}
         onClose={handleCloseMovementModal}
         title="Record Movement"
         size="md"

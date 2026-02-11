@@ -100,7 +100,7 @@ export function PriceUploadModal({
   )
 
   return (
-    <Modal isOpen={isOpen} onClose={handleClose} title="Upload Price CSV" size="lg">
+    <Modal open={isOpen} onClose={handleClose} title="Upload Price CSV" size="lg">
       {step === 'upload' && (
         <div className="space-y-4">
           <p className="text-sm text-muted">

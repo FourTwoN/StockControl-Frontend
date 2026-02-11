@@ -173,7 +173,7 @@ export function EmpaquetadoPage() {
       />
 
       <Modal
-        isOpen={modal.isOpen}
+        open={modal.isOpen}
         onClose={handleCloseModal}
         title={modal.item ? 'Edit Packaging' : 'New Packaging'}
         size="lg"

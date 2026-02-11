@@ -1,7 +1,19 @@
 export { Button, buttonVariants } from '@core/components/ui/Button'
 export { Input } from '@core/components/ui/Input'
 export { Select } from '@core/components/ui/Select'
-export { Modal } from '@core/components/ui/Modal'
+export {
+  Modal,
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from '@core/components/ui/Modal'
 export { Card } from '@core/components/ui/Card'
 export { Badge } from '@core/components/ui/Badge'
 export { ToastProvider, useToast, useToastStore } from '@core/components/ui/Toast'

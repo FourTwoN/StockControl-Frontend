@@ -116,7 +116,7 @@ export function UsersPage() {
       <UserTable onEdit={handleEdit} onDelete={handleDeleteRequest} />
 
       <Modal
-        isOpen={modal.isOpen}
+        open={modal.isOpen}
         onClose={handleCloseModal}
         title={modal.user ? 'Edit User' : 'New User'}
         size="lg"

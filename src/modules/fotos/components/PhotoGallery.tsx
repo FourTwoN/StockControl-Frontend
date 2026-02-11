@@ -56,7 +56,7 @@ export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryP
       </div>
 
       <Modal
-        isOpen={previewImage !== null}
+        open={previewImage !== null}
         onClose={handleClosePreview}
         title={previewImage?.fileName ?? 'Image Preview'}
         size="lg"

@@ -105,7 +105,7 @@ export function ProductsPage() {
       <ProductList onCreate={handleCreate} onEdit={handleEdit} onDelete={handleDeleteRequest} />
 
       <Modal
-        isOpen={modal.isOpen}
+        open={modal.isOpen}
         onClose={handleCloseModal}
         title={modal.product ? 'Edit Product' : 'New Product'}
         size="lg"
