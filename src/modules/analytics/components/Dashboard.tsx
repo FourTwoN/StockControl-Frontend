@@ -19,7 +19,7 @@ type SalesPeriod = 'monthly' | 'weekly'
 
 function toExportableStock(
   data: readonly StockHistoryPoint[],
-): readonly Record<string, string | number | boolean>[] {
+): readonly Record<string, unknown>[] {
   return data.map((point) => ({
     date: point.date,
     totalQuantity: point.totalQuantity,
@@ -30,7 +30,7 @@ function toExportableStock(
 
 function toExportableSales(
   data: readonly SalesSummaryPoint[],
-): readonly Record<string, string | number | boolean>[] {
+): readonly Record<string, unknown>[] {
   return data.map((point) => ({
     period: point.period,
     totalSales: point.totalSales,

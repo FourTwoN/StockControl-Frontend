@@ -6,6 +6,8 @@ import type {
   TopProduct,
   WarehouseOccupancy,
   KPI,
+  WarehouseScorecardEntry,
+  GlobalProductAnalytics,
 } from '../types/Analytics.ts'
 
 interface StockHistoryParams {
@@ -50,4 +52,14 @@ export const analyticsService = {
     apiClient.get<WarehouseOccupancy[]>('/api/v1/analytics/location-occupancy').then((r) => r.data),
 
   fetchKPIs: () => apiClient.get<KPI[]>('/api/v1/analytics/kpis').then((r) => r.data),
+
+  fetchWarehouseScorecard: () =>
+    apiClient
+      .get<WarehouseScorecardEntry[]>('/api/v1/analytics/warehouse-scorecard')
+      .then((r) => r.data),
+
+  fetchGlobalProductAnalytics: () =>
+    apiClient
+      .get<GlobalProductAnalytics>('/api/v1/analytics/global-product-analytics')
+      .then((r) => r.data),
 }

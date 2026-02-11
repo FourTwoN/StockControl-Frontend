@@ -46,3 +46,25 @@ export interface KPI {
   readonly unit: string
   readonly trend: 'up' | 'down' | 'stable' | null
 }
+
+export interface WarehouseScorecardEntry {
+  readonly warehouseId: string
+  readonly warehouseName: string
+  readonly occupancyPercentage: number
+  readonly stockAlertCount: number
+  readonly lastActivityDate: string
+}
+
+export interface ProductValuation {
+  readonly productId: string
+  readonly productName: string
+  readonly totalQuantity: number
+  readonly totalValue: number
+  readonly percentage: number
+}
+
+export interface GlobalProductAnalytics {
+  readonly topProducts: readonly TopProduct[]
+  readonly valuations: readonly ProductValuation[]
+  readonly totalValuation: number
+}
