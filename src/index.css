@@ -53,6 +53,15 @@
   --transition-fast: 150ms var(--ease-out-quart);
   --transition-base: 200ms var(--ease-out-quart);
   --transition-slow: 300ms var(--ease-out-quart);
+
+  /* shadcn/ui compatibility tokens */
+  --radius: 0.625rem;
+
+  /* RGB versions for opacity support (used by shadcn components) */
+  --primary-rgb: 27, 79, 114;
+  --destructive-rgb: 239, 68, 68;
+  --success-rgb: 16, 185, 129;
+  --warning-rgb: 245, 158, 11;
 }
 
 /* ============================================================================
@@ -76,6 +85,8 @@
 
   --glass-bg: rgba(17, 24, 39, 0.8);
   --glass-border: rgba(30, 41, 59, 0.6);
+
+  /* RGB tokens stay the same in dark mode (colors don't change, just surfaces) */
 
   color-scheme: dark;
 }
