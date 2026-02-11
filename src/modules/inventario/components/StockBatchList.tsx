@@ -3,7 +3,13 @@ import { Eye } from 'lucide-react'
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { Button } from '@core/components/ui/Button'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 import { usePagination } from '@core/hooks/usePagination'
 import { BatchStatus } from '@core/types/enums'
 import { useProducts } from '@modules/productos/hooks/useProducts.ts'
@@ -50,16 +56,16 @@ export function StockBatchList({ onView }: StockBatchListProps) {
   }, [data, pagination])
 
   const handleProductChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setProductFilter(e.target.value)
+    (value: string) => {
+      setProductFilter(value)
       pagination.setPage(0)
     },
     [pagination],
   )
 
   const handleStatusChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setStatusFilter(e.target.value)
+    (value: string) => {
+      setStatusFilter(value)
       pagination.setPage(0)
     },
     [pagination],
@@ -138,20 +144,32 @@ export function StockBatchList({ onView }: StockBatchListProps) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
           <div className="w-full sm:w-64">
-            <Select
-              options={productOptions}
-              value={productFilter}
-              onChange={handleProductChange}
-              placeholder="All products"
-            />
+            <Select value={productFilter} onValueChange={handleProductChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="All products" />
+              </SelectTrigger>
+              <SelectContent>
+                {productOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="w-full sm:w-40">
-            <Select
-              options={[...STATUS_OPTIONS]}
-              value={statusFilter}
-              onChange={handleStatusChange}
-              placeholder="All statuses"
-            />
+            <Select value={statusFilter} onValueChange={handleStatusChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="All statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUS_OPTIONS.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </div>

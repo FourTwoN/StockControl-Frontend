@@ -6,7 +6,13 @@ import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { Button } from '@core/components/ui/Button'
 import { Badge } from '@core/components/ui/Badge'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 import { Input } from '@core/components/ui/Input'
 import { usePagination } from '@core/hooks/usePagination'
 import { useSales } from '../hooks/useSales.ts'
@@ -26,8 +32,10 @@ const STATUS_LABELS: Readonly<Record<Sale['status'], string>> = {
   CANCELLED: 'Cancelled',
 }
 
+const ALL_STATUSES = 'ALL'
+
 const STATUS_OPTIONS = [
-  { value: '', label: 'All Statuses' },
+  { value: ALL_STATUSES, label: 'All Statuses' },
   { value: 'PENDING', label: 'Pending' },
   { value: 'CONFIRMED', label: 'Confirmed' },
   { value: 'CANCELLED', label: 'Cancelled' },
@@ -50,13 +58,15 @@ export function SaleList({ onCreate }: SaleListProps) {
   const navigate = useNavigate()
   const pagination = usePagination(20)
 
-  const [statusFilter, setStatusFilter] = useState<Sale['status'] | ''>('')
+  const [statusFilter, setStatusFilter] = useState<string>(ALL_STATUSES)
   const [dateFrom, setDateFrom] = useState('')
   const [dateTo, setDateTo] = useState('')
 
   const filters = useMemo(
     () => ({
-      ...(statusFilter ? { status: statusFilter as Sale['status'] } : {}),
+      ...(statusFilter && statusFilter !== ALL_STATUSES
+        ? { status: statusFilter as Sale['status'] }
+        : {}),
       ...(dateFrom ? { from: dateFrom } : {}),
       ...(dateTo ? { to: dateTo } : {}),
     }),
@@ -72,8 +82,8 @@ export function SaleList({ onCreate }: SaleListProps) {
   }, [data, pagination])
 
   const handleStatusChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setStatusFilter(e.target.value as Sale['status'] | '')
+    (value: string) => {
+      setStatusFilter(value)
       pagination.setPage(0)
     },
     [pagination],
@@ -174,11 +184,18 @@ export function SaleList({ onCreate }: SaleListProps) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
           <div className="w-full sm:w-40">
             <label className="mb-1 block text-xs font-medium text-muted">Status</label>
-            <Select
-              value={statusFilter}
-              onChange={handleStatusChange}
-              options={[...STATUS_OPTIONS]}
-            />
+            <Select value={statusFilter} onValueChange={handleStatusChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="All Statuses" />
+              </SelectTrigger>
+              <SelectContent>
+                {STATUS_OPTIONS.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="w-full sm:w-40">
             <label className="mb-1 block text-xs font-medium text-muted">From</label>

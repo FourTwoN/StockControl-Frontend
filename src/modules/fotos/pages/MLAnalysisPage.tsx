@@ -3,7 +3,13 @@ import { useNavigate } from 'react-router'
 import { Cpu, Upload, CheckCircle, XCircle, Loader2, RefreshCw, Layers, Target } from 'lucide-react'
 import { Button } from '@core/components/ui/Button'
 import { Card } from '@core/components/ui/Card'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 import { FileUpload } from '@core/components/forms/FileUpload'
 import { Badge } from '@core/components/ui/Badge'
 import { useToast } from '@core/components/ui/Toast'
@@ -197,13 +203,25 @@ export function MLAnalysisPage() {
               </div>
 
               {/* Pipeline Selection */}
-              <Select
-                label="Pipeline"
-                value={selectedPipeline}
-                onChange={(e) => setSelectedPipeline(e.target.value)}
-                disabled={pipelinesLoading}
-                options={pipelineOptions}
-              />
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-text-primary">Pipeline</label>
+                <Select
+                  value={selectedPipeline}
+                  onValueChange={setSelectedPipeline}
+                  disabled={pipelinesLoading}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select pipeline" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {pipelineOptions.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
               {/* Process Button */}
               <Button

@@ -3,7 +3,13 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { Badge } from '@core/components/ui/Badge'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 import { Input } from '@core/components/ui/Input'
 import { usePagination } from '@core/hooks/usePagination'
 import { MovementType } from '@core/types/enums'
@@ -57,8 +63,8 @@ export function MovementsPage() {
   }, [data, pagination])
 
   const handleTypeChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setTypeFilter(e.target.value)
+    (value: string) => {
+      setTypeFilter(value)
       pagination.setPage(0)
     },
     [pagination],
@@ -141,12 +147,18 @@ export function MovementsPage() {
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:gap-4">
         <div className="w-full sm:w-40">
           <label className="mb-1 block text-xs font-medium text-muted">Type</label>
-          <Select
-            options={[...TYPE_OPTIONS]}
-            value={typeFilter}
-            onChange={handleTypeChange}
-            placeholder="All types"
-          />
+          <Select value={typeFilter} onValueChange={handleTypeChange}>
+            <SelectTrigger>
+              <SelectValue placeholder="All types" />
+            </SelectTrigger>
+            <SelectContent>
+              {TYPE_OPTIONS.map((opt) => (
+                <SelectItem key={opt.value} value={opt.value}>
+                  {opt.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="w-full sm:w-44">

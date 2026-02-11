@@ -24,18 +24,19 @@ export default function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <AuthGuard>
-              <TenantProvider>
-                <TenantTheme>
-                  <Suspense fallback={<PageFallback />}>
-                    <AuthenticatedApp />
-                  </Suspense>
-                </TenantTheme>
-              </TenantProvider>
-            </AuthGuard>
-          </AuthProvider>
-          <ToastProvider />
+          <ToastProvider>
+            <AuthProvider>
+              <AuthGuard>
+                <TenantProvider>
+                  <TenantTheme>
+                    <Suspense fallback={<PageFallback />}>
+                      <AuthenticatedApp />
+                    </Suspense>
+                  </TenantTheme>
+                </TenantProvider>
+              </AuthGuard>
+            </AuthProvider>
+          </ToastProvider>
         </QueryClientProvider>
       </BrowserRouter>
     </ErrorBoundary>

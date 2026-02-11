@@ -1,8 +1,14 @@
 import { useCallback, useMemo } from 'react'
 import { RotateCcw } from 'lucide-react'
-import { Select } from '@core/components/ui/Select.tsx'
-import { Button } from '@core/components/ui/Button.tsx'
-import { SearchInput } from '@core/components/forms/SearchInput.tsx'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
+import { Button } from '@core/components/ui/Button'
+import { SearchInput } from '@core/components/forms/SearchInput'
 import type { PackagingType, PackagingMaterial, PackagingColor } from '../types/Packaging.ts'
 
 interface PackagingFilters {
@@ -63,22 +69,22 @@ export function PackagingFilterBar({
   )
 
   const handleTypeChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      onFiltersChange({ ...filters, typeId: e.target.value })
+    (value: string) => {
+      onFiltersChange({ ...filters, typeId: value })
     },
     [filters, onFiltersChange],
   )
 
   const handleMaterialChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      onFiltersChange({ ...filters, materialId: e.target.value })
+    (value: string) => {
+      onFiltersChange({ ...filters, materialId: value })
     },
     [filters, onFiltersChange],
   )
 
   const handleColorChange = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      onFiltersChange({ ...filters, colorId: e.target.value })
+    (value: string) => {
+      onFiltersChange({ ...filters, colorId: value })
     },
     [filters, onFiltersChange],
   )
@@ -104,26 +110,44 @@ export function PackagingFilterBar({
       </div>
 
       <div className="grid grid-cols-3 gap-3 sm:flex sm:gap-4">
-        <Select
-          options={typeOptions}
-          value={filters.typeId}
-          onChange={handleTypeChange}
-          placeholder="All types"
-        />
+        <Select value={filters.typeId || undefined} onValueChange={handleTypeChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="All types" />
+          </SelectTrigger>
+          <SelectContent>
+            {typeOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <Select
-          options={materialOptions}
-          value={filters.materialId}
-          onChange={handleMaterialChange}
-          placeholder="All materials"
-        />
+        <Select value={filters.materialId || undefined} onValueChange={handleMaterialChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="All materials" />
+          </SelectTrigger>
+          <SelectContent>
+            {materialOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <Select
-          options={colorOptions}
-          value={filters.colorId}
-          onChange={handleColorChange}
-          placeholder="All colors"
-        />
+        <Select value={filters.colorId || undefined} onValueChange={handleColorChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="All colors" />
+          </SelectTrigger>
+          <SelectContent>
+            {colorOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       {hasActiveFilters && (

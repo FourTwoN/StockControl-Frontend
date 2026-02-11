@@ -1,7 +1,13 @@
 import { useState, useCallback, useMemo } from 'react'
 import { List } from 'lucide-react'
 import { Button } from '@core/components/ui/Button'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 import { Skeleton } from '@core/components/ui/Skeleton'
 import { Badge } from '@core/components/ui/Badge'
 import { EmptyState } from '@core/components/ui/EmptyState'
@@ -50,8 +56,7 @@ export function CatalogPage() {
     }))
   }, [])
 
-  const handleMobileCategoryChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value
+  const handleMobileCategoryChange = useCallback((value: string) => {
     setFilters((prev) => ({
       ...prev,
       categoryId: value || undefined,
@@ -99,12 +104,18 @@ export function CatalogPage() {
 
       {/* Mobile: category dropdown */}
       <div className="mb-4 md:hidden">
-        <Select
-          options={categoryOptions}
-          value={filters.categoryId ?? ''}
-          onChange={handleMobileCategoryChange}
-          placeholder="All categories"
-        />
+        <Select value={filters.categoryId ?? ''} onValueChange={handleMobileCategoryChange}>
+          <SelectTrigger>
+            <SelectValue placeholder="All categories" />
+          </SelectTrigger>
+          <SelectContent>
+            {categoryOptions.map((opt) => (
+              <SelectItem key={opt.value} value={opt.value}>
+                {opt.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="flex gap-6">

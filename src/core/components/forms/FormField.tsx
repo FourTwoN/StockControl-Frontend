@@ -1,7 +1,13 @@
 import { Controller } from 'react-hook-form'
 import type { Control, FieldValues, Path, RegisterOptions } from 'react-hook-form'
 import { Input } from '@core/components/ui/Input'
-import { Select } from '@core/components/ui/Select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@core/components/ui/Select'
 
 interface SelectOption {
   readonly value: string
@@ -43,18 +49,35 @@ export function FormField<T extends FieldValues>({
 
         if (type === 'select') {
           return (
-            <Select
-              label={label}
-              error={errorMessage}
-              options={options as SelectOption[]}
-              placeholder={placeholder}
-              disabled={disabled}
-              value={field.value as string}
-              onChange={field.onChange}
-              onBlur={field.onBlur}
-              ref={field.ref}
-              name={field.name}
-            />
+            <div className="flex flex-col gap-1.5">
+              {label && (
+                <label className="text-sm font-medium text-text-primary">{label}</label>
+              )}
+              <Select
+                value={field.value as string}
+                onValueChange={field.onChange}
+                disabled={disabled}
+                name={field.name}
+              >
+                <SelectTrigger
+                  ref={field.ref}
+                  onBlur={field.onBlur}
+                  className={errorMessage ? 'border-destructive ring-2 ring-destructive/20' : ''}
+                >
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent>
+                  {(options as SelectOption[]).map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {errorMessage && (
+                <p className="text-xs text-destructive">{errorMessage}</p>
+              )}
+            </div>
           )
         }
 
