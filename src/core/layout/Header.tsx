@@ -1,8 +1,18 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
-import { Menu, Bell, User, LogOut, Sun, Moon } from 'lucide-react'
+import { useLocation } from 'react-router'
+import { Menu, Bell, Sun, Moon, LogOut, User, Settings } from 'lucide-react'
 import { useAuth } from '@core/auth/useAuth'
 import { useTenant } from '@core/tenant/useTenant'
 import { useThemeMode } from '@core/hooks/useThemeMode'
+import { cn } from '@/lib/utils'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  Avatar,
+  AvatarFallback,
+} from '@core/components/ui'
 
 interface HeaderProps {
   readonly onMenuToggle: () => void
@@ -12,28 +22,10 @@ export function Header({ onMenuToggle }: HeaderProps) {
   const { user, logout } = useAuth()
   const { tenantConfig } = useTenant()
   const { mode, toggle } = useThemeMode()
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const location = useLocation()
 
-  const closeDropdown = useCallback(() => {
-    setIsDropdownOpen(false)
-  }, [])
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        closeDropdown()
-      }
-    }
-
-    if (isDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside)
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [isDropdownOpen, closeDropdown])
+  const currentModule = location.pathname.split('/').filter(Boolean)[0] ?? ''
+  const moduleLabel = currentModule.charAt(0).toUpperCase() + currentModule.slice(1)
 
   const initials = user?.name
     ? user.name
@@ -44,9 +36,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
         .slice(0, 2)
     : '??'
 
-  const toggleDropdown = useCallback(() => {
-    setIsDropdownOpen((prev) => !prev)
-  }, [])
+  const notificationCount = 0
 
   return (
     <header className="glass sticky top-0 z-30 flex h-14 items-center border-b border-border/50 px-4 shadow-[var(--shadow-xs)]">
@@ -73,6 +63,14 @@ export function Header({ onMenuToggle }: HeaderProps) {
         )}
       </div>
 
+      {/* Breadcrumb */}
+      {moduleLabel && (
+        <div className="ml-4 hidden items-center gap-2 text-sm text-muted md:flex">
+          <span className="text-border">/</span>
+          <span className="font-medium text-text-secondary">{moduleLabel}</span>
+        </div>
+      )}
+
       {/* Spacer */}
       <div className="flex-1" />
 
@@ -91,54 +89,56 @@ export function Header({ onMenuToggle }: HeaderProps) {
         {/* Notifications */}
         <button
           type="button"
-          className="rounded-lg p-2 text-muted transition-all duration-200 hover:bg-primary/10 hover:text-primary"
+          className="relative rounded-lg p-2 text-muted transition-all duration-200 hover:bg-primary/10 hover:text-primary"
           aria-label="Notifications"
         >
           <Bell className="h-5 w-5" />
+          {notificationCount > 0 && (
+            <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-medium text-white">
+              {notificationCount}
+            </span>
+          )}
         </button>
 
         {/* User dropdown */}
-        <div ref={dropdownRef} className="relative">
-          <button
-            type="button"
-            onClick={toggleDropdown}
-            className="flex h-9 w-9 items-center justify-center rounded-full gradient-primary text-xs font-medium text-white ring-2 ring-primary/20 transition-all duration-200 hover:ring-primary/40 hover:shadow-[var(--shadow-glow-primary)]"
-            aria-label="User menu"
-            aria-expanded={isDropdownOpen}
-          >
-            {initials}
-          </button>
-
-          {isDropdownOpen && (
-            <div className="absolute right-0 top-full mt-2 w-56 rounded-xl border border-border/50 bg-surface py-1 shadow-[var(--shadow-lg)] animate-scale-in">
-              <div className="border-b border-border/50 px-4 py-3">
-                <p className="text-sm font-medium text-text-primary">{user?.name}</p>
-                <p className="text-xs text-muted">{user?.email}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  closeDropdown()
-                }}
-                className="flex w-full items-center gap-2 px-4 py-2 text-sm text-text-secondary transition-colors duration-200 hover:bg-surface-hover hover:text-text-primary"
-              >
-                <User className="h-4 w-4" />
-                Profile
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  closeDropdown()
-                  logout()
-                }}
-                className="flex w-full items-center gap-2 px-4 py-2 text-sm text-destructive transition-colors duration-200 hover:bg-destructive/10"
-              >
-                <LogOut className="h-4 w-4" />
-                Sign out
-              </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              type="button"
+              className="flex items-center rounded-full ring-2 ring-primary/20 transition-all duration-200 hover:ring-primary/40 hover:shadow-[var(--shadow-glow-primary)]"
+              aria-label="User menu"
+            >
+              <Avatar className="h-9 w-9">
+                <AvatarFallback className="gradient-primary text-xs font-medium text-white">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <div className="px-2 py-2">
+              <p className="text-sm font-medium text-text-primary">{user?.name}</p>
+              <p className="text-xs text-muted">{user?.email}</p>
             </div>
-          )}
-        </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <User className="h-4 w-4" />
+              Profile
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Settings className="h-4 w-4" />
+              Settings
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-destructive focus:text-destructive"
+              onSelect={logout}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )

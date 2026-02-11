@@ -1,6 +1,8 @@
 import { lazy, useMemo } from 'react'
 import type { ComponentType } from 'react'
-import { Routes, Route, Navigate } from 'react-router'
+import { useLocation, Routes, Route, Navigate } from 'react-router'
+import { AnimatePresence } from 'framer-motion'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { useTenant } from '@core/tenant/useTenant'
 import { getFirstEnabledPath } from '@core/config/modules'
 
@@ -35,20 +37,25 @@ const modulePathMap: Record<string, string> = {
 export function AppRoutes() {
   const { enabledModules } = useTenant()
   const defaultPath = useMemo(() => getFirstEnabledPath(enabledModules), [enabledModules])
+  const location = useLocation()
 
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to={defaultPath} replace />} />
+    <AnimatePresence mode="wait">
+      <AnimatedPage key={location.pathname}>
+        <Routes location={location}>
+          <Route path="/" element={<Navigate to={defaultPath} replace />} />
 
-      {enabledModules.map((key) => {
-        const Component = routeComponents[key]
-        const path = modulePathMap[key]
-        if (!Component || !path) return null
-        return <Route key={key} path={`${path}/*`} element={<Component />} />
-      })}
+          {enabledModules.map((key) => {
+            const Component = routeComponents[key]
+            const path = modulePathMap[key]
+            if (!Component || !path) return null
+            return <Route key={key} path={`${path}/*`} element={<Component />} />
+          })}
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to={defaultPath} replace />} />
-    </Routes>
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to={defaultPath} replace />} />
+        </Routes>
+      </AnimatedPage>
+    </AnimatePresence>
   )
 }
