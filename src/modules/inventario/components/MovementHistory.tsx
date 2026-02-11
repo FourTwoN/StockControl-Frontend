@@ -1,4 +1,6 @@
 import { ArrowDownCircle, ArrowRightLeft, ShoppingCart, Settings, Skull } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Skeleton } from '@core/components/ui/Skeleton'
 import { EmptyState } from '@core/components/ui/EmptyState'
 import type { MovementType } from '@core/types/enums'
@@ -66,19 +68,19 @@ function MovementEntry({
 
       {/* Icon */}
       <div
-        className={[
+        className={cn(
           'relative z-10 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full',
           config.bgColor,
-        ].join(' ')}
+        )}
       >
-        <Icon className={`h-5 w-5 ${config.color}`} />
+        <Icon className={cn('h-5 w-5', config.color)} />
       </div>
 
       {/* Content */}
       <div className="flex-1 pb-6">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
-            <span className={`text-sm font-semibold ${config.color}`}>{config.label}</span>
+            <span className={cn('text-sm font-semibold', config.color)}>{config.label}</span>
             <span className="text-sm font-medium text-primary">x{movement.quantity}</span>
           </div>
           <time className="text-xs text-muted">
@@ -139,14 +141,15 @@ export function MovementHistory({ movements, isLoading }: MovementHistoryProps) 
   }
 
   return (
-    <div className="flex flex-col">
+    <AnimatedList className="flex flex-col">
       {movements.map((movement, index) => (
-        <MovementEntry
-          key={movement.id}
-          movement={movement}
-          isLast={index === movements.length - 1}
-        />
+        <AnimatedListItem key={movement.id}>
+          <MovementEntry
+            movement={movement}
+            isLast={index === movements.length - 1}
+          />
+        </AnimatedListItem>
       ))}
-    </div>
+    </AnimatedList>
   )
 }

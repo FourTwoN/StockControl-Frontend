@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from 'react'
 import { DollarSign, Plus } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Button } from '@core/components/ui/Button.tsx'
 import { Skeleton } from '@core/components/ui/Skeleton.tsx'
 import { EmptyState } from '@core/components/ui/EmptyState.tsx'
@@ -99,7 +101,7 @@ export default function PriceListPage() {
   const priceLists = data?.content ?? []
 
   return (
-    <div className="space-y-6 p-6">
+    <AnimatedPage className="space-y-6 p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <h1 className="text-2xl font-bold text-primary">Price Lists</h1>
         <Button onClick={() => setIsCreateOpen(true)}>
@@ -129,11 +131,13 @@ export default function PriceListPage() {
           }
         />
       ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <AnimatedList className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {priceLists.map((priceList) => (
-            <PriceListCard key={priceList.id} priceList={priceList} />
+            <AnimatedListItem key={priceList.id}>
+              <PriceListCard priceList={priceList} />
+            </AnimatedListItem>
           ))}
-        </div>
+        </AnimatedList>
       )}
 
       {/* Create Price List Modal */}
@@ -179,6 +183,6 @@ export default function PriceListPage() {
           </div>
         </form>
       </Modal>
-    </div>
+    </AnimatedPage>
   )
 }

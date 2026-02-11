@@ -1,4 +1,5 @@
 import type { ReactNode, MouseEventHandler } from 'react'
+import { cn } from '@/lib/utils'
 
 interface CardProps {
   readonly children: ReactNode
@@ -9,15 +10,12 @@ interface CardProps {
 export function Card({ children, className, onClick }: CardProps) {
   return (
     <div
-      className={[
+      className={cn(
         'rounded-xl border border-border/50 bg-surface p-4 shadow-[var(--shadow-sm)] transition-all duration-200',
-        onClick
-          ? 'cursor-pointer hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-primary/20'
-          : '',
+        onClick &&
+          'cursor-pointer hover:-translate-y-1 hover:shadow-[var(--shadow-md)] hover:border-primary/20',
         className,
-      ]
-        .filter(Boolean)
-        .join(' ')}
+      )}
       onClick={onClick}
       onKeyDown={
         onClick

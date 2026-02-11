@@ -1,5 +1,7 @@
 import { AlertCircle, CheckCircle2, Loader2, Clock } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { Badge } from '@core/components/ui/Badge'
+import { Progress } from '@core/components/ui/Progress'
 import { Skeleton } from '@core/components/ui/Skeleton'
 import { useSessionStatus } from '../hooks/useSessionStatus.ts'
 import type { ProcessingStatus } from '../types/Photo.ts'
@@ -58,15 +60,13 @@ export function ProcessingProgress({ sessionId }: ProcessingProgressProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <StatusIcon
-            className={[
+            className={cn(
               'h-4 w-4',
-              status.status === 'PROCESSING' ? 'animate-spin text-warning' : '',
-              status.status === 'COMPLETED' ? 'text-success' : '',
-              status.status === 'FAILED' ? 'text-destructive' : '',
-              status.status === 'PENDING' ? 'text-muted' : '',
-            ]
-              .filter(Boolean)
-              .join(' ')}
+              status.status === 'PROCESSING' && 'animate-spin text-warning',
+              status.status === 'COMPLETED' && 'text-success',
+              status.status === 'FAILED' && 'text-destructive',
+              status.status === 'PENDING' && 'text-muted',
+            )}
           />
           <span className="text-sm font-medium text-primary">{STATUS_LABELS[status.status]}</span>
         </div>
@@ -74,15 +74,13 @@ export function ProcessingProgress({ sessionId }: ProcessingProgressProps) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <div className="h-2.5 w-full overflow-hidden rounded-full bg-border/40">
-          <div
-            className={[
-              'h-full rounded-full transition-all duration-500',
-              status.status === 'FAILED' ? 'bg-destructive' : 'bg-primary',
-            ].join(' ')}
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <Progress
+          value={progress}
+          className={cn(
+            'h-2.5',
+            status.status === 'FAILED' && '[&>*]:bg-destructive',
+          )}
+        />
         <p className="text-xs text-muted">
           {status.processedCount} of {status.totalCount} images processed
         </p>

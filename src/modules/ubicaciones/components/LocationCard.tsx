@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import { Card } from '@core/components/ui/Card.tsx'
 import type { StorageLocation } from '../types/Location.ts'
 
@@ -42,7 +43,7 @@ export function LocationCard({ location, onClick }: LocationCardProps) {
         </div>
         <div className="h-2 w-full overflow-hidden rounded-full bg-border">
           <div
-            className={`h-full rounded-full transition-all ${barColor}`}
+            className={cn('h-full rounded-full transition-all', barColor)}
             style={{ width: `${percent}%` }}
           />
         </div>

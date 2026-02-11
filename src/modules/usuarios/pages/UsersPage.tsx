@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { Plus } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { Modal } from '@core/components/ui/Modal'
 import { ConfirmDialog } from '@core/components/ui/ConfirmDialog'
 import { Button } from '@core/components/ui/Button'
@@ -99,7 +100,7 @@ export function UsersPage() {
   }, [deleteDialog.user, deleteUser, toast])
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-primary">Users</h1>
@@ -137,6 +138,6 @@ export function UsersPage() {
         confirmText="Delete"
         variant="danger"
       />
-    </div>
+    </AnimatedPage>
   )
 }

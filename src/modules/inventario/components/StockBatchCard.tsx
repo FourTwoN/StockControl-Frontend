@@ -1,4 +1,5 @@
 import { MapPin, Package } from 'lucide-react'
+import { cn } from '@/lib/utils'
 import { Card } from '@core/components/ui/Card'
 import { BatchStatusBadge } from './BatchStatusBadge.tsx'
 import type { StockBatch } from '../types/StockBatch.ts'
@@ -39,14 +40,14 @@ export function StockBatchCard({ batch, onClick }: StockBatchCardProps) {
           </div>
           <div className="h-2 w-full overflow-hidden rounded-full bg-background">
             <div
-              className={[
+              className={cn(
                 'h-full rounded-full transition-all',
                 quantityPercentage > 50
                   ? 'bg-success'
                   : quantityPercentage > 20
                     ? 'bg-warning'
                     : 'bg-destructive',
-              ].join(' ')}
+              )}
               style={{ width: `${Math.min(quantityPercentage, 100)}%` }}
             />
           </div>

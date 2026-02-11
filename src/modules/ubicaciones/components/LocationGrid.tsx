@@ -1,3 +1,4 @@
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import type { StorageLocation } from '../types/Location.ts'
 import { LocationCard } from './LocationCard.tsx'
 
@@ -8,10 +9,12 @@ interface LocationGridProps {
 
 export function LocationGrid({ locations, onLocationClick }: LocationGridProps) {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <AnimatedList className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {locations.map((location) => (
-        <LocationCard key={location.id} location={location} onClick={onLocationClick} />
+        <AnimatedListItem key={location.id}>
+          <LocationCard location={location} onClick={onLocationClick} />
+        </AnimatedListItem>
       ))}
-    </div>
+    </AnimatedList>
   )
 }

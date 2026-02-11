@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
+import { cn } from '@/lib/utils'
 import { Modal } from '@core/components/ui/Modal.tsx'
 import { Button } from '@core/components/ui/Button.tsx'
 import { FileUpload } from '@core/components/forms/FileUpload.tsx'
@@ -141,10 +142,10 @@ export function PriceUploadModal({
                 {previewRows.map((row, index) => (
                   <tr
                     key={`${row.productSku}-${index}`}
-                    className={[
+                    className={cn(
                       'border-b border-border last:border-b-0',
-                      row.isValid ? '' : 'bg-destructive/5',
-                    ].join(' ')}
+                      !row.isValid && 'bg-destructive/5',
+                    )}
                   >
                     <td className="px-3 py-2 text-primary">{row.productSku}</td>
                     <td className="px-3 py-2 text-primary">{row.unitPrice}</td>

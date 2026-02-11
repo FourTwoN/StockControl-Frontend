@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { Modal } from '@core/components/ui/Modal'
 import { ConfirmDialog } from '@core/components/ui/ConfirmDialog'
 import { useToast } from '@core/components/ui/Toast'
@@ -96,7 +97,7 @@ export function ProductsPage() {
   }, [deleteDialog.product, deleteProduct, toast])
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Products</h1>
         <p className="mt-1 text-sm text-muted">Manage your product catalog</p>
@@ -126,6 +127,6 @@ export function ProductsPage() {
         confirmText="Delete"
         variant="danger"
       />
-    </div>
+    </AnimatedPage>
   )
 }

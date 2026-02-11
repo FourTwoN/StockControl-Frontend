@@ -5,6 +5,7 @@ import { DataTable } from '@core/components/ui/DataTable'
 import type { Column } from '@core/components/ui/DataTable'
 import { Button } from '@core/components/ui/Button'
 import { Badge } from '@core/components/ui/Badge'
+import { Avatar, AvatarFallback } from '@core/components/ui/Avatar'
 import { RoleGuard } from '@core/auth/RoleGuard'
 import { usePagination } from '@core/hooks/usePagination'
 import { useUsers } from '../hooks/useUsers.ts'
@@ -25,9 +26,9 @@ function UserAvatar({ name }: { readonly name: string }) {
     .toUpperCase()
 
   return (
-    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
-      {initials}
-    </div>
+    <Avatar className="h-8 w-8">
+      <AvatarFallback className="text-xs">{initials}</AvatarFallback>
+    </Avatar>
   )
 }
 

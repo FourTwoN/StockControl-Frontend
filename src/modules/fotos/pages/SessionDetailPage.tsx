@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { ArrowLeft, Camera } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { Button } from '@core/components/ui/Button'
 import { Card } from '@core/components/ui/Card'
 import { Badge } from '@core/components/ui/Badge'
@@ -71,7 +72,7 @@ export function SessionDetailPage() {
   const showCompare = selectedImage?.processedUrl != null
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       {/* Header */}
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
@@ -142,7 +143,7 @@ export function SessionDetailPage() {
           onImageSelect={handleImageSelect}
         />
       </div>
-    </div>
+    </AnimatedPage>
   )
 }
 

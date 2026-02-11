@@ -1,10 +1,10 @@
 import { Badge } from '@core/components/ui/Badge'
 import type { UserRole } from '@core/types/enums'
 
-type BadgeVariant = 'success' | 'warning' | 'default'
+type BadgeVariant = 'success' | 'warning' | 'default' | 'destructive'
 
 const ROLE_BADGE_MAP: Readonly<Record<UserRole, BadgeVariant>> = {
-  ADMIN: 'destructive' as BadgeVariant,
+  ADMIN: 'destructive',
   SUPERVISOR: 'warning',
   WORKER: 'default',
   VIEWER: 'default',

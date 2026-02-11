@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router'
 import { ArrowLeft, Pencil } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { Card } from '@core/components/ui/Card'
 import { Badge } from '@core/components/ui/Badge'
 import { Button } from '@core/components/ui/Button'
@@ -61,30 +62,30 @@ export function ProductDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="p-4 sm:p-6">
+      <AnimatedPage className="p-4 sm:p-6">
         <Skeleton className="mb-6 h-8 w-48" />
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <Skeleton className="h-64" variant="rectangle" />
           <Skeleton className="h-64" variant="rectangle" />
         </div>
-      </div>
+      </AnimatedPage>
     )
   }
 
   if (!product) {
     return (
-      <div className="p-4 sm:p-6">
+      <AnimatedPage className="p-4 sm:p-6">
         <p className="text-muted">Product not found</p>
         <Button variant="ghost" onClick={handleBack} className="mt-4">
           <ArrowLeft className="h-4 w-4" />
           Back to Products
         </Button>
-      </div>
+      </AnimatedPage>
     )
   }
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="sm" onClick={handleBack}>
@@ -169,6 +170,6 @@ export function ProductDetailPage() {
           isSubmitting={updateProduct.isPending}
         />
       </Modal>
-    </div>
+    </AnimatedPage>
   )
 }

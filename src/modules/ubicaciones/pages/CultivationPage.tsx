@@ -1,8 +1,11 @@
 import { useState, useCallback } from 'react'
 import { MapPin } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
+import { FadeIn } from '@core/components/motion/FadeIn'
 import { Skeleton } from '@core/components/ui/Skeleton.tsx'
 import { EmptyState } from '@core/components/ui/EmptyState.tsx'
 import { Card } from '@core/components/ui/Card.tsx'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@core/components/ui/Tabs.tsx'
 import type { StorageLocation } from '../types/Location.ts'
 import { LocationGrid } from '../components/LocationGrid.tsx'
 import { useLocations } from '../hooks/useLocations.ts'
@@ -86,36 +89,74 @@ export default function CultivationPage() {
   const locationList = locations ?? []
 
   return (
-    <div className="space-y-6 p-6">
+    <AnimatedPage className="space-y-6 p-6">
       <h1 className="text-2xl font-bold text-primary">Cultivation Locations</h1>
 
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {/* Left: Location grid */}
-        <div className="w-full lg:w-1/2">
-          {locationList.length === 0 ? (
-            <EmptyState
-              icon={<MapPin className="h-8 w-8" />}
-              title="No locations"
-              description="No storage locations have been registered yet."
-            />
-          ) : (
-            <LocationGrid locations={locationList} onLocationClick={handleLocationClick} />
-          )}
-        </div>
+      <Tabs defaultValue="grid">
+        <TabsList>
+          <TabsTrigger value="grid">Grid View</TabsTrigger>
+          <TabsTrigger value="details">Details</TabsTrigger>
+        </TabsList>
 
-        {/* Right: Selected location details */}
-        <div className="w-full lg:w-1/2">
-          <Card>
-            {selectedLocation ? (
-              <SelectedLocationDetail location={selectedLocation} />
+        <TabsContent value="grid">
+          <div className="flex flex-col gap-6 lg:flex-row">
+            {/* Left: Location grid */}
+            <div className="w-full lg:w-1/2">
+              {locationList.length === 0 ? (
+                <EmptyState
+                  icon={<MapPin className="h-8 w-8" />}
+                  title="No locations"
+                  description="No storage locations have been registered yet."
+                />
+              ) : (
+                <LocationGrid locations={locationList} onLocationClick={handleLocationClick} />
+              )}
+            </div>
+
+            {/* Right: Selected location details */}
+            <div className="w-full lg:w-1/2">
+              <FadeIn key={selectedLocation?.id ?? 'empty'}>
+                <Card>
+                  {selectedLocation ? (
+                    <SelectedLocationDetail location={selectedLocation} />
+                  ) : (
+                    <div className="flex h-48 items-center justify-center">
+                      <p className="text-sm text-muted">Select a location to view details</p>
+                    </div>
+                  )}
+                </Card>
+              </FadeIn>
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="details">
+          <div className="flex flex-col gap-4">
+            {locationList.length === 0 ? (
+              <EmptyState
+                icon={<MapPin className="h-8 w-8" />}
+                title="No locations"
+                description="No storage locations have been registered yet."
+              />
             ) : (
-              <div className="flex h-48 items-center justify-center">
-                <p className="text-sm text-muted">Select a location to view details</p>
-              </div>
+              locationList.map((location) => (
+                <Card key={location.id} onClick={() => handleLocationClick(location)}>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-sm font-semibold text-primary">{location.name}</h3>
+                      <p className="text-xs text-muted">{location.code}</p>
+                    </div>
+                    <div className="text-right text-xs text-muted">
+                      <p>{location.occupancy} / {location.maxCapacity} capacity</p>
+                      <p>{location.binCount} bins</p>
+                    </div>
+                  </div>
+                </Card>
+              ))
             )}
-          </Card>
-        </div>
-      </div>
-    </div>
+          </div>
+        </TabsContent>
+      </Tabs>
+    </AnimatedPage>
   )
 }

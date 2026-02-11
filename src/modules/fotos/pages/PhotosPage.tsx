@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { Camera, Plus, Cpu } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Button } from '@core/components/ui/Button'
 import { Modal } from '@core/components/ui/Modal'
 import { Input } from '@core/components/ui/Input'
@@ -69,7 +71,7 @@ export function PhotosPage() {
   const totalPages = data?.totalPages ?? 0
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-primary">Photo Sessions</h1>
@@ -113,11 +115,13 @@ export function PhotosPage() {
 
       {!isLoading && sessions.length > 0 && (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <AnimatedList className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {sessions.map((session) => (
-              <SessionCard key={session.id} session={session} />
+              <AnimatedListItem key={session.id}>
+                <SessionCard session={session} />
+              </AnimatedListItem>
             ))}
-          </div>
+          </AnimatedList>
 
           {totalPages > 1 && (
             <div className="mt-6 flex items-center justify-center gap-4">
@@ -173,6 +177,6 @@ export function PhotosPage() {
           </div>
         </div>
       </Modal>
-    </div>
+    </AnimatedPage>
   )
 }

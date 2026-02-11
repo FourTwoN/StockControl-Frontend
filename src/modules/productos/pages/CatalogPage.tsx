@@ -1,5 +1,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import { List } from 'lucide-react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Button } from '@core/components/ui/Button'
 import {
   Select,
@@ -96,7 +98,7 @@ export function CatalogPage() {
   }, [families, filters.categoryId, productsData?.content])
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Product Catalog</h1>
         <p className="mt-1 text-sm text-muted">Browse products by category and family</p>
@@ -187,11 +189,11 @@ export function CatalogPage() {
                 description="Try adjusting your category or family filters."
               />
             ) : (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <AnimatedList className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {filteredProducts.map((product) => (
+                  <AnimatedListItem key={product.id}>
                   <div
-                    key={product.id}
-                    className="rounded-lg border border-border bg-surface p-4 transition-colors hover:bg-background"
+                    className="rounded-lg border border-border bg-surface p-4 transition-all duration-200 hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
@@ -218,12 +220,13 @@ export function CatalogPage() {
                       <Badge variant="outline">{product.familyName}</Badge>
                     </div>
                   </div>
+                  </AnimatedListItem>
                 ))}
-              </div>
+              </AnimatedList>
             )}
           </section>
         </main>
       </div>
-    </div>
+    </AnimatedPage>
   )
 }

@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react'
 import { Eye } from 'lucide-react'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Badge } from '@core/components/ui/Badge'
 import { Modal } from '@core/components/ui/Modal'
 import { Skeleton } from '@core/components/ui/Skeleton'
@@ -49,11 +50,13 @@ export function PhotoGallery({ images, isLoading, onImageSelect }: PhotoGalleryP
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+      <AnimatedList className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
         {images.map((image) => (
-          <ImageCard key={image.id} image={image} onClick={handleImageClick} />
+          <AnimatedListItem key={image.id}>
+            <ImageCard image={image} onClick={handleImageClick} />
+          </AnimatedListItem>
         ))}
-      </div>
+      </AnimatedList>
 
       <Modal
         open={previewImage !== null}

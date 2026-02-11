@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { AnimatedPage } from '@core/components/motion/AnimatedPage'
 import { Modal } from '@core/components/ui/Modal'
 import { useToast } from '@core/components/ui/Toast'
 import { SaleList } from '../components/SaleList.tsx'
@@ -36,7 +37,7 @@ export function VentasPage() {
   )
 
   return (
-    <div className="p-4 sm:p-6">
+    <AnimatedPage className="p-4 sm:p-6">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-primary">Sales</h1>
         <p className="mt-1 text-sm text-muted">Manage sales and view receipts</p>
@@ -47,6 +48,6 @@ export function VentasPage() {
       <Modal open={isCreateOpen} onClose={handleCloseCreate} title="New Sale" size="lg">
         <SaleForm onSubmit={handleSubmit} isSubmitting={createSale.isPending} />
       </Modal>
-    </div>
+    </AnimatedPage>
   )
 }

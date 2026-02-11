@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { Package, Pencil, Trash2, ChevronLeft, ChevronRight } from 'lucide-react'
+import { AnimatedList, AnimatedListItem } from '@core/components/motion/AnimatedList'
 import { Card } from '@core/components/ui/Card.tsx'
 import { Badge } from '@core/components/ui/Badge.tsx'
 import { Button } from '@core/components/ui/Button.tsx'
@@ -185,16 +186,17 @@ export function PackagingCatalogList({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <AnimatedList className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {items.map((item) => (
-          <CatalogCard
-            key={item.id}
-            item={item}
-            onEdit={() => onEdit(item)}
-            onDelete={() => onDelete(item)}
-          />
+          <AnimatedListItem key={item.id}>
+            <CatalogCard
+              item={item}
+              onEdit={() => onEdit(item)}
+              onDelete={() => onDelete(item)}
+            />
+          </AnimatedListItem>
         ))}
-      </div>
+      </AnimatedList>
 
       <Pagination
         page={page}
