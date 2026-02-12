@@ -49,7 +49,7 @@ export function InventarioPage() {
         <p className="mt-1 text-sm text-muted">Manage stock batches and track inventory levels</p>
       </div>
 
-      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         <FadeIn delay={0}>
           <KpiCard
             icon={<Package className="h-5 w-5 text-blue-600 dark:text-blue-400" />}

@@ -49,23 +49,23 @@ export function SessionDetailPage() {
 
   if (isLoadingSession) {
     return (
-      <div className="p-4 sm:p-6">
+      <AnimatedPage className="p-4 sm:p-6">
         <Skeleton className="mb-6 h-8 w-48" />
         <Skeleton className="mb-4 h-32" variant="rectangle" />
         <Skeleton className="h-64" variant="rectangle" />
-      </div>
+      </AnimatedPage>
     )
   }
 
   if (!session) {
     return (
-      <div className="p-4 sm:p-6">
+      <AnimatedPage className="p-4 sm:p-6">
         <p className="text-muted">Session not found</p>
         <Button variant="ghost" onClick={handleBack} className="mt-4">
           <ArrowLeft className="h-4 w-4" />
           Back to Sessions
         </Button>
-      </div>
+      </AnimatedPage>
     )
   }
 

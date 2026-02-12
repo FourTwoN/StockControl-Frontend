@@ -63,26 +63,26 @@ export default function CultivationPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6 p-6">
+      <AnimatedPage className="space-y-6 p-6">
         <Skeleton className="h-8 w-64" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }, (_, i) => (
             <Skeleton key={i} variant="rectangle" className="h-28" />
           ))}
         </div>
-      </div>
+      </AnimatedPage>
     )
   }
 
   if (isError) {
     return (
-      <div className="p-6">
+      <AnimatedPage className="p-6">
         <EmptyState
           icon={<MapPin className="h-8 w-8" />}
           title="Failed to load locations"
           description="An error occurred while loading location data. Please try again later."
         />
-      </div>
+      </AnimatedPage>
     )
   }
 

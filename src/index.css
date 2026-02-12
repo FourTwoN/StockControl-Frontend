@@ -215,6 +215,24 @@ body {
   box-shadow: var(--shadow-md);
 }
 
+/* Hover glow effect */
+.hover-glow {
+  transition: box-shadow var(--transition-base);
+}
+
+.hover-glow:hover {
+  box-shadow: var(--shadow-glow-primary);
+}
+
+/* Press scale effect */
+.press-scale {
+  transition: transform 0.1s ease;
+}
+
+.press-scale:active {
+  transform: scale(0.98);
+}
+
 /* Gradient text */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-primary), var(--color-accent));

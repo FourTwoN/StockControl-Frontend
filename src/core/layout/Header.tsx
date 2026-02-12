@@ -44,7 +44,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
       <button
         type="button"
         onClick={onMenuToggle}
-        className="mr-3 rounded-lg p-2 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary md:hidden"
+        className="mr-3 min-h-11 min-w-11 rounded-lg p-2 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary md:hidden"
         aria-label="Toggle menu"
       >
         <Menu className="h-5 w-5" />
@@ -80,7 +80,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
         <button
           type="button"
           onClick={toggle}
-          className="rounded-lg p-2 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary"
+          className="min-h-11 min-w-11 rounded-lg p-2 text-muted transition-all duration-200 hover:bg-surface-hover hover:text-text-primary"
           aria-label={mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {mode === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -89,7 +89,7 @@ export function Header({ onMenuToggle }: HeaderProps) {
         {/* Notifications */}
         <button
           type="button"
-          className="relative rounded-lg p-2 text-muted transition-all duration-200 hover:bg-primary/10 hover:text-primary"
+          className="relative min-h-11 min-w-11 rounded-lg p-2 text-muted transition-all duration-200 hover:bg-primary/10 hover:text-primary"
           aria-label="Notifications"
         >
           <Bell className="h-5 w-5" />

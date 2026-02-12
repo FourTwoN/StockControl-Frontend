@@ -45,7 +45,7 @@ const DialogContent = forwardRef<
 >(({ className, children, size = 'md', ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
-    <DialogPrimitive.Content ref={ref} asChild {...props}>
+    <DialogPrimitive.Content ref={ref} aria-describedby={undefined} asChild {...props}>
       <motion.div
         initial={{ opacity: 0, scale: 0.96, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}

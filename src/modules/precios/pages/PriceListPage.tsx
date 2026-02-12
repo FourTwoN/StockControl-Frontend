@@ -74,7 +74,7 @@ export default function PriceListPage() {
 
   if (isLoading) {
     return (
-      <div className="space-y-6 p-6">
+      <AnimatedPage className="space-y-6 p-6">
         <Skeleton className="h-8 w-48" />
         <Skeleton className="h-10 w-full" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -82,19 +82,19 @@ export default function PriceListPage() {
             <Skeleton key={i} variant="rectangle" className="h-32" />
           ))}
         </div>
-      </div>
+      </AnimatedPage>
     )
   }
 
   if (isError) {
     return (
-      <div className="p-6">
+      <AnimatedPage className="p-6">
         <EmptyState
           icon={<DollarSign className="h-8 w-8" />}
           title="Failed to load price lists"
           description="An error occurred while loading price list data. Please try again later."
         />
-      </div>
+      </AnimatedPage>
     )
   }
 

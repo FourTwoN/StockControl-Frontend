@@ -38,7 +38,7 @@ export function MobileNav({ items }: MobileNavProps) {
                 <Link
                   to={item.path}
                   className={cn(
-                    'relative flex flex-col items-center gap-0.5 px-2 py-2.5 text-xs font-medium transition-all duration-200',
+                    'relative flex flex-col items-center gap-0.5 px-2 py-3 text-xs font-medium transition-all duration-200',
                     active ? 'text-primary' : 'text-muted',
                   )}
                 >
@@ -66,7 +66,7 @@ export function MobileNav({ items }: MobileNavProps) {
                   whileTap={{ scale: 0.92 }}
                   type="button"
                   className={cn(
-                    'relative flex w-full flex-col items-center gap-0.5 px-2 py-2.5 text-xs font-medium transition-all duration-200',
+                    'relative flex w-full flex-col items-center gap-0.5 px-2 py-3 text-xs font-medium transition-all duration-200',
                     isOverflowActive ? 'text-primary' : 'text-muted',
                   )}
                 >

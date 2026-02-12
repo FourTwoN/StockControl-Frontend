@@ -95,13 +95,15 @@ export function SessionList({
     [],
   )
 
+  const safeSessions = Array.isArray(sessions) ? sessions : []
+
   const filteredSessions = useMemo(() => {
-    if (searchQuery.trim().length === 0) return sessions
+    if (searchQuery.trim().length === 0) return safeSessions
     const query = searchQuery.toLowerCase()
-    return sessions.filter((session) =>
+    return safeSessions.filter((session) =>
       session.title.toLowerCase().includes(query),
     )
-  }, [sessions, searchQuery])
+  }, [safeSessions, searchQuery])
 
   return (
     <div className={cn('flex h-full flex-col', className)}>

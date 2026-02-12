@@ -193,7 +193,7 @@ export function CatalogPage() {
                 {filteredProducts.map((product) => (
                   <AnimatedListItem key={product.id}>
                   <div
-                    className="rounded-lg border border-border bg-surface p-4 transition-all duration-200 hover:shadow-md hover:border-primary/20 hover:-translate-y-0.5"
+                    className="hover-lift rounded-lg border border-border bg-surface p-4"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">

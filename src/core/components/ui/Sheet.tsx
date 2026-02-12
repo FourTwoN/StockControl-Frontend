@@ -47,7 +47,7 @@ const SheetContent = forwardRef<React.ComponentRef<typeof DialogPrimitive.Conten
   ({ side = 'right', className, children, ...props }, ref) => (
     <SheetPortal>
       <SheetOverlay />
-      <DialogPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+      <DialogPrimitive.Content ref={ref} aria-describedby={undefined} className={cn(sheetVariants({ side }), className)} {...props}>
         <DialogPrimitive.Close className="absolute right-4 top-4 rounded-md p-1 text-muted transition-opacity hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/50">
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
